@@ -40,6 +40,7 @@ public class TestApp{
 	public void testGetProperty() {
 		String prop = App.getProperty("PeerGroupName");
 		assertEquals("PeerGroupName Property", "speerker", prop);
+		App.logger.info("Hola");
 	}
 
 }
