@@ -25,6 +25,8 @@ package speerker.p2p;
 import java.io.File;
 import java.net.URI;
 
+import speerker.App;
+
 import net.jxta.document.MimeMediaType;
 import net.jxta.document.XMLDocument;
 import net.jxta.exception.PeerGroupException;
@@ -64,7 +66,7 @@ public class GroupLauncher {
 
         PeerGroup wpg = wpgf.getInterface();
 
-        System.out.println("JXTA World Peer Group : " + wpg + " started!");
+        App.logger.info("JXTA World Peer Group : " + wpg + " started!");
 
         return wpg;
     }
@@ -106,7 +108,7 @@ public class GroupLauncher {
         // Instantiate the domain net peer group
         NetPeerGroupFactory npgf1 = new NetPeerGroupFactory(wpg, domainConfig.getPlatformConfig(), npgImplAdv);
         PeerGroup domain = npgf1.getInterface();
-        System.out.println("Peer Group : " + domain + " started!");
+        App.logger.info("Peer Group : " + domain + " started!");
 
         return domain;
     }
