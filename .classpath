@@ -11,6 +11,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/jdom.jar"/>
 	<classpathentry kind="lib" path="lib/jid3lib-0.5.4.jar"/>
-	<classpathentry kind="lib" path="lib/jxse-2.6.jar"/>
+	<classpathentry kind="lib" path="lib/jxta.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
