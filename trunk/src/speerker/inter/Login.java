@@ -35,7 +35,7 @@ public class Login {
 		
 		GridData gridTitle = new GridData(GridData.FILL_HORIZONTAL | GridData.FILL_VERTICAL);
 		Label title = new Label(shell, SWT.CENTER);
-		ImageData dataLogo = new ImageData("logoLogin.png");
+		ImageData dataLogo = new ImageData("images/logoLogin.png");
 		Image imageLogo = new Image(display, dataLogo);
 	    title.setImage(imageLogo); 
 		title.setLayoutData(gridTitle);
