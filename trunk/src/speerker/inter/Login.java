@@ -68,7 +68,7 @@ public class Login {
 		data[0] = userText.getText();
 		data[1] = passwordText.getText();
 		
-		shell.close();
+		display.dispose();
 		
 		return data;
 	}
