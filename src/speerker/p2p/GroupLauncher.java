@@ -74,7 +74,7 @@ public class GroupLauncher {
     /**
      * Configure and start a separate top-level JXTA domain.
      *
-     * @param wpg        The JXTA context into which the domain will run.
+     * @param wpg The JXTA context into which the domain will run.
      * @param domainName The name of the domain.
      * @throws PeerGroupException Thrown for errors creating the domain.
      * @return the net peergroup
