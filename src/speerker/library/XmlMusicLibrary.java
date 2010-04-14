@@ -39,12 +39,12 @@ import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
 
-public class xmlMusicLibrary {
+public class XmlMusicLibrary {
 
 	Document lib;
 	File flib;
 	
-	public xmlMusicLibrary(String path){
+	public XmlMusicLibrary(String path){
 		
 		flib = new File(path);
 		if (flib.exists()){
