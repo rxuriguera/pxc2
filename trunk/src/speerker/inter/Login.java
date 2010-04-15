@@ -4,6 +4,8 @@ package speerker.inter;
 
 import org.eclipse.swt.*;
 import org.eclipse.swt.widgets.*;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
@@ -59,7 +61,7 @@ public class Login {
 		passwordLabel.setText("Password: ");
 		passwordLabel.setLayoutData(gridData);
 		
-		Text passwordText = new Text (shell, SWT.BORDER);
+		Text passwordText = new Text (shell, SWT.BORDER | SWT.PASSWORD);
 		passwordText.setLayoutData(gridText);
 		
 		Button button = new Button(shell, SWT.PUSH);
