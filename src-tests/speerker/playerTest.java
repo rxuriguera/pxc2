@@ -1,27 +1,26 @@
 package speerker;
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import javazoom.jl.decoder.JavaLayerException;
-import javazoom.jl.player.jlp;
+import javazoom.jl.player.advanced.AdvancedPlayer;
 
 public class playerTest {
 
 	/**
 	 * @param args
+	 * @throws FileNotFoundException 
+	 * @throws JavaLayerException 
 	 */
-	public static void main(String[] args) {
-		String[] args1 = new String[1];
-		args1[0] = "/Users/bartru/Music/Broken Bells - Broken Bells/02 Vaporize.mp3";
-		jlp player = jlp.createInstance(args1);
-		try
-		{
-			player.play();
-			//assertTrue("Play",true);	
-		}
-		catch (JavaLayerException e)
-		{
-			e.printStackTrace();
-			//assertTrue("JavaLayerException : "+e.getMessage(),false);			
-		}
+	public static void main(String[] args) throws FileNotFoundException, JavaLayerException {
+		String song="/Users/bartru/Music/Metallica - Enter Sandman/Metallica - Enter Sandman.mp3";
+
+		FileInputStream fis     = new FileInputStream(song);
+        BufferedInputStream bis = new BufferedInputStream(fis);
+		
+		AdvancedPlayer player = new AdvancedPlayer(bis);
+		player.play(1000,200000);
 
 	}
 }
