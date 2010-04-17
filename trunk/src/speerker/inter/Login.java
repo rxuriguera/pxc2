@@ -4,8 +4,6 @@ package speerker.inter;
 
 import org.eclipse.swt.*;
 import org.eclipse.swt.widgets.*;
-import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
@@ -17,10 +15,7 @@ public class Login {
 	
 	static boolean login;
  
-	public static String[] show() {
-            	
-		Display display = new Display();
-		Display.setAppName("Speerker");
+	public static String[] show(Display display) {
 		 
 		Shell shell = new Shell(display, SWT.TITLE | SWT.CLOSE | SWT.BORDER | SWT.ON_TOP);
 		login = false;
@@ -84,7 +79,7 @@ public class Login {
 		data[0] = userText.getText();
 		data[1] = passwordText.getText();
 		
-		display.dispose();
+		shell.close();
 		
 		return data;
 	}
