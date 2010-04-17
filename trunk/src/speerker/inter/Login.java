@@ -6,6 +6,8 @@ import org.eclipse.swt.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
@@ -16,9 +18,14 @@ public class Login {
 	static boolean login;
  
 	public static String[] show(Display display) {
-		 
+		
+		FontData fontData = new FontData();
+		fontData.setHeight(9);
+		Font font = new Font(display,fontData);
+		
 		Shell shell = new Shell(display, SWT.TITLE | SWT.CLOSE | SWT.BORDER | SWT.ON_TOP);
 		login = false;
+		shell.setFont(font);
 		
 		shell.setText("Login");
 		shell.setSize(300, 350);
