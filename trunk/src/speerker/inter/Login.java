@@ -4,6 +4,7 @@ package speerker.inter;
 
 import org.eclipse.swt.*;
 import org.eclipse.swt.widgets.*;
+import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Font;
@@ -17,20 +18,15 @@ public class Login {
 	
 	static boolean login;
  
-	public static String[] show(Display display) {
+	public static String[] show(final Display display) {
 		
-		FontData fontData = new FontData();
-		fontData.setHeight(9);
-		Font font = new Font(display,fontData);
-		
-		Shell shell = new Shell(display, SWT.TITLE | SWT.CLOSE | SWT.BORDER | SWT.ON_TOP);
+		final Shell shell = new Shell(display, SWT.TITLE | SWT.CLOSE | SWT.BORDER | SWT.ON_TOP);
 		login = false;
-		shell.setFont(font);
 		
 		shell.setText("Login");
-		shell.setSize(300, 350);
+		shell.setSize(300, 300);
 		shell.setLocation(400, 200);
-		GridLayout shellLayout = new GridLayout(1, false);
+		GridLayout shellLayout = new GridLayout(2, false);
 		shellLayout.marginLeft = 30;
 		shellLayout.marginRight = 30;
 		shellLayout.marginBottom = 35;
@@ -38,6 +34,7 @@ public class Login {
 		shell.setLayout(shellLayout);
 		
 		GridData gridTitle = new GridData(GridData.FILL_HORIZONTAL | GridData.FILL_VERTICAL);
+		gridTitle.horizontalSpan = 2;
 		Label title = new Label(shell, SWT.CENTER);
 		ImageData dataLogo = new ImageData("images/logoLogin.png");
 		Image imageLogo = new Image(display, dataLogo);
@@ -46,6 +43,8 @@ public class Login {
 		
 		GridData gridData = new GridData(GridData.FILL_HORIZONTAL | GridData.VERTICAL_ALIGN_END);
 		GridData gridText = new GridData(GridData.VERTICAL_ALIGN_END);
+		GridData gridButton = new GridData(GridData.VERTICAL_ALIGN_END | GridData.HORIZONTAL_ALIGN_CENTER | GridData.FILL_HORIZONTAL);
+		gridButton.verticalIndent = 10;
 		
 		
 		Label userLabel = new Label (shell, SWT.LEFT);
@@ -67,11 +66,18 @@ public class Login {
 		passwordText.setLayoutData(gridText);
 		
 		Button button = new Button(shell, SWT.PUSH);
-		GridData gridButton = new GridData(GridData.VERTICAL_ALIGN_END | GridData.HORIZONTAL_ALIGN_CENTER);
-		gridButton.verticalIndent = 10;
-		button.setText("Login");
+		button.setText("Register");
 		button.setLayoutData(gridButton);
 		button.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				Register.show(display);
+			}
+		});
+		
+		Button buttonLogin = new Button(shell, SWT.PUSH);
+		buttonLogin.setText("Login");
+		buttonLogin.setLayoutData(gridButton);
+		buttonLogin.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				login = true;
 			}
@@ -86,7 +92,7 @@ public class Login {
 		data[0] = userText.getText();
 		data[1] = passwordText.getText();
 		
-		shell.close();
+		shell.dispose();
 		
 		return data;
 	}
