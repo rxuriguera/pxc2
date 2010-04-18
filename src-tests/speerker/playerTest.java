@@ -14,6 +14,7 @@ public class playerTest {
 	 * @throws JavaLayerException 
 	 */
 	public static void main(String[] args) throws FileNotFoundException, JavaLayerException {
+		
 		String song="/Users/bartru/Music/Metallica - Enter Sandman/Metallica - Enter Sandman.mp3";
 
 		FileInputStream fis     = new FileInputStream(song);
