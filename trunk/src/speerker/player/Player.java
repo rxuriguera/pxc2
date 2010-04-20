@@ -14,25 +14,13 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Scale;
 
-import speerker.inter.UtilsSWT;
-
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.advanced.AdvancedPlayer;
 
-public class Player {
-	
-	Thread playBack = new Thread() {
-		public void run() {
-			try {
-				player.play();
-			} catch (JavaLayerException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	};
+public class Player{
 	
 	String status;
+	boolean playing;
 	
 	String songPath;
 	FileInputStream fis;
@@ -68,19 +56,19 @@ public class Player {
     	buttonPlay = new Button(comp, SWT.PUSH);
     	buttonPlay.setText("Play");
     	buttonPlay.setEnabled(false);
-    	gridButtonPlay.widthHint = UtilsSWT.getButtonSize(buttonPlay);
+    	buttonPlay.pack();
     	buttonPlay.setLayoutData(gridButtonPlay);
     	
     	buttonPause = new Button(comp, SWT.PUSH);
     	buttonPause.setText("Pause");
     	buttonPause.setEnabled(false);
-    	gridButtonPause.widthHint = UtilsSWT.getButtonSize(buttonPause);
+    	buttonPause.pack();
     	buttonPause.setLayoutData(gridButtonPause);
     	
     	buttonStop = new Button(comp, SWT.PUSH);
     	buttonStop.setText("Stop");
     	buttonStop.setEnabled(false);
-    	gridButtonStop.widthHint = UtilsSWT.getButtonSize(buttonStop);
+    	buttonStop.pack();
     	buttonStop.setLayoutData(gridButtonStop);
     	
     	buttonPlay.addSelectionListener(new SelectionAdapter() {
@@ -121,43 +109,42 @@ public class Player {
 		buttonStop.setEnabled(true);
 		scale.setEnabled(true);
 		
+		
+		playing = false;
 		status = "stop";
 		
-    	
     }
     
     private void play(){
     	
     	if (status.equals("stop")){
     		try {
-    			fis = new FileInputStream(songPath);
-    	        bis = new BufferedInputStream(fis);
+				fis = new FileInputStream(songPath);
+				bis = new BufferedInputStream(fis);
 				player = new AdvancedPlayer(bis);
-			} catch (JavaLayerException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			} catch (JavaLayerException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			new Thread() {
-				public void run() {
-					try {
-						player.play();
-					} catch (JavaLayerException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			}.start();
+    	    
+			playing = true;
+			PlayerThread pt = new PlayerThread();
+			pt.start();
 			status = "play";
-		}	
+		}else if (status.equals("pause")) {
+			playing = true;
+			status = "play";
+		}
     }
     
     private void pause(){
     	
     	if (status.equals("play")){
-    		
+    		playing = false;
+    		status = "pause";
 		}
     	
     }
@@ -165,12 +152,25 @@ public class Player {
     private void stop(){
     	
     	if (status.equals("play")||status.equals("pause")){
-    		player.close();
-			status = "stop";
+    		
 		}
     	
     }
     
+    class PlayerThread extends Thread {
+		public void run(){
+			try {
+				while(playing){
+					System.out.println("si");
+					player.play(50);
+				}
+			}
+			catch( Exception e ) {
+			e.printStackTrace();
+			}
+		}
+    }
 	
 
+    
 }
