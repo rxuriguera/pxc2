@@ -25,7 +25,7 @@ public class playerTest {
 	 */
 	public static void main(String[] args) throws FileNotFoundException, JavaLayerException {
 		
-		String song="/Users/bartru/Music/Metallica - Enter Sandman/Metallica - Enter Sandman.mp3";
+		String song="/Users/bartru/Music/Los Planetas - Una opera egipcia/03. Soy un pobre granaino.mp3";
 
 		Display display = new Display();
 		Display.setAppName("Speerker");
@@ -39,7 +39,7 @@ public class playerTest {
 		
 		Player player = new Player(shell);
 		
-		player.loadSong("/Users/bartru/Music/Metallica - Enter Sandman/Metallica - Enter Sandman.mp3");
+		player.loadSong(song);
 		
 		shell.open();
 		while (!shell.isDisposed()) {
