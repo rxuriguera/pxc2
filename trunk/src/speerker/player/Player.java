@@ -1,7 +1,6 @@
 package speerker.player;
 
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
 
 import org.eclipse.swt.SWT;
@@ -15,17 +14,16 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Scale;
 
 import javazoom.jl.decoder.JavaLayerException;
-import javazoom.jl.player.advanced.AdvancedPlayer;
+import javazoom.jlgui.basicplayer.BasicController;
+import javazoom.jlgui.basicplayer.BasicPlayer;
+import javazoom.jlgui.basicplayer.BasicPlayerException;
 
 public class Player{
 	
-	String status;
-	boolean playing;
-	
 	String songPath;
-	FileInputStream fis;
-    BufferedInputStream bis;
-    AdvancedPlayer player;
+    
+    BasicPlayer player;
+	BasicController control;
     
     Composite comp;
     GridData gridComposite;
@@ -95,8 +93,6 @@ public class Player{
     	scale.setEnabled(false);
     	gridScale = new GridData(GridData.FILL_HORIZONTAL);
     	scale.setLayoutData(gridScale);
-    	
-    	status = "ini";
  
 	}
     
@@ -109,68 +105,50 @@ public class Player{
 		buttonStop.setEnabled(true);
 		scale.setEnabled(true);
 		
+		player = new BasicPlayer();
+		control = (BasicController) player;
 		
-		playing = false;
-		status = "stop";
+		try {
+			control.open(new File(songPath));
+		} catch (BasicPlayerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
     }
     
     private void play(){
     	
-    	if (status.equals("stop")){
-    		try {
-				fis = new FileInputStream(songPath);
-				bis = new BufferedInputStream(fis);
-				player = new AdvancedPlayer(bis);
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (JavaLayerException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-    	    
-			playing = true;
-			PlayerThread pt = new PlayerThread();
-			pt.start();
-			status = "play";
-		}else if (status.equals("pause")) {
-			playing = true;
-			status = "play";
+    	try {
+			control.play();
+		} catch (BasicPlayerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+    	
+    	
     }
     
     private void pause(){
     	
-    	if (status.equals("play")){
-    		playing = false;
-    		status = "pause";
+    	try {
+			control.pause();
+		} catch (BasicPlayerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
     	
     }
     
     private void stop(){
     	
-    	if (status.equals("play")||status.equals("pause")){
-    		
+    	try {
+			control.stop();
+		} catch (BasicPlayerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
     	
     }
-    
-    class PlayerThread extends Thread {
-		public void run(){
-			try {
-				while(playing){
-					System.out.println("si");
-					player.play(50);
-				}
-			}
-			catch( Exception e ) {
-			e.printStackTrace();
-			}
-		}
-    }
-	
-
     
 }
