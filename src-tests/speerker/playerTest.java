@@ -25,7 +25,7 @@ public class playerTest {
 	 */
 	public static void main(String[] args) throws FileNotFoundException, JavaLayerException {
 		
-		String song="/Users/bartru/Music/Los Planetas - Una opera egipcia/03. Soy un pobre granaino.mp3";
+		String song="/Users/bartru/Music/Crystal Castles - Crystal Castles [2010]/01 - Fainting Spells.mp3";
 
 		Display display = new Display();
 		Display.setAppName("Speerker");
