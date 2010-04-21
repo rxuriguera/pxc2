@@ -23,7 +23,12 @@ import net.jxta.protocol.ModuleImplAdvertisement;
 import net.jxta.protocol.PeerGroupAdvertisement;
 
 @SuppressWarnings("deprecation")
-public class Client {
+public class Client extends Thread {
+	
+	public Client(){
+		this.setName(App.getProperty("ClientThreadName"));
+	}
+	
 	/*
 	 * public void run(String peerName, String groupName) throws
 	 * PeerGroupException { PeerGroup peerGroup =
@@ -129,7 +134,7 @@ public class Client {
 
 		return group.newGroup(groupAdv);
 	}
-
+/*
 	public void run(String peerName, String groupName) {
 		try {
 			File cacheDir = new File(App.getProperty("CacheDirectory"));
@@ -153,13 +158,15 @@ public class Client {
 			// manager.setInfrastructureID(peerGroup.getPeerGroupID());
 			// manager.setPeerID(peerGroup.getPeerID());
 			App.logger.info("Started app " + speekerPeerGroup);
+
+            try {
+                Thread.sleep( 10 * 60 * 1000);
+            } catch(InterruptedException woken) {
+                Thread.interrupted();
+            }
+
 			speekerPeerGroup.stopApp();
-
 			manager.stopNetwork();
-
-			// manager.setPeerID(peerGroup.getPeerID());
-			// manager.setInfrastructureID(peerGroup.getPeerGroupID());
-			//
 		} catch (IOException e) {
 			App.logger.error("Error loading cache directory: ", e);
 		} catch (PeerGroupException e) {
@@ -168,5 +175,11 @@ public class Client {
 			App.logger.error("Error: ", e);
 		}
 	}
-
+*/
+	
+	public void run(){
+		while(true){
+			System.out.println("Client");
+		}
+	}
 }

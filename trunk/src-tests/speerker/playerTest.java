@@ -33,7 +33,7 @@ public class playerTest {
 		
 		shell.setText("Login");
 		shell.setSize(500, 500);
-		shell.setLocation(400, 200);
+		shell.setLocation(400, 500);
 		GridLayout shellLayout = new GridLayout(1, false);
 		shell.setLayout(shellLayout);
 		
