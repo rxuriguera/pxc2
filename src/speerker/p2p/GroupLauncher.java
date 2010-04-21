@@ -44,7 +44,12 @@ import net.jxta.impl.peergroup.StdPeerGroupParamAdv;
 
 
 public class GroupLauncher {
-    /**
+    
+	final static PeerGroupID PEERGROUP_ID = PeerGroupID.create(URI
+			.create("urn:jxta:uuid-098353991A6E455E804B85ED40BD1A"
+					+ "B459616261646162614E5047205032503302"));
+	
+	/**
      * Configure and start the World Peer Group.
      *
      * @param storeHome The location JXTA will use to store all persistent data.

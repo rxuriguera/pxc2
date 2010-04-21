@@ -25,7 +25,7 @@ public class Login {
 		
 		shell.setText("Login");
 		shell.setSize(300, 300);
-		shell.setLocation(400, 200);
+		shell.setLocation(400, 500);
 		GridLayout shellLayout = new GridLayout(2, false);
 		shellLayout.marginLeft = 30;
 		shellLayout.marginRight = 30;
