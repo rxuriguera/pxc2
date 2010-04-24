@@ -21,6 +21,7 @@ import javazoom.jlgui.basicplayer.BasicPlayerException;
 public class Player{
 	
 	String songPath;
+	String status;
     
     BasicPlayer player;
 	BasicController control;
@@ -115,12 +116,16 @@ public class Player{
 			e.printStackTrace();
 		}
 		
+		status = "stop";
+		
     }
     
     private void play(){
     	
     	try {
-			control.play();
+    		if (status.equals("stop")) control.play();
+    		else if (status.equals("pause")) control.resume();
+			status = "play";
 		} catch (BasicPlayerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -133,6 +138,7 @@ public class Player{
     	
     	try {
 			control.pause();
+			status = "pause";
 		} catch (BasicPlayerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -144,6 +150,7 @@ public class Player{
     	
     	try {
 			control.stop();
+			status = "stop";
 		} catch (BasicPlayerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
