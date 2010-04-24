@@ -10,21 +10,20 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Scale;
 
 import javazoom.jl.decoder.JavaLayerException;
-import javazoom.jlgui.basicplayer.BasicController;
 import javazoom.jlgui.basicplayer.BasicPlayer;
 import javazoom.jlgui.basicplayer.BasicPlayerException;
 
 public class Player{
 	
 	String songPath;
-	String status;
     
     BasicPlayer player;
-	BasicController control;
+    PlayerListener listener;
     
     Composite comp;
     GridData gridComposite;
@@ -32,25 +31,43 @@ public class Player{
     GridData gridButtonPlay;
     GridData gridButtonPause;
     GridData gridButtonStop;
+    GridData gridButtonNext;
+    GridData gridButtonPrev;
     GridData gridScale;
     Button buttonPlay;
     Button buttonStop;
     Button buttonPause;
+    Button buttonNext;
+    Button buttonPrev;
     Scale scale;
     
+    Shell shell;
+    Display display;
     
-    public Player(Shell shell) {
+    
+    public Player(Shell s, Display d) {
+    	
+    	shell = s;
+    	display = d;
     	
     	comp = new Composite(shell, SWT.NONE);
     	gridComposite = new GridData(GridData.FILL_HORIZONTAL);
     	comp.setLayoutData(gridComposite);
     	
-    	playerLayout = new GridLayout(4, false);
+    	playerLayout = new GridLayout(6, false);
     	comp.setLayout(playerLayout);
     	
     	gridButtonPlay = new GridData();
     	gridButtonPause = new GridData();
     	gridButtonStop = new GridData();
+    	gridButtonNext = new GridData();
+    	gridButtonPrev = new GridData();
+    	
+    	buttonPrev = new Button(comp, SWT.PUSH);
+    	buttonPrev.setText("<<");
+    	buttonPrev.setEnabled(false);
+    	buttonPrev.pack();
+    	buttonPrev.setLayoutData(gridButtonPrev);
     	
     	buttonPlay = new Button(comp, SWT.PUSH);
     	buttonPlay.setText("Play");
@@ -69,6 +86,12 @@ public class Player{
     	buttonStop.setEnabled(false);
     	buttonStop.pack();
     	buttonStop.setLayoutData(gridButtonStop);
+    	
+    	buttonNext = new Button(comp, SWT.PUSH);
+    	buttonNext.setText(">>");
+    	buttonNext.setEnabled(false);
+    	buttonNext.pack();
+    	buttonNext.setLayoutData(gridButtonNext);
     	
     	buttonPlay.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
@@ -89,11 +112,16 @@ public class Player{
 		});
     	
     	scale = new Scale(comp, SWT.NONE);
-    	scale.setMaximum (100);
     	scale.setPageIncrement (1);
     	scale.setEnabled(false);
     	gridScale = new GridData(GridData.FILL_HORIZONTAL);
     	scale.setLayoutData(gridScale);
+    	
+    	scale.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				move();
+			}
+		});
  
 	}
     
@@ -107,25 +135,25 @@ public class Player{
 		scale.setEnabled(true);
 		
 		player = new BasicPlayer();
-		control = (BasicController) player;
+		
+		listener = new PlayerListener(this,display);
+		player.addBasicPlayerListener(listener);
 		
 		try {
-			control.open(new File(songPath));
+			player.open(new File(songPath));
 		} catch (BasicPlayerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		status = "stop";
-		
+
     }
     
     private void play(){
     	
     	try {
-    		if (status.equals("stop")) control.play();
-    		else if (status.equals("pause")) control.resume();
-			status = "play";
+    		if (player.getStatus()==BasicPlayer.OPENED||player.getStatus()==BasicPlayer.STOPPED) player.play();
+    		else if (player.getStatus()==BasicPlayer.PAUSED) player.resume();
 		} catch (BasicPlayerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -137,8 +165,7 @@ public class Player{
     private void pause(){
     	
     	try {
-			control.pause();
-			status = "pause";
+			player.pause();
 		} catch (BasicPlayerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -146,16 +173,69 @@ public class Player{
     	
     }
     
-    private void stop(){
+    private void move(){
     	
+    	int pos = scale.getSelection();
+    	boolean restart = false;
+    	if (player.getStatus()==BasicPlayer.PLAYING) restart = true;
+    	player.removeBasicPlayerListener(listener);
+		try {
+			player.stop();
+			loadSong(songPath);
+			player.seek(pos);
+			//if (restart) player.play();
+		} catch (BasicPlayerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JavaLayerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
+    private void stop(){
+  
     	try {
-			control.stop();
-			status = "stop";
+    		player.removeBasicPlayerListener(listener);
+    		player.stop();
+    		scale.setSelection(0);
+    		loadSong(songPath);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JavaLayerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} catch (BasicPlayerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	
     }
+
+	public void setScaleValue(final int i) {
+		display.syncExec(
+				new Runnable() {
+					public void run(){
+						scale.setSelection(i);
+				    }
+				});
+		
+		
+		
+	}
+
+	public void setMaximumScale(final int bytesLength) {
+		display.syncExec(
+				new Runnable() {
+					public void run(){
+						scale.setMaximum(bytesLength);
+				    }
+				});
+		
+	}
     
 }

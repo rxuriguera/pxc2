@@ -32,12 +32,12 @@ public class playerTest {
 		Shell shell = new Shell(display, SWT.TITLE | SWT.CLOSE | SWT.BORDER | SWT.ON_TOP);
 		
 		shell.setText("Login");
-		shell.setSize(500, 500);
+		shell.setSize(700, 500);
 		shell.setLocation(400, 500);
 		GridLayout shellLayout = new GridLayout(1, false);
 		shell.setLayout(shellLayout);
 		
-		Player player = new Player(shell);
+		Player player = new Player(shell,display);
 		
 		player.loadSong(song);
 		
