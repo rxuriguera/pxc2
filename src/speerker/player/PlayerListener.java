@@ -13,10 +13,10 @@ import javazoom.jlgui.basicplayer.BasicPlayerListener;
 public class PlayerListener implements BasicPlayerListener{
 
 	
-	Player player;
+	SpeerkerPlayer player;
 	private double bytesLength;
 	
-	public PlayerListener(Player p, Display display){
+	public PlayerListener(SpeerkerPlayer p, Display display){
 		player=p;
 		
 	}

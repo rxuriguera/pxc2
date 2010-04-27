@@ -18,12 +18,14 @@ import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jlgui.basicplayer.BasicPlayer;
 import javazoom.jlgui.basicplayer.BasicPlayerException;
 
-public class Player{
+public class SpeerkerPlayer{
 	
 	String songPath;
     
     BasicPlayer player;
     PlayerListener listener;
+    
+    Playlist playlist;
     
     Composite comp;
     GridData gridComposite;
@@ -45,7 +47,7 @@ public class Player{
     Display display;
     
     
-    public Player(Shell s, Display d) {
+    public SpeerkerPlayer(Shell s, Display d) {
     	
     	shell = s;
     	display = d;
@@ -125,6 +127,12 @@ public class Player{
  
 	}
     
+    public void enableControls(){
+    	buttonPlay.setEnabled(true);
+		buttonPause.setEnabled(true);
+		buttonStop.setEnabled(true);
+    }
+    
     public void loadSong(String song) throws FileNotFoundException, JavaLayerException{
     	
     	songPath = song;
@@ -183,7 +191,7 @@ public class Player{
 			player.stop();
 			loadSong(songPath);
 			player.seek(pos);
-			//if (restart) player.play();
+			if (restart) player.play();
 		} catch (BasicPlayerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -235,6 +243,20 @@ public class Player{
 						scale.setMaximum(bytesLength);
 				    }
 				});
+		
+	}
+	
+	public void setPlaylist(Playlist p){
+		playlist = p;
+	}
+
+	public void disablePrevButton() {
+		buttonPrev.setEnabled(false);
+		
+	}
+	
+	public void disableNextButton() {
+		buttonNext.setEnabled(false);
 		
 	}
     

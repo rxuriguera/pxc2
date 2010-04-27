@@ -11,7 +11,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 import speerker.inter.Login;
-import speerker.player.Player;
+import speerker.player.SpeerkerPlayer;
+import speerker.player.Playlist;
 
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.advanced.AdvancedPlayer;
@@ -25,7 +26,12 @@ public class playerTest {
 	 */
 	public static void main(String[] args) throws FileNotFoundException, JavaLayerException {
 		
-		String song="/Users/bartru/Music/Crystal Castles - Crystal Castles [2010]/01 - Fainting Spells.mp3";
+		String song0="/Users/bartru/Music/Crystal Castles - Crystal Castles [2010]/01 - Fainting Spells.mp3";
+		String song1="/Users/bartru/Music/Crystal Castles - Crystal Castles [2010]/03 - Doe Deer.mp3";
+		String song2="/Users/bartru/Music/Crystal Castles - Crystal Castles [2010]/05 - Year of Silence.mp3";
+		String song3="/Users/bartru/Music/Crystal Castles - Crystal Castles [2010]/11 - Pap Smear.mp3";
+		
+		Playlist playlist = new Playlist(null);
 
 		Display display = new Display();
 		Display.setAppName("Speerker");
@@ -37,9 +43,16 @@ public class playerTest {
 		GridLayout shellLayout = new GridLayout(1, false);
 		shell.setLayout(shellLayout);
 		
-		Player player = new Player(shell,display);
+		SpeerkerPlayer player = new SpeerkerPlayer(shell,display);
+		playlist.setPlayer(player);
 		
-		player.loadSong(song);
+		playlist.add(song0);
+		playlist.add(song1);
+		playlist.add(song2);
+		playlist.add(song3);
+		
+		
+		
 		
 		shell.open();
 		while (!shell.isDisposed()) {
