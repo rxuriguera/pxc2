@@ -36,7 +36,9 @@ public class PlayerInter {
     
     SpeerkerPlayer player;
     
-    public PlayerInter(Shell s, Display d) {
+    public PlayerInter(Shell s, Display d, SpeerkerPlayer p) {
+    	
+    	player = p;
     	
     	shell = s;
     	display = d;
@@ -86,19 +88,31 @@ public class PlayerInter {
     	
     	buttonPlay.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				play();
+				player.play();
 			}
 		});
     	
     	buttonPause.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				pause();
+				player.pause();
 			}
 		});
     	
     	buttonStop.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				stop();
+				player.stop();
+			}
+		});
+    	
+    	buttonNext.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				player.next();
+			}
+		});
+    	
+    	buttonPrev.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				player.prev();
 			}
 		});
     	
@@ -110,10 +124,91 @@ public class PlayerInter {
     	
     	scale.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				move();
+				player.move(scale.getSelection());
 			}
 		});
  
 	}
+    
+    public void setScaleValue(final int i) {
+		display.syncExec(
+				new Runnable() {
+					public void run(){
+						scale.setSelection(i);
+				    }
+				});
+		
+		
+		
+	}
 
+	public void setMaximumScale(final int bytesLength) {
+		display.syncExec(
+				new Runnable() {
+					public void run(){
+						scale.setMaximum(bytesLength);
+				    }
+				});
+		
+	}
+	
+	public void setEnablePlay(final boolean set) {
+		display.syncExec(
+				new Runnable() {
+					public void run(){
+						buttonPlay.setEnabled(set);
+				    }
+				});
+		
+	}
+
+	public void setEnablePause(final boolean set) {
+		display.syncExec(
+				new Runnable() {
+					public void run(){
+						buttonPause.setEnabled(set);
+				    }
+				});
+		
+	}
+	
+	public void setEnableStop(final boolean set) {
+		display.syncExec(
+				new Runnable() {
+					public void run(){
+						buttonStop.setEnabled(set);
+				    }
+				});
+		
+	}
+	
+	public void setEnableNext(final boolean set) {
+		display.syncExec(
+				new Runnable() {
+					public void run(){
+						buttonNext.setEnabled(set);
+				    }
+				});
+		
+	}
+	
+	public void setEnablePrev(final boolean set) {
+		display.syncExec(
+				new Runnable() {
+					public void run(){
+						buttonPrev.setEnabled(set);
+				    }
+				});
+		
+	}
+
+	public void setEnableScale(final boolean set) {
+		display.syncExec(
+				new Runnable() {
+					public void run(){
+						scale.setEnabled(set);
+				    }
+				});
+		
+	}
 }

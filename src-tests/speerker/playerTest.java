@@ -11,6 +11,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 import speerker.inter.Login;
+import speerker.inter.PlayerInter;
 import speerker.player.SpeerkerPlayer;
 import speerker.player.Playlist;
 
@@ -32,6 +33,8 @@ public class playerTest {
 		String song3="/Users/bartru/Music/Crystal Castles - Crystal Castles [2010]/11 - Pap Smear.mp3";
 		
 		Playlist playlist = new Playlist(null);
+		
+		SpeerkerPlayer player = new SpeerkerPlayer();
 
 		Display display = new Display();
 		Display.setAppName("Speerker");
@@ -43,16 +46,16 @@ public class playerTest {
 		GridLayout shellLayout = new GridLayout(1, false);
 		shell.setLayout(shellLayout);
 		
-		SpeerkerPlayer player = new SpeerkerPlayer(shell,display);
+		PlayerInter playerInter = new PlayerInter(shell, display, player);
+		
 		playlist.setPlayer(player);
+		player.setPlaylist(playlist);
+		player.setInter(playerInter);
 		
 		playlist.add(song0);
 		playlist.add(song1);
 		playlist.add(song2);
 		playlist.add(song3);
-		
-		
-		
 		
 		shell.open();
 		while (!shell.isDisposed()) {
