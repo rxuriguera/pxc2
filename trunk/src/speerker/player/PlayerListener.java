@@ -16,7 +16,7 @@ public class PlayerListener implements BasicPlayerListener{
 	SpeerkerPlayer player;
 	private double bytesLength;
 	
-	public PlayerListener(SpeerkerPlayer p, Display display){
+	public PlayerListener(SpeerkerPlayer p){
 		player=p;
 		
 	}
@@ -46,6 +46,7 @@ public class PlayerListener implements BasicPlayerListener{
 	@Override
 	public void stateUpdated(BasicPlayerEvent arg0) {
 		// TODO Auto-generated method stub
+		if (arg0.getCode()==BasicPlayerEvent.EOM) player.next();
 		
 	}
 
