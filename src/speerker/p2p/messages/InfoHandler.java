@@ -23,18 +23,26 @@ import peerbase.Node;
 import peerbase.PeerConnection;
 
 /**
- * Handler for SpeerkerMessage.NAME messages. The main goal is to return the id
- * of the peer that receives the message.
+ * This class handles messages oft the type SpeerkerMessage.INFO. The purpose of
+ * this handler is to reply with the peer ID.
  */
-public class NameHandler extends SpeerkerMessageHandler {
+public class InfoHandler extends SpeerkerMessageHandler {
 	private Node peer;
 
-	public NameHandler(Node peer) {
+	/**
+	 * Creates a new handler for INFO messages.
+	 * 
+	 * @param peer
+	 *            a Node instance representing the peer that will handle the
+	 *            messages
+	 */
+	public InfoHandler(Node peer) {
 		this.peer = peer;
 	}
 
+	@Override
 	public void handleMessage(PeerConnection peerconn, SpeerkerMessage msg) {
 		peerconn.sendData(new SpeerkerMessage(SpeerkerMessage.REPLY, peer
-				.getId()));
+				.getInfo()));
 	}
 }
