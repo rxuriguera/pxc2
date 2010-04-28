@@ -20,6 +20,7 @@ public class Playlist {
 	
 	public Playlist(){
 		list = new ArrayList<Song>(0);
+		current = -1;
 	}
 
 	public void setPlayer(SpeerkerPlayer p){
@@ -31,7 +32,6 @@ public class Playlist {
 		if (list.size()==0) current = 0;
 		list.add(new Song(t,a,alb,p));
 		player.setEnableControls(true);
-		if (inter != null) inter.refreshTable();
 		if (list.size()==1)
 			try {
 				player.loadSong((String) list.get(0).path);
@@ -48,12 +48,16 @@ public class Playlist {
 			
 			if (current == list.size()-1) player.setEnableNext(false);
 			else player.setEnableNext(true);
+			
+		if (inter != null) inter.refreshTable();
 	}
 	
 	public boolean play(int i){
 		
+		player.stop();
+		
 		if (i <= list.size()-1){
-			
+		
 			try {
 				player.loadSong((String) list.get(i).path);
 				player.play();
@@ -71,8 +75,11 @@ public class Playlist {
 			
 			if (current == list.size()-1) player.setEnableNext(false);
 			else player.setEnableNext(true);
-			
-		}else player.stop();
+				
+			if (inter != null) inter.refreshTable();
+		}
+		
+		
 		
 		return false;
 		
@@ -97,6 +104,10 @@ public class Playlist {
 	
 	public int getSize(){
 		return list.size();
+	}
+	
+	public int getCurrent(){
+		return current;
 	}
 	
 	public String getTitle(int i){

@@ -3,13 +3,18 @@ package speerker.inter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Scale;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.TableItem;
 
 import speerker.player.SpeerkerPlayer;
 
@@ -30,6 +35,8 @@ public class PlayerInter {
     Button buttonNext;
     Button buttonPrev;
     Scale scale;
+    
+    Boolean scaleMove;
     
     Shell shell;
     Display display;
@@ -120,11 +127,22 @@ public class PlayerInter {
     	gridScale = new GridData(GridData.FILL_HORIZONTAL);
     	scale.setLayoutData(gridScale);
     	
-    	scale.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				player.move(scale.getSelection());
+    	scaleMove = true;
+    	
+    	scale.addListener (SWT.MouseDown, new Listener () {
+			public void handleEvent (Event event) {
+				scaleMove = false;
 			}
 		});
+    	
+    	scale.addListener (SWT.MouseUp, new Listener () {
+			public void handleEvent (Event event) {
+				player.move(scale.getSelection());
+				scaleMove = true;
+			}
+		});
+    	
+    	player.setInter(this);
  
 	}
     
@@ -132,11 +150,9 @@ public class PlayerInter {
 		display.syncExec(
 				new Runnable() {
 					public void run(){
-						scale.setSelection(i);
+						if (scaleMove) scale.setSelection(i);
 				    }
 				});
-		
-		
 		
 	}
 
