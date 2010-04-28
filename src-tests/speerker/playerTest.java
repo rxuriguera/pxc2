@@ -14,6 +14,7 @@ import org.eclipse.swt.widgets.Shell;
 import speerker.inter.Login;
 import speerker.inter.PlayerInter;
 import speerker.inter.PlaylistInter;
+import speerker.inter.SearchSlotInter;
 import speerker.player.SpeerkerPlayer;
 import speerker.player.Playlist;
 
@@ -69,15 +70,14 @@ public class playerTest {
 		shell.setLocation(400, 500);
 		GridLayout shellLayout = new GridLayout(1, false);
 		shell.setLayout(shellLayout);
-
+		
+		Composite compoSearch = new Composite(shell, SWT.NONE);
 		Composite compoPlaylist = new Composite(shell, SWT.NONE);
 		Composite compoInter = new Composite(shell, SWT.NONE);
 	
+		SearchSlotInter searchSlotInter = new SearchSlotInter(compoSearch, display); 
 		PlaylistInter playlistInter = new PlaylistInter(compoPlaylist, display, playlist);
 		PlayerInter playerInter = new PlayerInter(compoInter, display, player);
-		
-		playlist.setInter(playlistInter);
-		player.setInter(playerInter);
 		
 		playlist.add(title0,artist0,album0,path0);
 		playlist.add(title1,artist1,album1,path1);

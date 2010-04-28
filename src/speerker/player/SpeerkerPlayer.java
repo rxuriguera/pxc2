@@ -139,7 +139,7 @@ public class SpeerkerPlayer{
 			e.printStackTrace();
 		}
 		if (inter!=null) inter.setScaleValue(0);
-		if(playlist != null) playlist.next();
+		if (playlist != null) playlist.next();
 		
 	}
 

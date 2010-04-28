@@ -1,10 +1,15 @@
 package speerker.inter;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
@@ -25,6 +30,7 @@ public class PlaylistInter {
 	
 	Table table;
 	GridData tableGridData;
+	Color colorPlay;
 	
 	public PlaylistInter (Composite c, Display d, Playlist p) {
 		
@@ -39,7 +45,7 @@ public class PlaylistInter {
     	compoPlaylist.setLayout(playerLayout);
     	
     	table = new Table (compoPlaylist, SWT.MULTI | SWT.BORDER | SWT.FULL_SELECTION);
-    	table.setLinesVisible (true);
+    	//table.setLinesVisible (true);
     	table.setHeaderVisible (true);
     	tableGridData = new GridData(SWT.FILL, SWT.FILL, true, true);
     	tableGridData.heightHint = 200;
@@ -56,20 +62,59 @@ public class PlaylistInter {
 		columnAlbum = new TableColumn (table, SWT.NONE);
 		columnAlbum.setText ("Album");
 		columnAlbum.setWidth(200);
+		
+		table.addListener (SWT.MouseDoubleClick, new Listener () {
+			public void handleEvent (Event event) {
+				Rectangle clientArea = table.getClientArea ();
+				Point pt = new Point (event.x, event.y);
+				int index = table.getTopIndex ();
+				while (index < table.getItemCount ()) {
+					boolean visible = false;
+					TableItem item = table.getItem (index);
+					for (int i=0; i < 3; i++) {
+						Rectangle rect = item.getBounds (i);
+						if (rect.contains (pt)) {
+							playlist.play(index);
+							return;
+						}
+						if (!visible && rect.intersects (clientArea)) {
+							visible = true;
+						}
+					}
+					if (!visible) return;
+					index++;
+				}
+			}
+		});
+		
+		colorPlay = new Color (display, 176, 217, 12);
+		
+		playlist.setInter(this);
     	
 	}
 	
 	public void refreshTable(){
+		display.syncExec(
+				new Runnable() {
+					public void run(){
+						table.removeAll();
+						
+						for (int i=0; i<playlist.getSize(); i++) {
+							TableItem item = new TableItem (table, SWT.NONE);
+							item.setText (0, playlist.getTitle(i));
+							item.setText (1, playlist.getArtist(i));
+							item.setText (2, playlist.getAlbum(i));
+							
+							
+							if (i==playlist.getCurrent()){
+								item.setBackground(colorPlay);
+							}
+							
+						}
+				    }
+				});
 		
-		table.removeAll();
 		
-		for (int i=0; i<playlist.getSize(); i++) {
-			TableItem item = new TableItem (table, SWT.NONE);
-			item.setText (0, playlist.getTitle(i));
-			item.setText (1, playlist.getArtist(i));
-			item.setText (2, playlist.getAlbum(i));
-			
-		}
 		
 		
 		
