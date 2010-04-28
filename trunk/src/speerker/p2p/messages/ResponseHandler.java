@@ -19,62 +19,41 @@
 
 package speerker.p2p.messages;
 
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Queue;
 
 import peerbase.PeerConnection;
-import peerbase.PeerMessage;
-import speerker.App;
-import speerker.Song;
+import speerker.p2p.SearchResult;
 import speerker.p2p.SpeerkerNode;
 
-public class FileGetHandler extends SpeerkerMessageHandler {
+public class ResponseHandler extends SpeerkerMessageHandler {
 	private SpeerkerNode peer;
 
-	public FileGetHandler(SpeerkerNode peer) {
+	public ResponseHandler(SpeerkerNode peer) {
 		this.peer = peer;
 	}
 
+	@SuppressWarnings("unchecked")
 	public void handleMessage(PeerConnection peerconn, SpeerkerMessage msg) {
-
-		// Get Song
-		Song song = null;
+		List<SearchResult> searchResults;
 		try {
-			song = (Song) msg.getMsgContent();
+			searchResults = (List<SearchResult>) msg.getMsgContent();
 		} catch (ClassCastException e) {
-			this.sendErrorMessage(peerconn, msg.getMsgType(),
+			this.sendErrorMessage(peerconn, SpeerkerMessage.RESPONSE,
 					"Incorrect arguments.", e);
 			return;
 		} catch (ClassNotFoundException e) {
-			this.sendErrorMessage(peerconn, msg.getMsgType(),
+			this.sendErrorMessage(peerconn, SpeerkerMessage.RESPONSE,
 					"Incorrect arguments.", e);
 			return;
 		}
 
-		String path = this.peer.getFilePath(song.getHash());
-		if (path == null) {
-			App.logger.warn("File with hash " + song.getHash()
-					+ " not available from this peer.");
-
-			peerconn.sendData(new PeerMessage(SpeerkerMessage.ERROR,
-					SpeerkerMessage.FILEGET + ": file not found "
-							+ song.getHash()));
+		// Add the search results to the peer's queue.
+		Iterator<SearchResult> iterator = searchResults.iterator();
+		Queue<SearchResult> queue = this.peer.getSearchQueue();
+		while (iterator.hasNext()) {
+			queue.add(iterator.next());
 		}
-
-		byte[] filedata = null;
-		try {
-			FileInputStream infile = new FileInputStream(path);
-			int len = infile.available();
-			filedata = new byte[len];
-			infile.read(filedata);
-			infile.close();
-		} catch (IOException e) {
-			App.logger.info("FileGet: Error reading file: " + e);
-			peerconn.sendData(new PeerMessage(SpeerkerMessage.ERROR, "Fget: "
-					+ "error reading file "));
-			return;
-		}
-
-		peerconn.sendData(new PeerMessage(SpeerkerMessage.REPLY, filedata));
 	}
 }

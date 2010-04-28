@@ -19,23 +19,16 @@
 
 package speerker.p2p.messages;
 
-import java.io.IOException;
-
-import peerbase.HandlerInterface;
 import peerbase.PeerConnection;
-import peerbase.PeerMessage;
 import speerker.App;
+import speerker.p2p.QueryProcessor;
 import speerker.p2p.SearchQuery;
 import speerker.p2p.SpeerkerNode;
-import speerker.p2p.QueryProcessor;
-
-import speerker.util.Serializer;
 
 /**
- * Handles query messages
- * 
+ * Handles SpeerkerMessage.QUERY messages, which will consist of a search.
  */
-public class QueryHandler implements HandlerInterface {
+public class QueryHandler extends SpeerkerMessageHandler {
 
 	private SpeerkerNode peer;
 
@@ -44,38 +37,31 @@ public class QueryHandler implements HandlerInterface {
 	}
 
 	@Override
-	public void handleMessage(PeerConnection peerconn, PeerMessage msg) {
-		Boolean error = false;
-		SearchQuery query = new SearchQuery();
+	public void handleMessage(PeerConnection peerconn, SpeerkerMessage msg) {
+		SearchQuery query = null;
 
 		// Get the message. It should be a SearchQuery object
 		try {
-			query = (SearchQuery) Serializer.deserialize(msg.getMsgDataBytes());
-		} catch (IOException e) {
-			App.logger.error("Could not unserialize object: ", e);
-			error = true;
+			query = (SearchQuery) msg.getMsgContent();
+		} catch (ClassCastException e) {
+			this.sendErrorMessage(peerconn, msg.getMsgType(),
+					"Incorrect arguments.", e);
+			return;
 		} catch (ClassNotFoundException e) {
-			App.logger.error("Could not unserialize object: ", e);
-			error = true;
-		}
-
-		if (error) {
-			peerconn.sendData(new PeerMessage(SpeerkerMessage.ERROR,
-					"Query: incorrect arguments"));
+			this.sendErrorMessage(peerconn, msg.getMsgType(),
+					"Incorrect arguments.", e);
 			return;
 		}
 
-		peerconn.sendData(new PeerMessage(SpeerkerMessage.REPLY, "Query: ACK"));
+		peerconn.sendData(new SpeerkerMessage(SpeerkerMessage.REPLY,
+				"Query: ACK"));
 
-		/*
-		 * After acknowledging the query, this connection will be closed. A
-		 * separate thread will be started to actually perform the task of the
-		 * query...
-		 */
+		App.logger.info("Sent query acknowledgement.");
+
+		// Perform the search in a separate thread
 		QueryProcessor qp = new QueryProcessor(peer, query);
+		qp.setName("Speerker-QueryProcessor");
 		qp.start();
 	}
 
 }
-
-/* msg syntax: QUER return-pid ttl query */
