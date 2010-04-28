@@ -31,17 +31,23 @@ public class App {
 		if (properties == null) {
 			try {
 				properties = new Properties();
-				java.net.URL url = ClassLoader.getSystemResource("speerker.properties");
+				java.net.URL url = ClassLoader
+						.getSystemResource("speerker.properties");
 				properties.load(url.openStream());
 			} catch (Exception e) {
-				App.logger.error("Couldn't load application properties.",e);
+				App.logger.error("Couldn't load application properties.", e);
 			}
 		}
 	}
 
 	public static String getProperty(String name) {
-		if(properties == null)
+		if (properties == null)
 			loadProperties();
 		return properties.getProperty(name);
+	}
+
+	public static void setJavaLogging() {
+		System.setProperty("java.util.logging.config.file", App
+				.getProperty("JavaLogging"));
 	}
 }
