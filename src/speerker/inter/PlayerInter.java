@@ -36,14 +36,12 @@ public class PlayerInter {
     
     SpeerkerPlayer player;
     
-    public PlayerInter(Shell s, Display d, SpeerkerPlayer p) {
+    public PlayerInter(Composite compoInter, Display d, SpeerkerPlayer p) {
     	
     	player = p;
-    	
-    	shell = s;
     	display = d;
     	
-    	comp = new Composite(shell, SWT.NONE);
+    	comp = compoInter;
     	gridComposite = new GridData(GridData.FILL_HORIZONTAL);
     	comp.setLayoutData(gridComposite);
     	
