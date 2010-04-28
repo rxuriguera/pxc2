@@ -3,33 +3,38 @@ package speerker.player;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
+import speerker.inter.PlaylistInter;
+
 import javazoom.jl.decoder.JavaLayerException;
 
 
 public class Playlist {
 	
-	ArrayList<Object> list;
+	ArrayList<Song> list;
+	
 	SpeerkerPlayer player;
+	PlaylistInter inter;
+	
 	int current;
 	
 	
-	public Playlist(SpeerkerPlayer p){
-		player = p;
-		list = new ArrayList<Object>(0);
+	public Playlist(){
+		list = new ArrayList<Song>(0);
 	}
 
 	public void setPlayer(SpeerkerPlayer p){
 		player = p;
 	}
 	
-	public void add(String song){
+	public void add(String t, String a, String alb, String p){
 		
 		if (list.size()==0) current = 0;
-		list.add(song);
+		list.add(new Song(t,a,alb,p));
 		player.setEnableControls(true);
+		if (inter != null) inter.refreshTable();
 		if (list.size()==1)
 			try {
-				player.loadSong((String) list.get(0));
+				player.loadSong((String) list.get(0).path);
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -50,7 +55,7 @@ public class Playlist {
 		if (i <= list.size()-1){
 			
 			try {
-				player.loadSong((String) list.get(i));
+				player.loadSong((String) list.get(i).path);
 				player.play();
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
@@ -67,7 +72,7 @@ public class Playlist {
 			if (current == list.size()-1) player.setEnableNext(false);
 			else player.setEnableNext(true);
 			
-		}
+		}else player.stop();
 		
 		return false;
 		
@@ -84,4 +89,48 @@ public class Playlist {
 		play(current-1);
 		
 	}
+
+	public void setInter(PlaylistInter p) {
+		inter = p;
+		
+	}
+	
+	public int getSize(){
+		return list.size();
+	}
+	
+	public String getTitle(int i){
+		return list.get(i).title;
+	}
+	
+	public String getArtist(int i){
+		return list.get(i).artist;
+	}
+	
+	public String getAlbum(int i){
+		return list.get(i).album;
+	}
+	
+	public String getPath(int i){
+		return list.get(i).path;
+	}
+}
+
+class Song {
+	
+	String title;
+	String artist;
+	String album;
+	String path;
+	
+	public Song(String t, String a, String alb, String p){
+		title = t;
+		artist = a;
+		album = alb;
+		path = p;
+		
+		
+	}
+	
+	
 }
