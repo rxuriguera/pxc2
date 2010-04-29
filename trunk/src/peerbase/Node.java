@@ -407,4 +407,7 @@ public class Node {
 		return myInfo.getPort();
 	}
 
+	public PeerInfo getInfo() {
+		return this.myInfo;
+	}
 }
