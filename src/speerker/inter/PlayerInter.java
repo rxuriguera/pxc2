@@ -3,8 +3,6 @@ package speerker.inter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -14,8 +12,6 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Scale;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.TableItem;
-
 import speerker.player.SpeerkerPlayer;
 
 public class PlayerInter {
@@ -49,8 +45,6 @@ public class PlayerInter {
     	display = d;
     	
     	comp = compoInter;
-    	gridComposite = new GridData(GridData.FILL_HORIZONTAL);
-    	comp.setLayoutData(gridComposite);
     	
     	playerLayout = new GridLayout(6, false);
     	comp.setLayout(playerLayout);
