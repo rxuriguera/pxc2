@@ -5,12 +5,12 @@ import org.junit.Test;
 
 public class TestQueryProcessor {
 	private QueryProcessor qp;
-	
+
 	@Before
 	public void setUp() throws Exception {
 		MockPeerNode node = new MockPeerNode();
-		SearchQuery query = new SearchQuery(node.getInfo(),"xx",2);
-		this.qp = new QueryProcessor(node,query);
+		SearchQuery query = new SearchQuery(node.getInfo(), "id", "xx", 2);
+		this.qp = new QueryProcessor(node, query);
 	}
 
 	@Test

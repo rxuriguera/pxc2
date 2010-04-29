@@ -19,6 +19,8 @@
 package speerker.p2p;
 
 import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.List;
 
 import peerbase.PeerInfo;
 
@@ -28,16 +30,31 @@ public class SearchResult implements Serializable {
 
 	private static final long serialVersionUID = -7292223140154581486L;
 
+	protected String queryID;
 	protected Song song;
-	protected PeerInfo peer;
+	protected List<PeerInfo> peers;
 
 	public SearchResult() {
 
 	}
 
-	public SearchResult(Song song, PeerInfo peer) {
+	public SearchResult(String queryID, Song song, PeerInfo peer) {
+		this(queryID, song);
+		this.peers.add(peer);
+	}
+
+	public SearchResult(String queryID, Song song) {
+		this.queryID = queryID;
 		this.song = song;
-		this.peer = peer;
+		this.peers = new LinkedList<PeerInfo>();
+	}
+
+	public String getQueryID() {
+		return queryID;
+	}
+
+	public void setQueryID(String queryID) {
+		this.queryID = queryID;
 	}
 
 	public Song getSong() {
@@ -48,12 +65,20 @@ public class SearchResult implements Serializable {
 		this.song = song;
 	}
 
-	public PeerInfo getPeer() {
-		return peer;
+	public List<PeerInfo> getPeers() {
+		return peers;
 	}
 
-	public void setPeer(PeerInfo peer) {
-		this.peer = peer;
+	public void setPeers(List<PeerInfo> peers) {
+		this.peers = peers;
+	}
+
+	public void addPeer(PeerInfo peer) {
+		this.peers.add(peer);
+	}
+
+	public void removePeer(PeerInfo peer) {
+		this.peers.remove(peer);
 	}
 
 }

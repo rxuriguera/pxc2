@@ -28,15 +28,26 @@ public class Song implements Serializable {
 	protected String artist = "";
 	protected String album = "";
 	protected String hash = "";
+	protected Long size = 0l;
 
 	public Song() {
 	}
 
-	public Song(String title, String artist, String album, String hash) {
+	/**
+	 * Song constructor
+	 * @param title String
+	 * @param artist String
+	 * @param album String
+	 * @param hash String
+	 * @param size Long
+	 */
+	public Song(String title, String artist, String album, String hash,
+			Long size) {
 		this.title = title;
 		this.album = album;
 		this.artist = artist;
 		this.hash = hash;
+		this.size = size;
 	}
 
 	public String getTitle() {
@@ -69,6 +80,14 @@ public class Song implements Serializable {
 
 	public void setHash(String hash) {
 		this.hash = hash;
+	}
+
+	public Long getSize() {
+		return size;
+	}
+
+	public void setSize(Long size) {
+		this.size = size;
 	}
 
 }

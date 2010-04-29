@@ -100,8 +100,15 @@ public class PeerMessage {
 		
 		int len = byteArrayToInt(thelen);
 		data = new byte[len];
+
+		int offset = 0;
+		int numRead = 0;
+		while ((offset < data.length)
+				&& ((numRead = s.read(data, offset,data.length - offset)) >= 0)) {
+			offset += numRead;
+		}
 		
-		if (s.read(data) != len)
+		if (offset != len)
 			throw new IOException("EOF in PeerMessage constructor: " +
 									"Unexpected message data length");
 	}

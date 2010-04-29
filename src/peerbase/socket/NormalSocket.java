@@ -96,6 +96,13 @@ public class NormalSocket implements SocketInterface {
 	public int read(byte[] b) throws IOException {
 		return is.read(b);
 	}
+	
+	/* (non-Javadoc)
+	 * @see peerbase.SocketInterface#read(byte[], off, len)
+	 */
+	public int read(byte[] b, int off, int len) throws IOException{
+		return is.read(b, off, len);
+	}
 
 	/* (non-Javadoc)
 	 * @see peerbase.SocketInterface#write(byte[])

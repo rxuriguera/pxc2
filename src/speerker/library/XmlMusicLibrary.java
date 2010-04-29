@@ -160,6 +160,7 @@ public class XmlMusicLibrary {
 				song.setTitle(temporal.getChild("title").getText());
 				song.setArtist(temporal.getChild("artist").getText());
 				song.setAlbum(temporal.getChild("album").getText());
+				song.setSize(Long.valueOf(temporal.getChild("size").getText()));
 			}
 		}
 		return song;
@@ -197,6 +198,8 @@ public class XmlMusicLibrary {
 					song.addContent(new Element("hash").addContent(hash));
 					song.addContent(new Element("path").addContent(songFile
 							.getAbsolutePath()));
+					song.addContent(new Element("size").addContent(Long
+							.toString(songFile.length())));
 
 				} else
 					return null;
@@ -208,8 +211,8 @@ public class XmlMusicLibrary {
 		return song;
 	}
 
+	@SuppressWarnings("unchecked")
 	private boolean existSong(String hash) {
-
 		Element library = lib.getRootElement();
 		List songs = library.getChildren();
 		Iterator it = songs.iterator();
@@ -238,6 +241,7 @@ public class XmlMusicLibrary {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Element> getSongs() {
 		Element library = lib.getRootElement();
 		return library.getChildren();

@@ -29,7 +29,8 @@ public class SpeerkerMessage extends PeerMessage {
 	public static final String INFO = "INFO";
 	public static final String QUERY = "QUER";
 	public static final String RESPONSE = "RESP";
-	public static final String FILEGET = "FGET";
+	public static final String PARTREQ = "PREQ";
+	public static final String PARTRSP = "PRSP";
 	public static final String QUIT = "QUIT";
 
 	public static final String REPLY = "REPL";
@@ -46,8 +47,8 @@ public class SpeerkerMessage extends PeerMessage {
 	public SpeerkerMessage(byte[] type, byte[] data) {
 		super(type, data);
 	}
-	
-	public SpeerkerMessage(PeerMessage msg){
+
+	public SpeerkerMessage(PeerMessage msg) {
 		super(msg.getMsgTypeBytes(), msg.getMsgDataBytes());
 	}
 
@@ -55,7 +56,7 @@ public class SpeerkerMessage extends PeerMessage {
 		return Serializer.deserialize(super.getMsgDataBytes());
 	}
 
-	public static SpeerkerMessage valueOf(PeerMessage msg){
+	public static SpeerkerMessage valueOf(PeerMessage msg) {
 		return new SpeerkerMessage(msg);
 	}
 }

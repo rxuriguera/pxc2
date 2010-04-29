@@ -19,13 +19,9 @@
 
 package speerker.p2p;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.List;
-import java.util.Queue;
+import java.util.HashMap;
 
 import peerbase.PeerInfo;
-import peerbase.PeerMessage;
 import peerbase.util.SimplePingStabilizer;
 import speerker.App;
 import speerker.p2p.messages.SpeerkerMessage;
@@ -37,7 +33,7 @@ import speerker.p2p.messages.SpeerkerMessage;
 public class SpeerkerP2PLayer {
 	protected SpeerkerNode peer;
 	protected Thread peerThread;
-	
+
 	public SpeerkerP2PLayer(String thisHost, int thisPort, String remoteHost,
 			int remotePort, int maxPeers) {
 		this(new PeerInfo(thisHost, thisPort), new PeerInfo(remoteHost,
@@ -61,9 +57,9 @@ public class SpeerkerP2PLayer {
 		peer = new SpeerkerNode(peerInfo, maxPeers);
 		peer.buildPeers(remotePeerInfo, 2);
 
-		this.peerThread =(new Thread() {
+		this.peerThread = (new Thread() {
 			public void run() {
-				this.setName("Speerker-P2P-"+peer.getId());
+				this.setName("Speerker-P2P-" + peer.getId());
 				peer.mainLoop();
 			}
 		});
@@ -92,8 +88,10 @@ public class SpeerkerP2PLayer {
 	}
 
 	/**
+	 * Sends a query to all known peers.
 	 * 
 	 * @param query
+	 *            a SearchQuery instance.
 	 * @param searchQueue
 	 */
 	public void search(SearchQuery query) {
@@ -104,20 +102,35 @@ public class SpeerkerP2PLayer {
 		}
 	}
 
-	public void search(String query) {
+	/**
+	 * Sends a query to all known peers.
+	 * 
+	 * @param queryID
+	 *            And ID for the query so multiple results can be distinguished
+	 * @param query
+	 *            The query string
+	 */
+	public void search(String queryID, String query) {
 		Integer ttl = Integer.valueOf(App.getProperty("SearchTTL"));
-		SearchQuery squery = new SearchQuery(this.peer.getInfo(), query, ttl);
+		SearchQuery squery = new SearchQuery(this.peer.getInfo(), queryID,
+				query, ttl);
 		this.search(squery);
 	}
 
-	public void search(String query, Integer ttl) {
-		SearchQuery squery = new SearchQuery(this.peer.getInfo(), query, ttl);
-		this.search(squery);
+	/**
+	 * Returns all the search results that have been received up until now.
+	 * 
+	 * @return a HashMap of search results
+	 */
+	public HashMap<String, SearchResult> getSearchResults() {
+		return this.peer.getSearchResults();
 	}
 
-	public void search(String query, Queue<SearchResult> searchQueue) {
-		this.peer.setSearchQueue(searchQueue);
-		this.search(query);
+	/**
+	 * Clear all search results
+	 */
+	public void clearSearchResults() {
+		this.peer.clearSearchResults();
 	}
 
 	/**
@@ -126,39 +139,8 @@ public class SpeerkerP2PLayer {
 	 * @param result
 	 *            Search result containing information about the file and the
 	 *            peers that own it.
-	 * @return True or false depending if the file has been sent by the peers
-	 * 
 	 */
-	public Boolean getFile(SearchResult result) {
-		SpeerkerMessage message = new SpeerkerMessage(SpeerkerMessage.FILEGET,
-				result.song);
-		List<PeerMessage> responseList = this.peer.connectAndSend(result.peer,
-				message, true);
-
-		if (responseList.size() == 0)
-			return false;
-
-		PeerMessage response = responseList.get(0);
-		if (response.getMsgType().equals(SpeerkerMessage.ERROR)) {
-			App.logger
-					.error("Error getting the file: " + response.getMsgData());
-			return false;
-		}
-
-		try {
-			String filename = App.getProperty("DestFilePath") + "/"
-					+ result.song.getHash();
-
-			App.logger.info("Saving song " + result.song.getTitle() + " to "
-					+ filename);
-
-			FileOutputStream outfile = new FileOutputStream(filename);
-			outfile.write(responseList.get(0).getMsgDataBytes());
-			outfile.close();
-		} catch (IOException ex) {
-			App.logger.warn("Could not get file: " + ex);
-			return false;
-		}
-		return true;
+	public void getFile(SearchResult result) {
+		this.peer.newFileTransfer(result);
 	}
 }
