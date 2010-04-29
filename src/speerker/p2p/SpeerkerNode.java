@@ -19,152 +19,183 @@
 
 package speerker.p2p;
 
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
-
-import org.jdom.Element;
+import java.util.Queue;
+import java.util.Set;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import peerbase.*;
 import speerker.App;
-import speerker.library.XmlMusicLibrary;
+import speerker.Song;
 import speerker.p2p.messages.FileGetHandler;
+import speerker.p2p.messages.InfoHandler;
 import speerker.p2p.messages.JoinHandler;
 import speerker.p2p.messages.ListHandler;
-import speerker.p2p.messages.NameHandler;
-import speerker.p2p.messages.QResponseHandler;
+import speerker.p2p.messages.ResponseHandler;
 import speerker.p2p.messages.QueryHandler;
 import speerker.p2p.messages.QuitHandler;
 import speerker.p2p.messages.SpeerkerMessage;
 
 /**
- * The backend implementation of a simple peer-to-peer file sharing application.
- * This class mostly implements a simple protocol by defining the appropriate
- * handlers (as inner classes) for the inherited methods of the Node class from
- * the PeerBase system.
+ * The backend implementation the Speerker's P2P module. This class mostly
+ * implements the speerker protocol by defining the appropriate handlers for the
+ * inherited methods of the Node class from the PeerBase system.
  * 
  * @author Nadeem Abdul Hamid
  */
 public class SpeerkerNode extends Node {
-	// Maps from file hash to peer-id
-	private HashMap<String, String> owners;
-	// Maps from file hash to local path
-	private HashMap<String, String> paths;
-	// Maps from file info to hashe
-	private HashMap<String, String> searchInfo;
+	protected FileHashLibrary filesLibrary;
+	protected Queue<SearchResult> searchQueue;
 
-	public SpeerkerNode(int maxPeers, PeerInfo myInfo) {
-		super(maxPeers, myInfo);
-
-		this.loadFiles();
+	/**
+	 * Creates a new P2P Speerker Node
+	 * 
+	 * @param info
+	 *            PeerInfo instance with information of this node.
+	 * @param maxPeers
+	 *            Maximum number of peers
+	 */
+	public SpeerkerNode(PeerInfo info, int maxPeers) {
+		super(maxPeers, info);
+		this.filesLibrary = new FileHashLibrary(this.getId());
+		this.searchQueue = new LinkedBlockingQueue<SearchResult>();
 
 		this.addRouter(new SpeerkerRouter(this));
 
-		this.addHandler(SpeerkerMessage.INSERTPEER, new JoinHandler(this));
-		this.addHandler(SpeerkerMessage.LISTPEER, new ListHandler(this));
-		this.addHandler(SpeerkerMessage.PEERNAME, new NameHandler(this));
+		// Message Handlers
+		this.addHandler(SpeerkerMessage.JOIN, new JoinHandler(this));
+		this.addHandler(SpeerkerMessage.LIST, new ListHandler(this));
+		this.addHandler(SpeerkerMessage.INFO, new InfoHandler(this));
 		this.addHandler(SpeerkerMessage.QUERY, new QueryHandler(this));
-		this.addHandler(SpeerkerMessage.QRESPONSE, new QResponseHandler(this));
+		this.addHandler(SpeerkerMessage.RESPONSE, new ResponseHandler(this));
 		this.addHandler(SpeerkerMessage.FILEGET, new FileGetHandler(this));
-		this.addHandler(SpeerkerMessage.PEERQUIT, new QuitHandler(this));
+		this.addHandler(SpeerkerMessage.QUIT, new QuitHandler(this));
 	}
 
-	public HashMap<String, String> getOwners() {
-		return owners;
+	public void setSearchQueue(Queue<SearchResult> searchQueue) {
+		this.searchQueue = searchQueue;
 	}
 
-	public void setOwners(HashMap<String, String> owners) {
-		this.owners = owners;
-	}
-
-	public HashMap<String, String> getPaths() {
-		return paths;
-	}
-
-	public void setPaths(HashMap<String, String> paths) {
-		this.paths = paths;
-	}
-
-	public HashMap<String, String> getSearchInfo() {
-		return searchInfo;
-	}
-
-	public void setSearchInfo(HashMap<String, String> searchInfo) {
-		this.searchInfo = searchInfo;
+	public Queue<SearchResult> getSearchQueue() {
+		return searchQueue;
 	}
 
 	/**
-	 * Registers all the files from the library as being locally available.
-	 * Stores their info and hash so they can later be found by other peers.
+	 * Returns a list with all the songs in the local peer that match a query
+	 * 
+	 * @param query
+	 * @return a list of SearchResults
 	 */
-	public void loadFiles() {
-		owners = new HashMap<String, String>();
-		paths = new HashMap<String, String>();
-		searchInfo = new HashMap<String, String>();
+	public List<SearchResult> search(SearchQuery query) {
+		List<SearchResult> results = new LinkedList<SearchResult>();
 
-		XmlMusicLibrary library = new XmlMusicLibrary(App
-				.getProperty("MusicLibrary"));
-		List<Element> music = library.getSongs();
-
-		Element song;
-		String str, hash, path;
-		Iterator<Element> it = music.iterator();
-		while (it.hasNext()) {
-			song = it.next();
-			str = song.getChildText("title") + " "
-					+ song.getChildText("artist") + " "
-					+ song.getChildText("album");
-			hash = song.getChildText("hash");
-			path = song.getChildText("path");
-			this.owners.put(hash, this.getId());
-			this.paths.put(hash, path);
-			this.searchInfo.put(str, hash);
+		Iterator<Song> iterator = this.filesLibrary.getMatchingSongs(
+				query.query).iterator();
+		while (iterator.hasNext()) {
+			results.add(new SearchResult(iterator.next(), this.getInfo()));
 		}
+		return results;
 	}
 
-	public String getFileOwner(String filehash) {
-		return owners.get(filehash);
+	public String getFilePath(String hash) {
+		return this.filesLibrary.getFilePath(hash);
 	}
 
-	public void buildPeers(String host, int port, int hops) {
-		LoggerUtil.getLogger().fine("build peers");
+	/**
+	 * This method can be used to join a P2P network using a known remote peer
+	 * as a gateway.
+	 * 
+	 * @param remotePeer
+	 *            PeerInfo instance with information about the remote peer
+	 * @param hops
+	 *            Number of levels of peer discovery.
+	 */
+	public void buildPeers(PeerInfo remotePeer, int hops) {
+		if (this.maxPeersReached()) {
+			App.logger.warn("Maximum peers reached");
+			return;
+		} else if (hops <= 0) {
+			return;
+		}
 
-		if (this.maxPeersReached() || hops <= 0)
+		// Get peer information
+		SpeerkerMessage message = new SpeerkerMessage(SpeerkerMessage.INFO);
+		List<PeerMessage> responseList = this.connectAndSend(remotePeer,
+				message, true);
+		if (responseList == null || responseList.size() == 0)
 			return;
 
-		PeerInfo pd = new PeerInfo(host, port);
-		List<PeerMessage> resplist = this.connectAndSend(pd,
-				SpeerkerMessage.PEERNAME, "", true);
-		if (resplist == null || resplist.size() == 0)
+		// If the peer has replied, its information will be the first item in
+		// the response list
+		try {
+			remotePeer = (PeerInfo) SpeerkerMessage
+					.valueOf(responseList.get(0)).getMsgContent();
+		} catch (ClassNotFoundException e) {
+			App.logger.error("Error trying to get peer info:", e);
 			return;
-		String peerid = resplist.get(0).getMsgData();
-		LoggerUtil.getLogger().fine("contacted " + peerid);
-		pd.setId(peerid);
+		}
 
-		String resp = this.connectAndSend(
-				pd,
-				SpeerkerMessage.INSERTPEER,
-				String.format("%s %s %d", this.getId(), this.getHost(), this
-						.getPort()), true).get(0).getMsgType();
-		if (!resp.equals(SpeerkerMessage.REPLY)
-				|| this.getPeerKeys().contains(peerid))
+		App.logger.info("Contacted peer: " + remotePeer.getId());
+
+		// Send the remote peer a message to join
+		message = new SpeerkerMessage(SpeerkerMessage.JOIN, this.getInfo());
+		String response = this.connectAndSend(remotePeer, message, true).get(0)
+				.getMsgType();
+		if (!response.equals(SpeerkerMessage.REPLY)
+				|| this.getPeerKeys().contains(remotePeer.getId())) {
+			App.logger.info("Could not get peer information for "
+					+ remotePeer.toString());
 			return;
+		}
+		this.addPeer(remotePeer);
 
-		this.addPeer(pd);
+		// Once we've joined the remote peer, we do a recursive depth first
+		// search to add more peers
+		message = new SpeerkerMessage(SpeerkerMessage.LIST);
+		responseList = this.connectAndSend(remotePeer, message, true);
 
-		// do recursive depth first search to add more peers
-		resplist = this.connectAndSend(pd, SpeerkerMessage.LISTPEER, "", true);
+		// First element of response list is the number of known peers.
+		if (responseList.size() == 0)
+			return;
+		responseList.remove(0);
 
-		if (resplist.size() > 1) {
-			resplist.remove(0);
-			for (PeerMessage pm : resplist) {
-				String[] data = pm.getMsgData().split("\\s");
-				String nextpid = data[0];
-				String nexthost = data[1];
-				int nextport = Integer.parseInt(data[2]);
-				if (!nextpid.equals(this.getId()))
-					buildPeers(nexthost, nextport, hops - 1);
+		Iterator<PeerMessage> iterator = responseList.iterator();
+		PeerInfo nextPeer;
+		while (iterator.hasNext()) {
+			message = SpeerkerMessage.valueOf(iterator.next());
+			try {
+				nextPeer = (PeerInfo) message.getMsgContent();
+			} catch (ClassNotFoundException e) {
+				App.logger.error("Error deserializing LIST response", e);
+				continue;
 			}
+
+			if (!nextPeer.getId().equals(this.getId())) {
+				this.buildPeers(nextPeer, hops - 1);
+			}
+		}
+
+	}
+
+	/**
+	 * Removes the current peer from all its connected peers.
+	 */
+	public void closeConnections() {
+		PeerInfo current;
+		PeerMessage message;
+		@SuppressWarnings("unused")
+		List<PeerMessage> responseList;
+
+		Set<String> connectedPeers = this.getPeerKeys();
+		Iterator<String> iterator = connectedPeers.iterator();
+
+		// Request all the known peers to remove us from their list
+		while (iterator.hasNext()) {
+			current = this.getPeer(iterator.next());
+			message = new SpeerkerMessage(SpeerkerMessage.QUIT, this.getInfo());
+			responseList = this.connectAndSend(current, message, false);
 		}
 	}
 

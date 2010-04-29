@@ -34,6 +34,7 @@ import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
+import speerker.Song;
 import speerker.util.MD5Checksum;
 
 public class XmlMusicLibrary {
@@ -100,6 +101,7 @@ public class XmlMusicLibrary {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public Element search(String term) {
 
 		Element result = new Element("search");
@@ -141,8 +143,29 @@ public class XmlMusicLibrary {
 		return result;
 	}
 
-	private Element fileToElement(String path) throws Exception {
+	public Song getSong(String hash) {
+		Element library = lib.getRootElement();
+		@SuppressWarnings("unchecked")
+		List<Element> songs = library.getChildren();
+		Iterator<Element> it = songs.iterator();
 
+		Song song = null;
+		Element temporal = null;
+
+		while (it.hasNext()) {
+			temporal = (Element) it.next();
+			if (temporal.getChild("hash").getText().equals(hash)) {
+				song = new Song();
+				song.setHash(hash);
+				song.setTitle(temporal.getChild("title").getText());
+				song.setArtist(temporal.getChild("artist").getText());
+				song.setAlbum(temporal.getChild("album").getText());
+			}
+		}
+		return song;
+	}
+
+	private Element fileToElement(String path) throws Exception {
 		File songFile = new File(path);
 		Element song = new Element("song");
 
