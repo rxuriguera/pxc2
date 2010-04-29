@@ -30,13 +30,17 @@ public class SpeerkerInter {
 	private MenuInter menuInter;
 	private PlayerInter playerInter;
 	private PlaylistInter playlistInter;
+	private Composite compoLogo;
+	private GridData gridLogo;
+	private LogoInter logoInter;
+	private String center;
 
 	
-	public SpeerkerInter(Tools t){
+	public SpeerkerInter(Tools t, Display d){
 		
 		tools = t;
 		
-		display = new Display();
+		display = d;
 		Display.setAppName("Speerker");
 		shell = new Shell(display, SWT.TITLE | SWT.CLOSE | SWT.BORDER | SWT.ON_TOP | SWT.RESIZE);
 		shell.setMinimumSize(800, 500);
@@ -47,14 +51,18 @@ public class SpeerkerInter {
 		shellLayout = new GridLayout(2, false);
 		shell.setLayout(shellLayout);
 		
+		compoLogo = new Composite(shell, SWT.NONE);
+		gridLogo = new GridData();
+		gridLogo.widthHint = 175;
+		compoLogo.setLayoutData(gridLogo);
+		
 		compoSearch = new Composite(shell, SWT.NONE);
 		gridSearch = new GridData(GridData.FILL_HORIZONTAL);
-		gridSearch.horizontalSpan = 2;
 		compoSearch.setLayoutData(gridSearch);
 		
 		compoMenu = new Composite(shell, SWT.NONE);
 		gridMenu = new GridData(GridData.FILL_VERTICAL);
-		gridMenu.widthHint = 200;
+		gridMenu.widthHint = 175;
 		compoMenu.setLayoutData(gridMenu);
 		
 		compoCenter = new Composite(shell, SWT.NONE);
@@ -66,9 +74,11 @@ public class SpeerkerInter {
 		gridPlayer.horizontalSpan = 2;
 		compoPlayer.setLayoutData(gridPlayer);
 		
+		
+		logoInter = new LogoInter(compoLogo, display);
 		searchSlotInter = new SearchSlotInter(compoSearch, display); 
-		playlistInter = new PlaylistInter(compoCenter, display, tools.getPlaylist());
-		//browserInter = new BrowserInter(compoCenter, display);
+		//playlistInter = new PlaylistInter(compoCenter, display, tools.getPlaylist());
+		browserInter = new BrowserInter(compoCenter, display);
 		menuInter = new MenuInter(compoMenu, display, this);
 		playerInter = new PlayerInter(compoPlayer, display, tools.getPlayer());
 		
@@ -103,7 +113,6 @@ public class SpeerkerInter {
 		tools.getPlaylist().add(title3,artist3,album3,path3);
 		tools.getPlaylist().add(title4,artist4,album4,path4);
 		
-		
 		shell.open();
 		while (!shell.isDisposed()) {
 			if (!display.readAndDispatch())
@@ -121,6 +130,7 @@ public class SpeerkerInter {
 					public void run(){
 						Control[] childs = compoCenter.getChildren();
 						for (int i=0; i < childs.length; ++i){
+							System.out.println(childs[i]);
 							childs[i].dispose();
 						}
 						browserInter = new BrowserInter(compoCenter, display);

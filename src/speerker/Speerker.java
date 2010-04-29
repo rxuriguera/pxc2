@@ -2,6 +2,9 @@ package speerker;
 
 import java.io.FileNotFoundException;
 
+import org.eclipse.swt.widgets.Display;
+
+import speerker.inter.Login;
 import speerker.inter.SpeerkerInter;
 import speerker.player.Playlist;
 import speerker.player.SpeerkerPlayer;
@@ -21,14 +24,14 @@ public class Speerker {
 	 */
 	public static void main(String[] args) throws FileNotFoundException, JavaLayerException {
 		
-
+		Display display = new Display();
+		
+		String[] loginData = Login.show(display);
 		
 		tools = new Tools();
 		
-		speerkerInter = new SpeerkerInter(tools);
-		
-
-			
+		speerkerInter = new SpeerkerInter(tools, display);
+					
 		while (true){}
 		
 

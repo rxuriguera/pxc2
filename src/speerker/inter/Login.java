@@ -4,11 +4,8 @@ package speerker.inter;
 
 import org.eclipse.swt.*;
 import org.eclipse.swt.widgets.*;
-import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
@@ -25,7 +22,7 @@ public class Login {
 		
 		shell.setText("Login");
 		shell.setSize(300, 300);
-		shell.setLocation(400, 500);
+		shell.setLocation(200, 200);
 		GridLayout shellLayout = new GridLayout(2, false);
 		shellLayout.marginLeft = 30;
 		shellLayout.marginRight = 30;
