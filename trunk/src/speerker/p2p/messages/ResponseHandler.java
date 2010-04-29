@@ -21,7 +21,6 @@ package speerker.p2p.messages;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Queue;
 
 import peerbase.PeerConnection;
 import speerker.p2p.SearchResult;
@@ -51,9 +50,8 @@ public class ResponseHandler extends SpeerkerMessageHandler {
 
 		// Add the search results to the peer's queue.
 		Iterator<SearchResult> iterator = searchResults.iterator();
-		Queue<SearchResult> queue = this.peer.getSearchQueue();
 		while (iterator.hasNext()) {
-			queue.add(iterator.next());
+			this.peer.addToResults(iterator.next());
 		}
 	}
 }

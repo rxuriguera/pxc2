@@ -19,17 +19,17 @@
 
 package speerker.p2p;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 import java.util.Set;
-import java.util.concurrent.LinkedBlockingQueue;
 
 import peerbase.*;
 import speerker.App;
 import speerker.Song;
-import speerker.p2p.messages.FileGetHandler;
+import speerker.p2p.messages.FilePartRequestHandler;
+import speerker.p2p.messages.FilePartResponseHandler;
 import speerker.p2p.messages.InfoHandler;
 import speerker.p2p.messages.JoinHandler;
 import speerker.p2p.messages.ListHandler;
@@ -47,7 +47,8 @@ import speerker.p2p.messages.SpeerkerMessage;
  */
 public class SpeerkerNode extends Node {
 	protected FileHashLibrary filesLibrary;
-	protected Queue<SearchResult> searchQueue;
+	protected HashMap<String, SearchResult> searchResults;
+	protected List<FileGetter> fileTransfers;
 
 	/**
 	 * Creates a new P2P Speerker Node
@@ -60,7 +61,8 @@ public class SpeerkerNode extends Node {
 	public SpeerkerNode(PeerInfo info, int maxPeers) {
 		super(maxPeers, info);
 		this.filesLibrary = new FileHashLibrary(this.getId());
-		this.searchQueue = new LinkedBlockingQueue<SearchResult>();
+		this.searchResults = new HashMap<String, SearchResult>();
+		this.fileTransfers = new LinkedList<FileGetter>();
 
 		this.addRouter(new SpeerkerRouter(this));
 
@@ -70,16 +72,29 @@ public class SpeerkerNode extends Node {
 		this.addHandler(SpeerkerMessage.INFO, new InfoHandler(this));
 		this.addHandler(SpeerkerMessage.QUERY, new QueryHandler(this));
 		this.addHandler(SpeerkerMessage.RESPONSE, new ResponseHandler(this));
-		this.addHandler(SpeerkerMessage.FILEGET, new FileGetHandler(this));
+		this.addHandler(SpeerkerMessage.PARTREQ, new FilePartRequestHandler(
+				this));
+		this.addHandler(SpeerkerMessage.PARTRSP, new FilePartResponseHandler(
+				this));
 		this.addHandler(SpeerkerMessage.QUIT, new QuitHandler(this));
 	}
 
-	public void setSearchQueue(Queue<SearchResult> searchQueue) {
-		this.searchQueue = searchQueue;
+	public void clearSearchResults() {
+		this.searchResults = new HashMap<String, SearchResult>();
 	}
 
-	public Queue<SearchResult> getSearchQueue() {
-		return searchQueue;
+	public void addToResults(SearchResult result) {
+		SearchResult existentResult = this.searchResults.get(result.song
+				.getHash());
+		if (existentResult != null) {
+			existentResult.addPeer(result.getPeers().get(0));
+		} else {
+			this.searchResults.put(result.song.getHash(), result);
+		}
+	}
+
+	public HashMap<String, SearchResult> getSearchResults() {
+		return this.searchResults;
 	}
 
 	/**
@@ -94,7 +109,8 @@ public class SpeerkerNode extends Node {
 		Iterator<Song> iterator = this.filesLibrary.getMatchingSongs(
 				query.query).iterator();
 		while (iterator.hasNext()) {
-			results.add(new SearchResult(iterator.next(), this.getInfo()));
+			results.add(new SearchResult(query.queryID, iterator.next(), this
+					.getInfo()));
 		}
 		return results;
 	}
@@ -199,4 +215,22 @@ public class SpeerkerNode extends Node {
 		}
 	}
 
+	/**
+	 * Adds a new file transfer thread
+	 * 
+	 * @param fileGetter
+	 * @return and integer representing the file transfer ID
+	 */
+	public void newFileTransfer(SearchResult result) {
+		FileGetter fp = new FileGetter(this.fileTransfers.size(), this, result);
+		fp.setName("Speerker-" + this.getId() + "-Transfer-"
+				+ this.fileTransfers.size());
+		this.fileTransfers.add(fp);
+		fp.start();
+	}
+
+	public FileGetter getFileTransfer(Integer transferID) {
+		FileGetter transfer = this.fileTransfers.get(transferID);
+		return transfer;
+	}
 }

@@ -23,7 +23,6 @@
 	Jan 29 2007	Nadeem Abdul Hamid	Created
  */
 
-
 package peerbase;
 
 import java.io.IOException;
@@ -33,36 +32,36 @@ import peerbase.socket.SocketFactory;
 import peerbase.socket.SocketInterface;
 
 /**
- * Encapsulates a socket connection to a peer, providing simple, reliable
- * send and receive functionality. All data sent to a peer through this
- * class must be formatted as a PeerMessage object.
+ * Encapsulates a socket connection to a peer, providing simple, reliable send
+ * and receive functionality. All data sent to a peer through this class must be
+ * formatted as a PeerMessage object.
  * 
  * @author Nadeem Abdul Hamid
- *
+ * 
  */
 public class PeerConnection {
 
 	private PeerInfo pd;
 	private SocketInterface s;
-	
+
 	/**
 	 * Opens a new connection to the specified peer.
 	 * 
-	 * @param info the peer node to connect to
-	 * @throws IOException if an I/O error occurs
+	 * @param info
+	 *            the peer node to connect to
+	 * @throws IOException
+	 *             if an I/O error occurs
 	 * @throws UnknownHostException
 	 */
-	public PeerConnection(PeerInfo info) 
-	throws IOException, UnknownHostException {
+	public PeerConnection(PeerInfo info) throws IOException,
+			UnknownHostException {
 		pd = info;
-		s = SocketFactory.getSocketFactory().makeSocket(pd.getHost(), 
-														pd.getPort());
+		s = SocketFactory.getSocketFactory().makeSocket(pd.getHost(),
+				pd.getPort());
 	}
-	
-	
+
 	/**
-	 * Constructs a connection for which a socket has already been
-	 * opened.
+	 * Constructs a connection for which a socket has already been opened.
 	 * 
 	 * @param info
 	 * @param socket
@@ -71,32 +70,31 @@ public class PeerConnection {
 		pd = info;
 		s = socket;
 	}
-	
-	
+
 	/**
 	 * Sends a PeerMessage to the connected peer.
-	 * @param msg the message object to send
+	 * 
+	 * @param msg
+	 *            the message object to send
 	 */
 	public void sendData(PeerMessage msg) {
 		try {
 			s.write(msg.toBytes());
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			LoggerUtil.getLogger().warning("Error sending message: " + e);
 		}
 	}
-	
-	
+
 	/**
 	 * Receives a PeerMessage from the connected peer.
+	 * 
 	 * @return the message object received, or null if error
 	 */
 	public PeerMessage recvData() {
 		try {
 			PeerMessage msg = new PeerMessage(s);
 			return msg;
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			// it is normal for EOF to occur if there is no more replies coming
 			// back from this connection.
 			if (!e.getMessage().equals("EOF in PeerMessage constructor: type"))
@@ -106,8 +104,7 @@ public class PeerConnection {
 			return null;
 		}
 	}
-	
-	
+
 	/**
 	 * Closes the peer connection.
 	 */
@@ -121,15 +118,13 @@ public class PeerConnection {
 			s = null;
 		}
 	}
-	
-	
+
 	public PeerInfo getPeerInfo() {
 		return pd;
 	}
-	
-	
+
 	public String toString() {
 		return "PeerConnection[" + pd + "]";
 	}
-	
+
 }

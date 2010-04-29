@@ -39,7 +39,7 @@ public class TestQueryHandler {
 		}
 
 		// Peer01 sends a query message to peer02
-		SearchQuery query = new SearchQuery(this.peer01.getInfo(),
+		SearchQuery query = new SearchQuery(this.peer01.getInfo(), "query id",
 				"song query", 2);
 		message = new SpeerkerMessage(SpeerkerMessage.QUERY, query);
 

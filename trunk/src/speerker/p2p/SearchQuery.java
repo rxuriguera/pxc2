@@ -25,7 +25,7 @@ import peerbase.PeerInfo;
 public class SearchQuery implements Serializable {
 
 	private static final long serialVersionUID = -6575177247988240691L;
-
+	protected String queryID;
 	protected PeerInfo peerInfo;
 	protected String query = "";
 	protected Integer ttl = 4;
@@ -33,7 +33,9 @@ public class SearchQuery implements Serializable {
 	public SearchQuery() {
 	}
 
-	public SearchQuery(PeerInfo peerInfo, String query, Integer ttl) {
+	public SearchQuery(PeerInfo peerInfo, String queryID, String query,
+			Integer ttl) {
+		this.queryID = queryID;
 		this.peerInfo = peerInfo;
 		this.query = this.buildRegex(query);
 		this.ttl = ttl;
@@ -66,10 +68,10 @@ public class SearchQuery implements Serializable {
 	public void setTtl(Integer ttl) {
 		this.ttl = ttl;
 	}
-	
+
 	public String buildRegex(String query) {
 		query = query.toLowerCase();
-		query = ".*"+query+".*";
+		query = ".*" + query + ".*";
 		return query;
 	}
 

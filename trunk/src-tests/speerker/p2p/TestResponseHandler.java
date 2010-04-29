@@ -47,9 +47,12 @@ public class TestResponseHandler {
 	public void testHandleMessage() {
 		List<SearchResult> results = new LinkedList<SearchResult>();
 		PeerInfo info = new PeerInfo("RandomHost", 3333);
-		results.add(new SearchResult(new Song("a", "b", "c", "d"), info));
-		results.add(new SearchResult(new Song("e", "f", "g", "h"), info));
-		results.add(new SearchResult(new Song("i", "j", "k", "l"), info));
+		results.add(new SearchResult("ID", new Song("a", "b", "c", "d", 10l),
+				info));
+		results.add(new SearchResult("ID", new Song("e", "f", "g", "h", 11l),
+				info));
+		results.add(new SearchResult("ID", new Song("i", "j", "k", "d", 12l),
+				info));
 
 		MockPeerConnection peerconn = null;
 		try {
@@ -67,6 +70,6 @@ public class TestResponseHandler {
 			fail("Exception thrwon " + e.toString());
 		}
 
-		assertEquals(3, this.peer.getSearchQueue().size());
+		assertEquals(2, this.peer.getSearchResults().size());
 	}
 }

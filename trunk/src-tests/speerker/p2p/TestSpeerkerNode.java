@@ -26,6 +26,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import peerbase.PeerInfo;
+import speerker.Song;
 
 public class TestSpeerkerNode {
 	SpeerkerNode node;
@@ -37,15 +38,34 @@ public class TestSpeerkerNode {
 	}
 
 	@Test
-	public void testBuildPeers() {
-		this.node.buildPeers(new PeerInfo("localhost", 3), 3);
-	}
-
-	@Test
 	public void testSearch() {
 		List<SearchResult> results = this.node.search(new SearchQuery(this.node
-				.getInfo(), ".*money.*", 2));
+				.getInfo(), "someQueryID", ".*money.*", 2));
 		assertEquals(1, results.size());
 	}
 
+	@Test
+	public void testAddToResults() {
+		Song song01 = new Song("a", "", "", "a", 11l);
+		Song song02 = new Song("b", "", "", "b", 12l);
+		Song song03 = new Song("c", "", "", "a", 13l);
+
+		// Add a search Result
+		SearchResult result = new SearchResult("someQueryID", song01, this.node
+				.getInfo());
+		this.node.addToResults(result);
+
+		// Add another result
+		result = new SearchResult("someQueryID", song02, this.node.getInfo());
+		this.node.addToResults(result);
+
+		// Add an existing song
+		result = new SearchResult("someQueryID", song03, this.node.getInfo());
+		this.node.addToResults(result);
+	}
+
+	@Test
+	public void testBuildPeers() {
+		this.node.buildPeers(new PeerInfo("localhost", 3), 3);
+	}
 }
