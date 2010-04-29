@@ -6,6 +6,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
@@ -21,7 +22,7 @@ public class PlaylistInter {
 	Playlist playlist;
 	Composite compoPlaylist;
 	GridData gridComposite;
-    GridLayout playerLayout;
+    GridLayout playlistLayout;
 	
 	Display display;
 	TableColumn columnTitle;
@@ -37,12 +38,11 @@ public class PlaylistInter {
 		playlist = p;
 		compoPlaylist = c;
 		display = d;
-		
-		GridData gridComposite = new GridData(GridData.FILL_BOTH);
-    	compoPlaylist.setLayoutData(gridComposite);
     	
-    	playerLayout = new GridLayout(1, false);
-    	compoPlaylist.setLayout(playerLayout);
+		
+		
+    	playlistLayout = new GridLayout(1, false);
+    	compoPlaylist.setLayout(playlistLayout);
     	
     	table = new Table (compoPlaylist, SWT.MULTI | SWT.BORDER | SWT.FULL_SELECTION);
     	//table.setLinesVisible (true);

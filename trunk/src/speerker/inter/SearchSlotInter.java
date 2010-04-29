@@ -17,7 +17,6 @@ import org.eclipse.swt.widgets.Text;
 public class SearchSlotInter {
 	
 	Composite composite;
-    GridData gridComposite;
     GridLayout playerLayout;
     
     Display display;
@@ -33,8 +32,7 @@ public class SearchSlotInter {
     	composite=c;
     	display=d;
    
-    	gridComposite = new GridData(GridData.FILL_HORIZONTAL);
-    	composite.setLayoutData(gridComposite);
+    	
     	
     	playerLayout = new GridLayout(3, false);
     	composite.setLayout(playerLayout);
@@ -43,10 +41,10 @@ public class SearchSlotInter {
     	GridData gridText = new GridData(GridData.BEGINNING | GridData.VERTICAL_ALIGN_CENTER);
     	search = new Text(composite, SWT.BORDER);
     	search.forceFocus();
-    	Point sizeText20 = UtilsSWT.getTextSize(search, 20);
-		search.setSize(sizeText20);
-		gridText.heightHint = sizeText20.y;
-		gridText.widthHint = sizeText20.x;
+    	Point sizeText30 = UtilsSWT.getTextSize(search, 30);
+		search.setSize(sizeText30);
+		gridText.heightHint = sizeText30.y;
+		gridText.widthHint = sizeText30.x;
     	search.setLayoutData(gridText);
     	
     	GridData gridButton = new GridData(GridData.BEGINNING | GridData.VERTICAL_ALIGN_CENTER);
