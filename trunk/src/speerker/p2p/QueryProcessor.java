@@ -19,18 +19,15 @@
 
 package speerker.p2p;
 
-import java.io.IOException;
 import java.io.Serializable;
-import java.util.LinkedList;
 import java.util.List;
 
-import peerbase.PeerMessage;
+import peerbase.PeerInfo;
+import speerker.App;
 import speerker.p2p.messages.SpeerkerMessage;
-import speerker.util.Serializer;
 
 /**
- * 
- *
+ * This class will process a query made by some peer in a new thread.
  */
 public class QueryProcessor extends Thread {
 	private SpeerkerNode peer;
@@ -41,49 +38,30 @@ public class QueryProcessor extends Thread {
 		this.query = query;
 	}
 
+	@Override
 	public void run() {
-		// search through this node's list of files for a filename
-		// containing the key
+		// Search all this node's list of known files that match the query
+		List<SearchResult> results = this.peer.search(query);
 
-		/*
-		 * for (String filename : this.peer.files.keySet()) { if
-		 * (filename.toUpperCase().indexOf(key.toUpperCase()) >= 0) { String
-		 * fpid = this.peer.files.get(filename); String[] data =
-		 * ret_pid.split(":"); String host = data[0]; int port =
-		 * Integer.parseInt(data[1]);
-		 */
-		
-		List<SearchResult> response = new LinkedList<SearchResult>();
+		if (results.size() > 0) {
+			SpeerkerMessage responseMessage = new SpeerkerMessage(
+					SpeerkerMessage.RESPONSE, (Serializable) results);
 
-		try {
-			@SuppressWarnings("unused")
-			PeerMessage responseMessage = new PeerMessage(
-					SpeerkerMessage.QRESPONSE, Serializer
-							.serialize((Serializable) response));
-		} catch (IOException e) {
-			// TODO: Process exception
+			// Get the peer that made the search in the first place
+			PeerInfo searcher = this.query.getPeerInfo();
+			this.peer.connectAndSend(searcher, responseMessage, false);
+
+			App.logger.info("Sent search results. Total files found: "
+					+ results.size());
 		}
-		
-		/*
-		 * this.peer.connectAndSend(new PeerInfo(ret_pid, host, port),
-		 * SpeerkerNode.QRESPONSE, filename + " " + fpid, true);
-		 * LoggerUtil.getLogger().fine( "Sent QRESP " + new PeerInfo(ret_pid,
-		 * host, port) + " " + filename + " " + fpid); return; } }
-		 */
 
-		// Will only reach here if key not found...
-		// in which case propagate query to neighbors, if there is still
-		// time-to-live for the query
+		// Propagate query to neighbors, if there is still time-to-live for it
 		if (this.query.ttl > 0) {
 			this.query.ttl--;
-			try {
-				PeerMessage newMessage = new PeerMessage(SpeerkerMessage.QUERY,
-						Serializer.serialize(this.query));
-				for (String nextpid : peer.getPeerKeys())
-					peer.sendToPeer(nextpid, newMessage, true);
-			} catch (IOException e) {
-				return;
-			}
+			SpeerkerMessage newMessage = new SpeerkerMessage(
+					SpeerkerMessage.QUERY, this.query);
+			for (String nextpid : peer.getPeerKeys())
+				peer.sendToPeer(nextpid, newMessage, false);
 		}
 	}
 }
