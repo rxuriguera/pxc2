@@ -32,7 +32,7 @@ public class BrowserInter {
 			
 		}
 		if (browser != null) {
-			browser.setUrl("http://www.google.com");
+			browser.setUrl("file:///Users/bartru/workspace/Speerker/web/html/main.html");
 		}
     	browser.setLayoutData(gridBrowser);
     	
