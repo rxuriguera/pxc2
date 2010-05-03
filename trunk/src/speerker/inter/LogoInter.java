@@ -25,7 +25,7 @@ public class LogoInter {
 		playerLayout = new GridLayout(1, false);
     	composite.setLayout(playerLayout); 	
 		
-		gridTitle = new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_BEGINNING);
+		gridTitle = new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_CENTER);
 		title = new Label(composite, SWT.RIGHT);
 		ImageData dataLogo = new ImageData("images/logoApp.png");
 		Image imageLogo = new Image(display, dataLogo);
