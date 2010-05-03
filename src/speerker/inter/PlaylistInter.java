@@ -19,19 +19,18 @@ import speerker.player.Playlist;
 
 public class PlaylistInter {
 	
-	Playlist playlist;
-	Composite compoPlaylist;
-	GridData gridComposite;
-    GridLayout playlistLayout;
+	private Playlist playlist;
+	private Composite compoPlaylist;
+	private GridLayout playlistLayout;
 	
-	Display display;
-	TableColumn columnTitle;
-	TableColumn columnArtist;
-	TableColumn columnAlbum;
+    private Display display;
 	
-	Table table;
-	GridData tableGridData;
-	Color colorPlay;
+	private Table table;
+	private TableColumn columnTitle;
+	private TableColumn columnArtist;
+	private TableColumn columnAlbum;
+	private GridData tableGridData;
+	private Color colorPlay;
 	
 	public PlaylistInter (Composite c, Display d, Playlist p) {
 		
@@ -39,29 +38,27 @@ public class PlaylistInter {
 		compoPlaylist = c;
 		display = d;
     	
-		
-		
     	playlistLayout = new GridLayout(1, false);
     	compoPlaylist.setLayout(playlistLayout);
     	
     	table = new Table (compoPlaylist, SWT.MULTI | SWT.BORDER | SWT.FULL_SELECTION);
     	//table.setLinesVisible (true);
     	table.setHeaderVisible (true);
-    	tableGridData = new GridData(SWT.FILL, SWT.FILL, true, true);
+    	tableGridData = new GridData(GridData.FILL_BOTH);
     	tableGridData.heightHint = 200;
     	table.setLayoutData(tableGridData);
     	
     	columnTitle = new TableColumn (table, SWT.NONE);
 		columnTitle.setText ("Title");
-		columnTitle.setWidth(200);
+		columnTitle.setWidth(175);
 		
 		columnArtist = new TableColumn (table, SWT.NONE);
 		columnArtist.setText ("Artist");
-		columnArtist.setWidth(200);
+		columnArtist.setWidth(175);
 		
 		columnAlbum = new TableColumn (table, SWT.NONE);
 		columnAlbum.setText ("Album");
-		columnAlbum.setWidth(200);
+		columnAlbum.setWidth(175);
 		
 		table.addListener (SWT.MouseDoubleClick, new Listener () {
 			public void handleEvent (Event event) {
@@ -90,6 +87,7 @@ public class PlaylistInter {
 		colorPlay = new Color (display, 176, 217, 12);
 		
 		playlist.setInter(this);
+		refreshTable();
     	
 	}
 	
@@ -105,7 +103,6 @@ public class PlaylistInter {
 							item.setText (1, playlist.getArtist(i));
 							item.setText (2, playlist.getAlbum(i));
 							
-							
 							if (i==playlist.getCurrent()){
 								item.setBackground(colorPlay);
 							}
@@ -113,10 +110,6 @@ public class PlaylistInter {
 						}
 				    }
 				});
-		
-		
-		
-		
 		
 	}
 

@@ -77,8 +77,8 @@ public class SpeerkerInter {
 		
 		logoInter = new LogoInter(compoLogo, display);
 		searchSlotInter = new SearchSlotInter(compoSearch, display); 
-		//playlistInter = new PlaylistInter(compoCenter, display, tools.getPlaylist());
-		browserInter = new BrowserInter(compoCenter, display);
+		playlistInter = new PlaylistInter(compoCenter, display, tools.getPlaylist());
+		//browserInter = new BrowserInter(compoCenter, display);
 		menuInter = new MenuInter(compoMenu, display, this);
 		playerInter = new PlayerInter(compoPlayer, display, tools.getPlayer());
 		
@@ -128,11 +128,7 @@ public class SpeerkerInter {
 		display.syncExec(
 				new Runnable() {
 					public void run(){
-						Control[] childs = compoCenter.getChildren();
-						for (int i=0; i < childs.length; ++i){
-							System.out.println(childs[i]);
-							childs[i].dispose();
-						}
+						disposeCenter();
 						browserInter = new BrowserInter(compoCenter, display);
 				    }
 				});
@@ -143,15 +139,24 @@ public class SpeerkerInter {
 		display.syncExec(
 				new Runnable() {
 					public void run(){
-						Control[] childs = compoCenter.getChildren();
-						for (int i=0; i < childs.length; ++i){
-							childs[i].dispose();
-						}
+						disposeCenter();
 						playlistInter = new PlaylistInter(compoCenter, display, tools.getPlaylist());
 						
 				    }
 				});
 	}
+
+
+	protected void disposeCenter() {
+		Control[] childs = compoCenter.getChildren();
+		for (int i=0; i < childs.length; ++i){
+			System.out.println(childs[i]);
+			System.out.println(childs[i].getLocation());
+			childs[i].dispose();
+		}
+	}
+	
+	
 	
 	
 	
