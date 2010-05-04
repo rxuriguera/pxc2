@@ -35,7 +35,7 @@ public class TestFilePartRequestHandler {
 		PeerInfo remotePeer = new PeerInfo("peer01", "localhost", 9101);
 		@SuppressWarnings("unused")
 		SpeerkerP2PLayer app01 = new SpeerkerP2PLayer(remotePeer, nonExistent,
-				5);
+				5, false);
 
 		try {
 			peerconn = new PeerConnection(remotePeer);
