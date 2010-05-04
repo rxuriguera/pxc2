@@ -21,6 +21,7 @@ package speerker.p2p.messages;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Random;
 
 import peerbase.PeerConnection;
 import speerker.App;
@@ -49,6 +50,13 @@ public class FilePartRequestHandler extends SpeerkerMessageHandler {
 			return;
 		}
 
+		// Test timeouts
+		if(part.getPart()%2==0){
+			App.logger.debug("Not sending requested part "+part.getPart());
+			return;
+		}
+		////
+		
 		String path = this.peer.getFilePath(part.getFileHash());
 		if (path == null) {
 			App.logger.error("File does not exist in this peer");
@@ -59,15 +67,23 @@ public class FilePartRequestHandler extends SpeerkerMessageHandler {
 		byte[] filePartData = null;
 		try {
 			FileInputStream infile = new FileInputStream(path);
-			int fileLength = infile.available();
-			int len = (int) Math.min(fileLength, part.getPartSize());
-			int offset = (int) ((int) part.getPart() * part.getPartSize());
-			int numRead = 0, totalRead = 0;
-			filePartData = new byte[len];
-			while ((totalRead < filePartData.length)
-					&& ((numRead = infile.read(filePartData, offset,
-							filePartData.length - totalRead)) >= 0)) {
-				offset += numRead;
+			int partSize = part.getPartSize().intValue();
+			int offset = (int) ((int) part.getPart() * partSize);
+			int available = infile.available() - offset;
+
+			// Decide how many bytes have to be read
+			int readLen = available < partSize ? available : partSize;
+			filePartData = new byte[readLen];
+
+			// Skip the first offset bytes from the input stream
+			infile.skip(offset);
+
+			int numRead = 0, totalRead = 0, abOffset = 0;
+			while (totalRead < readLen && numRead >= 0) {
+				numRead = infile.read(filePartData, abOffset, readLen
+						- totalRead);
+
+				abOffset += numRead;
 				totalRead += numRead;
 			}
 			infile.close();
@@ -84,6 +100,19 @@ public class FilePartRequestHandler extends SpeerkerMessageHandler {
 		part.setData(filePartData);
 		SpeerkerMessage message = new SpeerkerMessage(SpeerkerMessage.PARTRSP,
 				part);
-		peerconn.sendData(message);
+
+		Random generator = new Random();
+		try {
+			Integer wait = generator.nextInt(8000);
+			App.logger.debug("Waiting random time before sending part: " + wait
+					+ " milliseconds");
+			Thread.sleep(wait);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		// Send part to peer
+		this.peer.connectAndSend(part.getRequester(), message, false);
 	}
 }

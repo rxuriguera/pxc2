@@ -56,6 +56,7 @@ public class FilePartResponseHandler extends SpeerkerMessageHandler {
 
 		if (transfer == null) {
 			App.logger.info("Transfer does not exist anymore");
+			return;
 		}
 
 		transfer.addReceivedFilePart(part);
