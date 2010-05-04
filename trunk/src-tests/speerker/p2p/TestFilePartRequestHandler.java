@@ -29,9 +29,6 @@ public class TestFilePartRequestHandler {
 
 	@Test
 	public void testHandleMessagePeer() throws InterruptedException {
-		String hash = "070EA649CB6D0C646FD34BB36B7D3CC2";
-		FilePart part = new FilePart(hash, 0, 0l);
-
 		PeerConnection peerconn = null;
 
 		PeerInfo nonExistent = new PeerInfo("nonExistent", "", 9100);
@@ -45,6 +42,9 @@ public class TestFilePartRequestHandler {
 		} catch (Exception e) {
 			fail("Error creating connection");
 		}
+
+		String hash = "070EA649CB6D0C646FD34BB36B7D3CC2";
+		FilePart part = new FilePart(hash, remotePeer, 1, 300000l);
 
 		SpeerkerMessage message = new SpeerkerMessage(SpeerkerMessage.PARTREQ,
 				part);
