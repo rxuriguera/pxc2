@@ -345,6 +345,10 @@ public class Node {
 	public void addHandler(String msgtype, HandlerInterface handler) {
 		handlers.put(msgtype, handler);
 	}
+	
+	public void deleteHandler(String msgtype) {
+		handlers.remove(msgtype);
+	}
 
 	public void addRouter(RouterInterface router) {
 		this.router = router;
