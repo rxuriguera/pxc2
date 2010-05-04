@@ -34,6 +34,12 @@ public class SpeerkerP2PLayer {
 	protected SpeerkerNode peer;
 	protected Thread peerThread;
 
+	public SpeerkerP2PLayer() {
+		this(App.getProperty("DefaultHost"), Integer.parseInt(App
+				.getProperty("DefaultPort")), App.getProperty("ServerHost"),
+				Integer.parseInt(App.getProperty("ServerPort")), 50);
+	}
+
 	public SpeerkerP2PLayer(String thisHost, int thisPort, String remoteHost,
 			int remotePort, int maxPeers) {
 		this(new PeerInfo(thisHost, thisPort), new PeerInfo(remoteHost,
