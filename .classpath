@@ -8,7 +8,6 @@
 	<classpathentry kind="lib" path="lib/log4j-1.2.15.jar"/>
 	<classpathentry kind="lib" path="lib/jdom.jar"/>
 	<classpathentry kind="lib" path="lib/jid3lib-0.5.4.jar"/>
-	<classpathentry kind="lib" path="lib/swt-linux-32.jar"/>
 	<classpathentry kind="lib" path="lib/Mp3Player/basicplayer3.0.jar"/>
 	<classpathentry kind="lib" path="lib/Mp3Player/commons-logging-api.jar"/>
 	<classpathentry kind="lib" path="lib/Mp3Player/jflac-1.2.jar"/>
@@ -22,5 +21,6 @@
 	<classpathentry kind="lib" path="lib/Mp3Player/mp3spi1.9.4.jar"/>
 	<classpathentry kind="lib" path="lib/Mp3Player/tritonus_share.jar"/>
 	<classpathentry kind="lib" path="lib/Mp3Player/vorbisspi1.0.2.jar"/>
+	<classpathentry kind="lib" path="lib/swt.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

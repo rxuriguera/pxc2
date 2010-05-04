@@ -33,7 +33,11 @@ public class SpeerkerInter {
 	private Composite compoLogo;
 	private GridData gridLogo;
 	private LogoInter logoInter;
-	private String center;
+	private GridLayout centerLayout;
+	private Composite compoBrowser;
+	private GridData gridBrowser;
+	private Composite compoPlaylist;
+	private GridData gridPlaylist;
 
 	
 	public SpeerkerInter(Tools t, Display d){
@@ -68,19 +72,30 @@ public class SpeerkerInter {
 		compoCenter = new Composite(shell, SWT.NONE);
 		gridCenter = new GridData(GridData.FILL_BOTH);
 		compoCenter.setLayoutData(gridCenter);
-
+		centerLayout = new GridLayout(1, false);
+		compoCenter.setLayout(centerLayout);
+		
+		compoBrowser = new Composite(compoCenter, SWT.NONE);
+		gridBrowser = new GridData(GridData.FILL_BOTH);
+		compoBrowser.setLayoutData(gridBrowser);
+		
+		compoPlaylist = new Composite(compoCenter, SWT.NONE);
+		gridPlaylist = new GridData(GridData.FILL_BOTH);
+		compoPlaylist.setLayoutData(gridPlaylist);
+		
 		compoPlayer = new Composite(shell, SWT.NONE);
 		gridPlayer = new GridData(GridData.FILL_HORIZONTAL);
 		gridPlayer.horizontalSpan = 2;
 		compoPlayer.setLayoutData(gridPlayer);
 		
-		
 		logoInter = new LogoInter(compoLogo, display);
 		searchSlotInter = new SearchSlotInter(compoSearch, display); 
-		playlistInter = new PlaylistInter(compoCenter, display, tools.getPlaylist());
-		//browserInter = new BrowserInter(compoCenter, display);
+		playlistInter = new PlaylistInter(compoPlaylist, display, tools.getPlaylist());
+		browserInter = new BrowserInter(compoBrowser, display);
 		menuInter = new MenuInter(compoMenu, display, this);
 		playerInter = new PlayerInter(compoPlayer, display, tools.getPlayer());
+		
+		gridPlaylist.exclude = true;		
 		
 		String title0 = "La llave de oro";
 		String artist0 = "Los Planetas";
@@ -123,41 +138,20 @@ public class SpeerkerInter {
 	}
 
 
-	public void showBrowser() {
+	public void switchCenter(String center) {
 		
-		display.syncExec(
-				new Runnable() {
-					public void run(){
-						disposeCenter();
-						browserInter = new BrowserInter(compoCenter, display);
-				    }
-				});
+        GridData playlistGridData = (GridData) compoPlaylist.getLayoutData();
+        GridData broswerGridData = (GridData) compoBrowser.getLayoutData();
+
+        if (center.equals("Playlist")) {
+            compoBrowser.setVisible (!(gridBrowser.exclude = true));
+            compoPlaylist.setVisible (!(gridPlaylist.exclude = false));
+        } else if(center.equals("Browser")){
+            compoPlaylist.setVisible (!(gridPlaylist.exclude = true));
+            compoBrowser.setVisible (!(gridBrowser.exclude = false));
+        }
+        compoCenter.layout();
+        compoCenter.getParent().layout();
 	}
-
-
-	public void showPlaylist() {
-		display.syncExec(
-				new Runnable() {
-					public void run(){
-						disposeCenter();
-						playlistInter = new PlaylistInter(compoCenter, display, tools.getPlaylist());
-						
-				    }
-				});
-	}
-
-
-	protected void disposeCenter() {
-		Control[] childs = compoCenter.getChildren();
-		for (int i=0; i < childs.length; ++i){
-			System.out.println(childs[i]);
-			System.out.println(childs[i].getLocation());
-			childs[i].dispose();
-		}
-	}
-	
-	
-	
-	
 	
 }
