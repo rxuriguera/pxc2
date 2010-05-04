@@ -107,6 +107,12 @@ public class SpeerkerNode extends Node {
 		}
 	}
 
+	public void newSearch(String queryID) {
+		if (this.searchResults.get(queryID) == null)
+			this.searchResults
+					.put(queryID, new HashMap<String, SearchResult>());
+	}
+
 	public HashMap<String, HashMap<String, SearchResult>> getSearchResults() {
 		return this.searchResults;
 	}

@@ -103,6 +103,7 @@ public class SpeerkerP2PLayer {
 	public void search(SearchQuery query) {
 		SpeerkerMessage message = new SpeerkerMessage(SpeerkerMessage.QUERY,
 				query);
+		this.peer.newSearch(query.queryID);
 		for (String key : this.peer.getPeerKeys()) {
 			peer.sendToPeer(key, message, false);
 		}
