@@ -50,6 +50,10 @@ public class SpeerkerNode extends Node {
 	protected HashMap<String, HashMap<String, SearchResult>> searchResults;
 	protected HashMap<String, FileGetter> fileTransfers;
 
+	public SpeerkerNode(PeerInfo info, int maxPeers) {
+		this(info, maxPeers, false);
+	}
+	
 	/**
 	 * Creates a new P2P Speerker Node
 	 * 
@@ -58,7 +62,7 @@ public class SpeerkerNode extends Node {
 	 * @param maxPeers
 	 *            Maximum number of peers
 	 */
-	public SpeerkerNode(PeerInfo info, int maxPeers) {
+	public SpeerkerNode(PeerInfo info, int maxPeers, Boolean mobileNode) {
 		super(maxPeers, info);
 		this.filesLibrary = new FileHashLibrary(this.getId());
 		this.searchResults = new HashMap<String, HashMap<String, SearchResult>>();
@@ -70,13 +74,17 @@ public class SpeerkerNode extends Node {
 		this.addHandler(SpeerkerMessage.JOIN, new JoinHandler(this));
 		this.addHandler(SpeerkerMessage.LIST, new ListHandler(this));
 		this.addHandler(SpeerkerMessage.INFO, new InfoHandler(this));
-		this.addHandler(SpeerkerMessage.QUERY, new QueryHandler(this));
 		this.addHandler(SpeerkerMessage.RESPONSE, new ResponseHandler(this));
-		this.addHandler(SpeerkerMessage.PARTREQ, new FilePartRequestHandler(
-				this));
 		this.addHandler(SpeerkerMessage.PARTRSP, new FilePartResponseHandler(
 				this));
 		this.addHandler(SpeerkerMessage.QUIT, new QuitHandler(this));
+
+		// Mobile nodes will not process queries and file requests
+		if (!mobileNode) {
+			this.addHandler(SpeerkerMessage.QUERY, new QueryHandler(this));
+			this.addHandler(SpeerkerMessage.PARTREQ,
+					new FilePartRequestHandler(this));
+		}
 	}
 
 	public void clearSearchResults(String queryID) {
