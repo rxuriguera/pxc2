@@ -86,15 +86,15 @@ public class TestSpeerkerP2PLayer {
 		SpeerkerP2PLayer app02 = new SpeerkerP2PLayer(peer02, peer01, 5);
 
 		Song song = new Song();
-		song.setHash("070EA649CB6D0C646FD34BB36B7D3CC2");
-		song.setSize(8895512l);
+		song.setHash("453A2D79E91541AB0F4D89E0DBF3FBFF");
+		song.setSize(1200000l);
 
 		SearchResult result = new SearchResult("ID", song, peer02);
 
 		app01.getFile(result);
 		
 		try {
-			Thread.sleep(2000);
+			Thread.sleep(10000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

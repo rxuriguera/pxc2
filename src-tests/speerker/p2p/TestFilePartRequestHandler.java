@@ -8,7 +8,6 @@ import org.junit.Test;
 import peerbase.PeerConnection;
 import peerbase.PeerInfo;
 
-import speerker.Song;
 import speerker.p2p.messages.FilePartRequestHandler;
 import speerker.p2p.messages.SpeerkerMessage;
 
@@ -31,13 +30,13 @@ public class TestFilePartRequestHandler {
 	@Test
 	public void testHandleMessagePeer() throws InterruptedException {
 		String hash = "070EA649CB6D0C646FD34BB36B7D3CC2";
-		Song song = new Song();
-		song.setHash(hash);
+		FilePart part = new FilePart(hash, 0, 0l);
 
 		PeerConnection peerconn = null;
 
 		PeerInfo nonExistent = new PeerInfo("nonExistent", "", 9100);
 		PeerInfo remotePeer = new PeerInfo("peer01", "localhost", 9101);
+		@SuppressWarnings("unused")
 		SpeerkerP2PLayer app01 = new SpeerkerP2PLayer(remotePeer, nonExistent,
 				5);
 
@@ -48,7 +47,7 @@ public class TestFilePartRequestHandler {
 		}
 
 		SpeerkerMessage message = new SpeerkerMessage(SpeerkerMessage.PARTREQ,
-				song);
+				part);
 		this.fgetHandler.handleMessage(peerconn, message);
 	}
 }

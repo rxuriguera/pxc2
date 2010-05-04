@@ -16,7 +16,7 @@ import speerker.Song;
 import speerker.p2p.messages.SpeerkerMessage;
 
 public class FileGetter extends Thread {
-	protected Integer transferID;
+	protected String transferID;
 	protected SpeerkerNode peer;
 	protected SearchResult result;
 	protected List<FilePart> partsBuffer;
@@ -24,7 +24,7 @@ public class FileGetter extends Thread {
 	protected Long periodMillis;
 	protected Integer nPeriods;
 
-	public FileGetter(Integer transferID, SpeerkerNode peer, SearchResult result) {
+	public FileGetter(String transferID, SpeerkerNode peer, SearchResult result) {
 		this.transferID = transferID;
 		this.peer = peer;
 		this.result = result;
@@ -36,11 +36,11 @@ public class FileGetter extends Thread {
 		this.nPeriods = Integer.valueOf(App.getProperty("WaitingPeriods"));
 	}
 
-	public Integer getTransferID() {
+	public String getTransferID() {
 		return transferID;
 	}
 
-	public void setTransferID(Integer transferID) {
+	public void setTransferID(String transferID) {
 		this.transferID = transferID;
 	}
 
@@ -51,6 +51,8 @@ public class FileGetter extends Thread {
 	public void run() {
 		if (this.transferID == null)
 			return;
+
+		App.logger.info("Starting new file transfer for: " + this.transferID);
 
 		// Decide how to divide the file
 		String filename = App.getProperty("DestFilePath") + "/"
@@ -72,13 +74,13 @@ public class FileGetter extends Thread {
 		// Send part requests to the peers that have the file
 		for (Integer part = 0; part < fileParts; part++) {
 			currentPeerInfo = this.result.getPeers().get(currentPeer);
-			filePart = new FilePart(this.transferID, part, packetSize, song
-					.getHash());
+			filePart = new FilePart(song.getHash(), part, packetSize);
 			message = new SpeerkerMessage(SpeerkerMessage.PARTREQ, filePart);
 			this.peer.connectAndSend(currentPeerInfo, message, false);
 			currentPeer = (currentPeer + 1) % peers.size();
 		}
-
+		App.logger.info("Sent part requests to peers");
+		
 		// Prepare file and streams
 		File file = new File(filename);
 		FileOutputStream outfile = null;
@@ -87,6 +89,7 @@ public class FileGetter extends Thread {
 		} catch (FileNotFoundException e) {
 			App.logger.error("File not found", e);
 		}
+		App.logger.info("Prepared output file and streams");
 		BufferedOutputStream buf = new BufferedOutputStream(outfile);
 
 		Integer bufferElements = 0;
@@ -108,6 +111,7 @@ public class FileGetter extends Thread {
 				continue;
 			}
 		}
+		App.logger.info("Finished transfer or time out");
 
 		try {
 			buf.close();
