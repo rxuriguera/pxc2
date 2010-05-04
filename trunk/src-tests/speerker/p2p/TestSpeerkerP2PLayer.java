@@ -78,13 +78,13 @@ public class TestSpeerkerP2PLayer {
 
 	@Test
 	public void testGetFile() {
-		PeerInfo nonExistent = new PeerInfo("nonExistent", "", 9100);
+		PeerInfo nonExistent = new PeerInfo("Server", "localhost", 7999);
 		PeerInfo peer01 = new PeerInfo("peer01", "localhost", 9101);
 		PeerInfo peer02 = new PeerInfo("peer02", "localhost", 9102);
 
-		SpeerkerP2PLayer app01 = new SpeerkerP2PLayer(peer01, nonExistent, 5);
+		SpeerkerP2PLayer app01 = new SpeerkerP2PLayer(peer01, nonExistent, 5, false);
 		@SuppressWarnings("unused")
-		SpeerkerP2PLayer app02 = new SpeerkerP2PLayer(peer02, peer01, 5);
+		SpeerkerP2PLayer app02 = new SpeerkerP2PLayer(peer02, peer01, 5, false);
 
 		Song song = new Song();
 		song.setHash("453A2D79E91541AB0F4D89E0DBF3FBFF");
