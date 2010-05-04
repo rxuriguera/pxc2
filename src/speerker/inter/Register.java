@@ -15,7 +15,7 @@ public class Register {
 	
 	public static final void show(Display display){
 		
-		final Shell shell = new Shell(display, SWT.TITLE | SWT.CLOSE | SWT.BORDER | SWT.ON_TOP);
+		final Shell shell = new Shell(display, SWT.DIALOG_TRIM);
 		
 		shell.setText("Register");
 		shell.setSize(600, 300);

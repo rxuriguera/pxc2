@@ -46,7 +46,7 @@ public class SpeerkerInter {
 		
 		display = d;
 		Display.setAppName("Speerker");
-		shell = new Shell(display, SWT.TITLE | SWT.CLOSE | SWT.BORDER | SWT.RESIZE);
+		shell = new Shell(display, SWT.TITLE | SWT.CLOSE | SWT.BORDER | SWT.RESIZE | SWT.MIN | SWT.MAX);
 		shell.setMinimumSize(800, 500);
 		
 		shell.setText("Speerker");
