@@ -45,7 +45,7 @@ public class PlaylistInter {
     	//table.setLinesVisible (true);
     	table.setHeaderVisible (true);
     	tableGridData = new GridData(GridData.FILL_BOTH);
-    	tableGridData.heightHint = 200;
+    	//tableGridData.heightHint = 200;
     	table.setLayoutData(tableGridData);
     	
     	columnTitle = new TableColumn (table, SWT.NONE);
