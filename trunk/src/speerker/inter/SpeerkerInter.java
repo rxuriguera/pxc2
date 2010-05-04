@@ -46,7 +46,7 @@ public class SpeerkerInter {
 		
 		display = d;
 		Display.setAppName("Speerker");
-		shell = new Shell(display, SWT.TITLE | SWT.CLOSE | SWT.BORDER | SWT.ON_TOP | SWT.RESIZE);
+		shell = new Shell(display, SWT.TITLE | SWT.CLOSE | SWT.BORDER | SWT.RESIZE);
 		shell.setMinimumSize(800, 500);
 		
 		shell.setText("Speerker");
@@ -73,6 +73,12 @@ public class SpeerkerInter {
 		gridCenter = new GridData(GridData.FILL_BOTH);
 		compoCenter.setLayoutData(gridCenter);
 		centerLayout = new GridLayout(1, false);
+		centerLayout.marginBottom = 0;
+		centerLayout.marginHeight = 0;
+		centerLayout.marginLeft = 0;
+		centerLayout.marginRight = 0;
+		centerLayout.marginTop = 0;
+		centerLayout.marginWidth = 0;
 		compoCenter.setLayout(centerLayout);
 		
 		compoBrowser = new Composite(compoCenter, SWT.NONE);
@@ -89,7 +95,7 @@ public class SpeerkerInter {
 		compoPlayer.setLayoutData(gridPlayer);
 		
 		logoInter = new LogoInter(compoLogo, display);
-		searchSlotInter = new SearchSlotInter(compoSearch, display); 
+		searchSlotInter = new SearchSlotInter(compoSearch, display, tools.getSearchManager()); 
 		playlistInter = new PlaylistInter(compoPlaylist, display, tools.getPlaylist());
 		browserInter = new BrowserInter(compoBrowser, display);
 		menuInter = new MenuInter(compoMenu, display, this);
@@ -133,7 +139,11 @@ public class SpeerkerInter {
 			if (!display.readAndDispatch())
 				display.sleep();
 		}
+		
+		tools.getPlayer().stop();
 		shell.dispose();
+		
+		
 		
 	}
 

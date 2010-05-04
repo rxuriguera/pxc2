@@ -31,8 +31,6 @@ public class Speerker {
 		tools = new Tools();
 		
 		speerkerInter = new SpeerkerInter(tools, display);
-					
-		while (true){}
 		
 
 	}

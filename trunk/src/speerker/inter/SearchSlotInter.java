@@ -11,6 +11,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
 
+import speerker.search.SearchManager;
+
 public class SearchSlotInter {
 	
 	Composite composite;
@@ -23,9 +25,11 @@ public class SearchSlotInter {
     
     Text search;
     Button button;
+	private SearchManager searchManager;
     
-    public SearchSlotInter(Composite c, Display d){
+    public SearchSlotInter(Composite c, Display d, SearchManager s){
     	
+    	searchManager = s;
     	composite=c;
     	display=d;
    
@@ -48,7 +52,7 @@ public class SearchSlotInter {
 		button.setLayoutData(gridButton);
 		button.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				
+				searchManager.newSearch(search.getText());
 			}
 		});
 		
