@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class FilePart implements Serializable {
 	private static final long serialVersionUID = 4587406815268423392L;
-	protected Integer transferID = 0;
+	protected String transferID;
 	protected Integer part = 0;
 	protected Long partSize;
 	protected String fileHash;
@@ -13,26 +13,19 @@ public class FilePart implements Serializable {
 	public FilePart() {
 	}
 
-	public FilePart(Integer transferID, Integer part, Long partSize,
-			String fileHash) {
-		this(transferID, part, partSize, fileHash, "".getBytes());
+	public FilePart(String fileHash, Integer part, Long partSize) {
+		this(fileHash, part, partSize, "".getBytes());
 	}
 
-	public FilePart(Integer transferID, Integer part, Long partSize,
-			String fileHash, byte[] data) {
-		this.transferID = transferID;
+	public FilePart(String fileHash, Integer part, Long partSize, byte[] data) {
 		this.part = part;
 		this.partSize = partSize;
 		this.fileHash = fileHash;
 		this.data = data;
 	}
 
-	public Integer getTransferID() {
-		return transferID;
-	}
-
-	public void setTransferID(Integer transferID) {
-		this.transferID = transferID;
+	public String getTransferID() {
+		return this.fileHash;
 	}
 
 	public Integer getPart() {

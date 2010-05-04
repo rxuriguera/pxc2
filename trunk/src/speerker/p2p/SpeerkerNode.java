@@ -47,8 +47,8 @@ import speerker.p2p.messages.SpeerkerMessage;
  */
 public class SpeerkerNode extends Node {
 	protected FileHashLibrary filesLibrary;
-	protected HashMap<String, SearchResult> searchResults;
-	protected List<FileGetter> fileTransfers;
+	protected HashMap<String, HashMap<String, SearchResult>> searchResults;
+	protected HashMap<String, FileGetter> fileTransfers;
 
 	/**
 	 * Creates a new P2P Speerker Node
@@ -61,8 +61,8 @@ public class SpeerkerNode extends Node {
 	public SpeerkerNode(PeerInfo info, int maxPeers) {
 		super(maxPeers, info);
 		this.filesLibrary = new FileHashLibrary(this.getId());
-		this.searchResults = new HashMap<String, SearchResult>();
-		this.fileTransfers = new LinkedList<FileGetter>();
+		this.searchResults = new HashMap<String, HashMap<String, SearchResult>>();
+		this.fileTransfers = new HashMap<String, FileGetter>();
 
 		this.addRouter(new SpeerkerRouter(this));
 
@@ -79,21 +79,35 @@ public class SpeerkerNode extends Node {
 		this.addHandler(SpeerkerMessage.QUIT, new QuitHandler(this));
 	}
 
+	public void clearSearchResults(String queryID) {
+		this.searchResults.put(queryID, new HashMap<String, SearchResult>());
+	}
+
 	public void clearSearchResults() {
-		this.searchResults = new HashMap<String, SearchResult>();
+		this.searchResults = new HashMap<String, HashMap<String, SearchResult>>();
 	}
 
 	public void addToResults(SearchResult result) {
-		SearchResult existentResult = this.searchResults.get(result.song
-				.getHash());
+		// Get search results depending on the queryID
+		HashMap<String, SearchResult> results = this.searchResults.get(result
+				.getQueryID());
+
+		// If it's the first result, create a new hash map to store it
+		if (results == null) {
+			results = new HashMap<String, SearchResult>();
+			this.searchResults.put(result.getQueryID(), results);
+		}
+
+		// Add results depending on the song's hash
+		SearchResult existentResult = results.get(result.song.getHash());
 		if (existentResult != null) {
 			existentResult.addPeer(result.getPeers().get(0));
 		} else {
-			this.searchResults.put(result.song.getHash(), result);
+			results.put(result.song.getHash(), result);
 		}
 	}
 
-	public HashMap<String, SearchResult> getSearchResults() {
+	public HashMap<String, HashMap<String, SearchResult>> getSearchResults() {
 		return this.searchResults;
 	}
 
@@ -222,14 +236,15 @@ public class SpeerkerNode extends Node {
 	 * @return and integer representing the file transfer ID
 	 */
 	public void newFileTransfer(SearchResult result) {
-		FileGetter fp = new FileGetter(this.fileTransfers.size(), this, result);
+		String transferID = result.getSong().getHash();
+		FileGetter fp = new FileGetter(transferID, this, result);
 		fp.setName("Speerker-" + this.getId() + "-Transfer-"
 				+ this.fileTransfers.size());
-		this.fileTransfers.add(fp);
+		this.fileTransfers.put(transferID, fp);
 		fp.start();
 	}
 
-	public FileGetter getFileTransfer(Integer transferID) {
+	public FileGetter getFileTransfer(String transferID) {
 		FileGetter transfer = this.fileTransfers.get(transferID);
 		return transfer;
 	}

@@ -15,7 +15,7 @@ public class FileAppender {
 		FileInputStream infile = new FileInputStream(inputPath);
 		BufferedInputStream bis = new BufferedInputStream(infile);
 
-		Integer len =10000;
+		Integer len =300000;
 		FileOutputStream outfile = new FileOutputStream(outputPath, true);
 		BufferedOutputStream buf = new BufferedOutputStream(outfile);
 		byte[] filedata = null;
@@ -24,6 +24,7 @@ public class FileAppender {
 			filedata = new byte[len];
 			bis.read(filedata);
 			buf.write(filedata);
+			System.out.println("File is "+len+" bytes bigger");
 			Thread.sleep(1000);
 		}
 

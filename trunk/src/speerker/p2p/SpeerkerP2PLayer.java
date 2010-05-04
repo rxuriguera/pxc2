@@ -122,7 +122,7 @@ public class SpeerkerP2PLayer {
 	 * 
 	 * @return a HashMap of search results
 	 */
-	public HashMap<String, SearchResult> getSearchResults() {
+	public HashMap<String, HashMap<String, SearchResult>> getSearchResults() {
 		return this.peer.getSearchResults();
 	}
 

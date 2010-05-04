@@ -51,7 +51,7 @@ public class FilePartResponseHandler extends SpeerkerMessageHandler {
 			return;
 		}
 
-		Integer transferID = part.getTransferID();
+		String transferID = part.getTransferID();
 		FileGetter transfer = this.peer.getFileTransfer(transferID);
 
 		if (transfer == null) {
