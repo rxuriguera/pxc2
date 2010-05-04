@@ -116,7 +116,8 @@ public class SpeerkerP2PLayer {
 	 * @param query
 	 *            The query string
 	 */
-	public void search(String queryID, String query) {
+	public void search(String query) {
+		String queryID = query;
 		Integer ttl = Integer.valueOf(App.getProperty("SearchTTL"));
 		SearchQuery squery = new SearchQuery(this.peer.getInfo(), queryID,
 				query, ttl);
