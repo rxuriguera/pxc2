@@ -2,9 +2,12 @@ package speerker.p2p;
 
 import java.io.Serializable;
 
+import peerbase.PeerInfo;
+
 public class FilePart implements Serializable {
 	private static final long serialVersionUID = 4587406815268423392L;
 	protected String transferID;
+	protected PeerInfo requester;
 	protected Integer part = 0;
 	protected Long partSize;
 	protected String fileHash;
@@ -13,12 +16,15 @@ public class FilePart implements Serializable {
 	public FilePart() {
 	}
 
-	public FilePart(String fileHash, Integer part, Long partSize) {
-		this(fileHash, part, partSize, "".getBytes());
+	public FilePart(String fileHash, PeerInfo requester, Integer part,
+			Long partSize) {
+		this(fileHash, requester, part, partSize, "".getBytes());
 	}
 
-	public FilePart(String fileHash, Integer part, Long partSize, byte[] data) {
+	public FilePart(String fileHash, PeerInfo requester, Integer part,
+			Long partSize, byte[] data) {
 		this.part = part;
+		this.requester = requester;
 		this.partSize = partSize;
 		this.fileHash = fileHash;
 		this.data = data;
@@ -26,6 +32,14 @@ public class FilePart implements Serializable {
 
 	public String getTransferID() {
 		return this.fileHash;
+	}
+
+	public PeerInfo getRequester() {
+		return requester;
+	}
+
+	public void setRequester(PeerInfo requester) {
+		this.requester = requester;
 	}
 
 	public Integer getPart() {

@@ -96,17 +96,26 @@ public class SpeerkerNode extends Node {
 		if (results == null) {
 			results = new HashMap<String, SearchResult>();
 			this.searchResults.put(result.getQueryID(), results);
+			App.logger.debug("Added new HashMap for search result");
 		}
 
 		// Add results depending on the song's hash
 		SearchResult existentResult = results.get(result.song.getHash());
 		if (existentResult != null) {
 			existentResult.addPeer(result.getPeers().get(0));
+			App.logger
+					.debug("Existent search result. Added to result peer list");
 		} else {
 			results.put(result.song.getHash(), result);
+			App.logger.debug("New search result added.");
 		}
 	}
 
+	/**
+	 * Creates a new hashMap for the search results (if necessary)
+	 * 
+	 * @param queryID
+	 */
 	public void newSearch(String queryID) {
 		if (this.searchResults.get(queryID) == null)
 			this.searchResults
@@ -212,7 +221,6 @@ public class SpeerkerNode extends Node {
 				this.buildPeers(nextPeer, hops - 1);
 			}
 		}
-
 	}
 
 	/**

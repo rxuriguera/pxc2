@@ -58,6 +58,13 @@ public class FileGetter extends Thread {
 		String filename = App.getProperty("DestFilePath") + "/"
 				+ result.song.getHash();
 
+		// Check if file exists
+		File file = new File(filename);
+		if (file.exists()) {
+			App.logger.info("File already exists");
+			return;
+		}
+
 		Song song = this.result.getSong();
 		List<PeerInfo> peers = this.result.getPeers();
 
@@ -71,44 +78,71 @@ public class FileGetter extends Thread {
 		Integer currentPeer = 0;
 		PeerInfo currentPeerInfo;
 
-		// Send part requests to the peers that have the file
-		for (Integer part = 0; part < fileParts; part++) {
-			currentPeerInfo = this.result.getPeers().get(currentPeer);
-			filePart = new FilePart(song.getHash(), part, packetSize);
-			message = new SpeerkerMessage(SpeerkerMessage.PARTREQ, filePart);
-			this.peer.connectAndSend(currentPeerInfo, message, false);
-			currentPeer = (currentPeer + 1) % peers.size();
+		App.logger.info("Sending peer requests to peers: " + fileParts
+				+ "parts");
+		try {
+			// Send part requests to the peers that have the file
+			for (Integer part = 0; part < fileParts; part++) {
+				currentPeerInfo = this.result.getPeers().get(currentPeer);
+				filePart = new FilePart(song.getHash(), this.peer.getInfo(),
+						part, packetSize);
+				message = new SpeerkerMessage(SpeerkerMessage.PARTREQ, filePart);
+				this.peer.connectAndSend(currentPeerInfo, message, false);
+				App.logger.debug("Sent request for part " + part + " to "
+						+ currentPeerInfo.getId());
+				currentPeer = (currentPeer + 1) % peers.size();
+
+				// Thread.sleep(200);
+			}
+			App.logger.info("Sent part requests to peers");
+		} catch (Exception e) {
+			App.logger.error("Error sending part requests: " + e);
 		}
-		App.logger.info("Sent part requests to peers");
-		
-		// Prepare file and streams
-		File file = new File(filename);
+
+		// Prepare streams
 		FileOutputStream outfile = null;
 		try {
 			outfile = new FileOutputStream(file, true);
 		} catch (FileNotFoundException e) {
 			App.logger.error("File not found", e);
 		}
-		App.logger.info("Prepared output file and streams");
+		App.logger.info("Prepared output streams");
 		BufferedOutputStream buf = new BufferedOutputStream(outfile);
 
-		Integer bufferElements = 0;
+		Integer initiallyExpected, partPeriods;
+		Integer firstPartPeriods = this.nPeriods;
 		// Wait for the parts to arrive
-		while (expectedPart < fileParts && this.nPeriods > 0) {
-			this.nPeriods--;
-			try {
-				// Check if there are new parts in the buffer
-				if (this.partsBuffer.size() > bufferElements) {
+		while (this.expectedPart < fileParts && firstPartPeriods > 0) {
+			partPeriods = this.nPeriods;
+			initiallyExpected = this.expectedPart;
+			// Timeout for each part
+			while (partPeriods > 0) {
+				partPeriods--;
+				try {
 					this.checkPartsBuffer(buf);
-					bufferElements = this.partsBuffer.size();
+					Thread.sleep(this.periodMillis);
+				} catch (InterruptedException e) {
+					App.logger.warn("Exception while sleeping", e);
+					continue;
+				} catch (IOException e) {
+					App.logger.warn("Exception while writing part to file", e);
+					continue;
 				}
-				Thread.sleep(this.periodMillis);
-			} catch (InterruptedException e) {
-				App.logger.warn("Exception while sleeping", e);
+			}
+
+			// Spend as much time as possible waiting for the first part
+			if (this.expectedPart.equals(0)) {
+				App.logger.debug("Haven't received first part yet.");
+				firstPartPeriods--;
 				continue;
-			} catch (IOException e) {
-				App.logger.warn("Exception while writing part to file", e);
-				continue;
+			}
+
+			// If there's a timeout for the expected part, set it to expect the
+			// following
+			if (initiallyExpected.equals(this.expectedPart)) {
+				App.logger.debug("Part " + this.expectedPart
+						+ " timed out and skipped.");
+				this.expectedPart++;
 			}
 		}
 		App.logger.info("Finished transfer or time out");
@@ -118,6 +152,11 @@ public class FileGetter extends Thread {
 			outfile.close();
 		} catch (IOException e) {
 			App.logger.warn("Exception while closing stream", e);
+		}
+		
+		// Remove the file if it is empty
+		if(file.length()==0 && file.canWrite()){
+			file.delete();
 		}
 	}
 
@@ -133,10 +172,12 @@ public class FileGetter extends Thread {
 		Iterator<FilePart> iterator = this.partsBuffer.iterator();
 		while (iterator.hasNext()) {
 			currentPart = iterator.next();
-			if (currentPart.getPart() == this.expectedPart) {
+			if (currentPart.getPart().equals(this.expectedPart)) {
 				this.partsBuffer.remove(currentPart);
 				// Write the current part
 				out.write(currentPart.getData());
+				out.flush();
+				App.logger.debug("Write part: " + currentPart.getPart());
 				this.expectedPart++;
 				// Reinitialize iterator
 				iterator = this.partsBuffer.iterator();
