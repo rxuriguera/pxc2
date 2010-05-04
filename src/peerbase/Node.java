@@ -67,9 +67,10 @@ public class Node {
 
 		public void run() {
 			LoggerUtil.getLogger().fine("New PeerHandler: " + s);
-
+			
 			PeerConnection peerconn = new PeerConnection(null, s);
 			PeerMessage peermsg = peerconn.recvData();
+			
 			if (!handlers.containsKey(peermsg.getMsgType())) {
 				LoggerUtil.getLogger().fine("Not handled: " + peermsg);
 			} else {
@@ -309,6 +310,7 @@ public class Node {
 					clientsock.setSoTimeout(0);
 
 					PeerHandler ph = new PeerHandler(clientsock);
+					ph.setName("Message-Handler");
 					ph.start();
 				} catch (SocketTimeoutException e) {
 					LoggerUtil.getLogger().fine("" + e);
