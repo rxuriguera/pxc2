@@ -16,8 +16,6 @@ public class BrowserInter {
 	GridData gridComposite;
     GridLayout browserLayout;
     Browser browser;
-	private GridData gridButton;
-	private Button buttonInicio;
     
     public BrowserInter(Composite c, Display d) {
     	
@@ -38,12 +36,6 @@ public class BrowserInter {
 			browser.setUrl("file:///Users/bartru/workspace/Speerker/web/html/main.html");
 		}
     	browser.setLayoutData(gridBrowser);
-    	
-    	gridButton = new GridData(GridData.BEGINNING);
-    	buttonInicio = new Button(compoBrowser, SWT.PUSH);
-    	buttonInicio.setText("Inicio");
-    	buttonInicio.pack();
-    	buttonInicio.setLayoutData(gridButton);
     	
     }
 }

@@ -35,7 +35,7 @@ public class MenuInter {
     	buttonInicio.setLayoutData(gridButton);
     	buttonInicio.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				speerkerInter.showBrowser();
+				speerkerInter.switchCenter("Browser");
 			}
 		});
 		
@@ -46,7 +46,7 @@ public class MenuInter {
     	buttonPlaylist.setLayoutData(gridButton);
     	buttonPlaylist.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				speerkerInter.showPlaylist();
+				speerkerInter.switchCenter("Playlist");
 			}
 		});
 		
