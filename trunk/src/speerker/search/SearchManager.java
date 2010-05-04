@@ -15,29 +15,15 @@ public class SearchManager {
 	public SearchManager(){
 		
 		count = 0;
-		//speerkerP2PLayer =  new SpeerkerP2PLayer(null, null, 0);
+		speerkerP2PLayer =  new SpeerkerP2PLayer();
 	
 	}
 	
 	public void newSearch(String field){
-		
-		++count;
-		//speerkerP2PLayer.search(Integer.toString(count), field);
-		System.out.println("se");
+	
+		speerkerP2PLayer.search(field);
+		System.out.println(speerkerP2PLayer.getSearchResults().values().size());
 		
 	}
 	
-
-	
-	class Search {
-		
-		int id;
-		String field;
-		HashMap<String, SearchResult> results;
-		
-		public Search(int i, HashMap<String, SearchResult> h){
-			id = i;
-			results = h;
-		}
-	}
 }
