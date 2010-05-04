@@ -35,15 +35,21 @@ public class SpeerkerP2PLayer {
 	protected Thread peerThread;
 
 	public SpeerkerP2PLayer() {
+		this(false);
+	}
+
+	public SpeerkerP2PLayer(Boolean mobileNode) {
 		this(App.getProperty("DefaultHost"), Integer.parseInt(App
 				.getProperty("DefaultPort")), App.getProperty("ServerHost"),
-				Integer.parseInt(App.getProperty("ServerPort")), 50);
+				Integer.parseInt(App.getProperty("ServerPort")), Integer
+						.parseInt(App.getProperty("DefaultMaxPeers")),
+				mobileNode);
 	}
 
 	public SpeerkerP2PLayer(String thisHost, int thisPort, String remoteHost,
-			int remotePort, int maxPeers) {
+			int remotePort, int maxPeers, Boolean mobileNode) {
 		this(new PeerInfo(thisHost, thisPort), new PeerInfo(remoteHost,
-				remotePort), maxPeers);
+				remotePort), maxPeers, false);
 	}
 
 	/**
@@ -59,8 +65,8 @@ public class SpeerkerP2PLayer {
 	 *            maximum number of peers that the local peer will know
 	 */
 	public SpeerkerP2PLayer(PeerInfo peerInfo, PeerInfo remotePeerInfo,
-			int maxPeers) {
-		peer = new SpeerkerNode(peerInfo, maxPeers);
+			int maxPeers, Boolean mobileNode) {
+		peer = new SpeerkerNode(peerInfo, maxPeers, mobileNode);
 		peer.buildPeers(remotePeerInfo, 2);
 
 		this.peerThread = (new Thread() {
