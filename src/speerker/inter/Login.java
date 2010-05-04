@@ -17,7 +17,7 @@ public class Login {
  
 	public static String[] show(final Display display) {
 		
-		Shell shell = new Shell(display, SWT.TITLE | SWT.CLOSE | SWT.BORDER | SWT.ON_TOP | SWT.APPLICATION_MODAL);
+		Shell shell = new Shell(display, SWT.TITLE | SWT.CLOSE | SWT.BORDER | SWT.ON_TOP | SWT.MIN);
 		login = false;
 		
 		shell.setText("Login");
