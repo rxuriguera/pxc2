@@ -38,6 +38,9 @@ public class SpeerkerInter {
 	private GridData gridBrowser;
 	private Composite compoPlaylist;
 	private GridData gridPlaylist;
+	private Composite compoSearchSlot;
+	private GridData gridSearchSlot;
+	private SearchInter searchInter;
 
 	
 	public SpeerkerInter(Tools t, Display d){
@@ -60,9 +63,9 @@ public class SpeerkerInter {
 		gridLogo.widthHint = 175;
 		compoLogo.setLayoutData(gridLogo);
 		
-		compoSearch = new Composite(shell, SWT.NONE);
-		gridSearch = new GridData(GridData.FILL_HORIZONTAL);
-		compoSearch.setLayoutData(gridSearch);
+		compoSearchSlot = new Composite(shell, SWT.NONE);
+		gridSearchSlot = new GridData(GridData.FILL_HORIZONTAL);
+		compoSearchSlot.setLayoutData(gridSearchSlot);
 		
 		compoMenu = new Composite(shell, SWT.NONE);
 		gridMenu = new GridData(GridData.FILL_VERTICAL);
@@ -89,19 +92,24 @@ public class SpeerkerInter {
 		gridPlaylist = new GridData(GridData.FILL_BOTH);
 		compoPlaylist.setLayoutData(gridPlaylist);
 		
+		compoSearch = new Composite(compoCenter, SWT.NONE);
+		gridSearch = new GridData(GridData.FILL_BOTH);
+		compoSearch.setLayoutData(gridSearch);
+		
 		compoPlayer = new Composite(shell, SWT.NONE);
 		gridPlayer = new GridData(GridData.FILL_HORIZONTAL);
 		gridPlayer.horizontalSpan = 2;
 		compoPlayer.setLayoutData(gridPlayer);
 		
 		logoInter = new LogoInter(compoLogo, display);
-		searchSlotInter = new SearchSlotInter(compoSearch, display, tools.getSearchManager()); 
+		searchSlotInter = new SearchSlotInter(compoSearchSlot, display, this); 
 		playlistInter = new PlaylistInter(compoPlaylist, display, tools.getPlaylist());
+		searchInter = new SearchInter(compoSearch, display, this);
 		browserInter = new BrowserInter(compoBrowser, display);
 		menuInter = new MenuInter(compoMenu, display, this);
 		playerInter = new PlayerInter(compoPlayer, display, tools.getPlayer());
 		
-		gridPlaylist.exclude = true;		
+		switchCenter("Browser");		
 		
 		String title0 = "La llave de oro";
 		String artist0 = "Los Planetas";
@@ -149,19 +157,34 @@ public class SpeerkerInter {
 
 
 	public void switchCenter(String center) {
-		
-        GridData playlistGridData = (GridData) compoPlaylist.getLayoutData();
-        GridData broswerGridData = (GridData) compoBrowser.getLayoutData();
 
         if (center.equals("Playlist")) {
+        	compoSearch.setVisible (!(gridSearch.exclude = true));
             compoBrowser.setVisible (!(gridBrowser.exclude = true));
             compoPlaylist.setVisible (!(gridPlaylist.exclude = false));
         } else if(center.equals("Browser")){
+        	compoSearch.setVisible (!(gridSearch.exclude = true));
             compoPlaylist.setVisible (!(gridPlaylist.exclude = true));
             compoBrowser.setVisible (!(gridBrowser.exclude = false));
+        } else if(center.equals("Search")){
+        	compoSearch.setVisible (!(gridSearch.exclude = false));
+            compoPlaylist.setVisible (!(gridPlaylist.exclude = true));
+            compoBrowser.setVisible (!(gridBrowser.exclude = true));
         }
         compoCenter.layout();
         compoCenter.getParent().layout();
+	}
+	
+	public Tools getTool(){
+		return this.tools;
+	}
+	
+	public MenuInter getMenuInter(){
+		return this.menuInter;
+	}
+	
+	public SearchInter getSearchInter(){
+		return this.searchInter;
 	}
 	
 }
