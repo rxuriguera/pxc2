@@ -21,32 +21,35 @@ package speerker.db;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import speerker.App;
 import speerker.types.User;
 
 public class UserGateway {
 
-	static public User findByUserName(String userName) {
-		App.logger.info("Finding string by username");
+	static public User findByUserName(String username) {
+		App.logger.debug("Finding user by username: " + username);
 
-		User user = new User();
 		String query = "SELECT * FROM users u WHERE username=?";
 
 		try {
 			PreparedStatement statement = SpeerkerConnection.getConnection()
 					.prepareStatement(query);
-			statement.setString(1, userName);
+			statement.setString(1, username);
 			ResultSet resultSet = statement.executeQuery();
 
-			if (!resultSet.first())
-				return user;
+			if (!resultSet.first()) {
+				App.logger.debug("User not found.");
+				return null;
+			}
+
 			return fillUser(resultSet);
 		} catch (SQLException e) {
 			App.logger.error("Error finding user: ", e);
 		}
 
-		return user;
+		return null;
 	}
 
 	static protected User fillUser(ResultSet resultSet) throws SQLException {
@@ -61,29 +64,41 @@ public class UserGateway {
 	}
 
 	static public Boolean userExists(User user) {
-		return findByUserName(user.getUsername()).getValid();
+		return findByUserName(user.getUsername()) != null;
 	}
 
-	static public Boolean newUser(User user) {
+	/**
+	 * Adds a new user to the database and returns its generated id
+	 * 
+	 * @param user
+	 * @return the user id or -1 if the user already exists or there's any other
+	 *         error
+	 */
+	static public Integer newUser(User user) {
 		if (userExists(user))
-			return false;
+			return -1;
 
 		String query = "INSERT INTO users(username,password,firstName,lastName) VALUES(?, ?, ?, ?)";
 
 		try {
 			PreparedStatement statement = SpeerkerConnection.getConnection()
-					.prepareStatement(query);
+					.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			statement.setString(1, user.getUsername());
 			statement.setString(2, user.getPassword());
 			statement.setString(3, user.getFirstName());
 			statement.setString(4, user.getLastName());
 
-			if (statement.executeUpdate() > 0)
-				return true;
+			statement.executeUpdate();
+			ResultSet resultSet = statement.getGeneratedKeys();
+
+			if (!resultSet.first())
+				return -1;
+			else
+				return resultSet.getInt(1);
 		} catch (SQLException e) {
-			App.logger.error("Error finding user: ", e);
+			App.logger.error("Error adding new user: ", e);
 		}
-		return false;
+		return -1;
 	}
 
 }

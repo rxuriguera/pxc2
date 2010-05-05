@@ -36,6 +36,11 @@ public class SpeerkerLoginImpl implements SpeerkerLogin {
 	public User login(User user) throws RemoteException {
 		App.logger.info("Login user: " + user.getUsername());
 		User dbUser = UserGateway.findByUserName(user.getUsername());
+
+		if (dbUser == null) {
+			return user;
+		}
+
 		if (dbUser.getValid()
 				&& dbUser.getPassword().equals(user.getPassword()))
 			return dbUser;
@@ -43,7 +48,4 @@ public class SpeerkerLoginImpl implements SpeerkerLogin {
 			return user;
 	}
 
-	public void bind() throws RemoteException {
-
-	}
 }
