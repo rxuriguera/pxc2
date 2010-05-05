@@ -19,6 +19,7 @@
 package speerker.types;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 
 import speerker.Song;
@@ -26,19 +27,33 @@ import speerker.Song;
 public class Play implements Serializable {
 
 	private static final long serialVersionUID = 6029414375163624398L;
+	protected int id;
 	protected String username;
 	protected Song song;
-	protected Date date;
+	protected Timestamp timestamp;
 
-	public Play(String username, Song song) {
-		this(username, song, new Date());
+	public Play() {
+		this("", null);
 	}
 
-	public Play(String username, Song song, Date date) {
+	public Play(String username, Song song) {
+		this(username, song, new Timestamp(new Date().getTime()));
+	}
+
+	public Play(String username, Song song, Timestamp date) {
 		super();
+		this.id = 0;
 		this.username = username;
 		this.song = song;
-		this.date = date;
+		this.timestamp = date;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getUsername() {
@@ -57,12 +72,12 @@ public class Play implements Serializable {
 		this.song = song;
 	}
 
-	public Date getDate() {
-		return date;
+	public Timestamp getTimestamp() {
+		return timestamp;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setTimestamp(Timestamp timestamp) {
+		this.timestamp = timestamp;
 	}
 
 }

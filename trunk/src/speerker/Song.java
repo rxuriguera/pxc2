@@ -23,7 +23,7 @@ import java.io.Serializable;
 public class Song implements Serializable {
 
 	private static final long serialVersionUID = 2273691535365963090L;
-
+	protected int id;
 	protected String title = "";
 	protected String artist = "";
 	protected String album = "";
@@ -33,21 +33,40 @@ public class Song implements Serializable {
 	public Song() {
 	}
 
+	public Song(String title, String artist, String album) {
+		this(title, artist, album, "", 0l);
+	}
+
 	/**
 	 * Song constructor
-	 * @param title String
-	 * @param artist String
-	 * @param album String
-	 * @param hash String
-	 * @param size Long
+	 * 
+	 * @param title
+	 *            String
+	 * @param artist
+	 *            String
+	 * @param album
+	 *            String
+	 * @param hash
+	 *            String
+	 * @param size
+	 *            Long
 	 */
 	public Song(String title, String artist, String album, String hash,
 			Long size) {
+		this.id = 0;
 		this.title = title;
 		this.album = album;
 		this.artist = artist;
 		this.hash = hash;
 		this.size = size;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getTitle() {

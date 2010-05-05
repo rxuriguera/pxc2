@@ -20,6 +20,8 @@ package speerker.rmi;
 
 import java.rmi.RemoteException;
 
+import speerker.App;
+import speerker.db.PlayGateway;
 import speerker.types.Play;
 
 public class SpeerkerStatsImpl implements SpeerkerStats {
@@ -28,7 +30,10 @@ public class SpeerkerStatsImpl implements SpeerkerStats {
 
 	@Override
 	public void submitPlay(Play play) throws RemoteException {
-		System.out.println("x");
+		App.logger.info("Submitting play: " + play.getSong().getTitle()
+				+ " listened by: " + play.getUsername());
+
+		PlayGateway.newPlay(play);
 	}
 
 }
