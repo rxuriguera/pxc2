@@ -17,6 +17,7 @@ public class SearchSlotInter {
 	
 	Composite composite;
     GridLayout playerLayout;
+    SpeerkerInter speerkerInter;
     
     Display display;
     
@@ -27,9 +28,10 @@ public class SearchSlotInter {
     Button button;
 	private SearchManager searchManager;
     
-    public SearchSlotInter(Composite c, Display d, SearchManager s){
+    public SearchSlotInter(Composite c, Display d, SpeerkerInter s){
     	
-    	searchManager = s;
+    	speerkerInter = s;
+    	searchManager = speerkerInter.getTool().getSearchManager();
     	composite=c;
     	display=d;
    
@@ -53,6 +55,10 @@ public class SearchSlotInter {
 		button.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				searchManager.newSearch(search.getText());
+				speerkerInter.getMenuInter().refreshTable();
+				speerkerInter.getSearchInter().setKey(search.getText());
+				speerkerInter.switchCenter("Search");
+				search.setText("");
 			}
 		});
 		

@@ -1,29 +1,33 @@
 package speerker.search;
 
+import java.util.Collection;
 import java.util.HashMap;
 
 import speerker.p2p.SearchResult;
 import speerker.p2p.SpeerkerP2PLayer;
-import speerker.player.Playlist;
-import speerker.player.SpeerkerPlayer;
 
 public class SearchManager {
 	
 	private SpeerkerP2PLayer speerkerP2PLayer;
-	private int count;
+	private HashMap<String, HashMap<String, SearchResult>> results;
 	
 	public SearchManager(){
 		
-		count = 0;
 		speerkerP2PLayer =  new SpeerkerP2PLayer();
+		results = speerkerP2PLayer.getSearchResults();
 	
 	}
 	
 	public void newSearch(String field){
 	
 		speerkerP2PLayer.search(field);
-		System.out.println(speerkerP2PLayer.getSearchResults().values().size());
 		
 	}
+	
+	public HashMap<String, HashMap<String, SearchResult>> getResults(){
+		return this.results;
+	}
+	
+	
 	
 }

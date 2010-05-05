@@ -1,5 +1,11 @@
 package speerker.inter;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -15,6 +21,8 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
+
+import speerker.p2p.SearchResult;
 
 public class MenuInter {
 	
@@ -49,6 +57,8 @@ public class MenuInter {
     	colorSelected = new Color (display, 176, 217, 12);
     	current = 0;
     	
+    	
+    	
     	refreshTable();
     	
     	table.addListener (SWT.MouseDown, new Listener () {
@@ -64,6 +74,10 @@ public class MenuInter {
 						if (rect.contains (pt)) {
 							if (index==0) speerkerInter.switchCenter("Browser");
 							else if (index==1) speerkerInter.switchCenter("Playlist");
+							else if (index>=3){
+								speerkerInter.getSearchInter().setKey(table.getItem(index).getText().substring(3));
+								speerkerInter.switchCenter("Search");
+							}
 							current = index;
 							refreshTable();
 							return;
@@ -90,6 +104,18 @@ public class MenuInter {
 						web.setText (0, "Web");
 						TableItem playlist = new TableItem (table, SWT.NONE);
 						playlist.setText (0, "Playlist");
+						TableItem search = new TableItem (table, SWT.NONE);
+						search.setText (0, "Search");
+						
+						Iterator<Entry<String, HashMap<String, SearchResult>>> iter = speerkerInter.getTool().getSearchManager().getResults().entrySet().iterator();
+						
+						while(iter.hasNext()){
+							Map.Entry e = iter.next();
+							TableItem s = new TableItem (table, SWT.NONE);
+							s.setText (0, (String) " - " + e.getKey());
+							
+						}
+
 						table.getItem(current).setBackground(colorSelected);
 				    }
 				});
