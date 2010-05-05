@@ -18,14 +18,10 @@
 
 package speerker.p2p;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
 import org.junit.Before;
 import org.junit.Test;
 
 import peerbase.PeerInfo;
-import speerker.App;
 import speerker.Song;
 
 public class TestSpeerkerP2PLayer {
