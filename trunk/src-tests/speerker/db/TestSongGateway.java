@@ -16,41 +16,39 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package speerker.rmi;
+package speerker.db;
 
 import static org.junit.Assert.*;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import speerker.Song;
-import speerker.types.Play;
-import speerker.types.User;
 
-public class TestSpeerkerRMIClient {
-	protected SpeerkerRMIClient client;
-	
-	@Before
-	public void setUp(){
-		client = new SpeerkerRMIClient();
-	}
-	
-	@Test
-	public void testLogin() {
-		User user = new User("abc","def");
-		user = this.client.login(user);
-		assertEquals(false, user.getValid());
-		
-		user = new User("mittens","love 'em");
-		user = this.client.login(user);
-		assertEquals(true, user.getValid());
-	}
-	
-	@Test
-	public void testSendStats() {
-		Play play = new Play("mittens2", new Song("a","b","c","d",33l));
-		this.client.sendPlay(play);
-	}
-	
+public class TestSongGateway {
 
+	@Test
+	public void testFindByUserName() {
+		// Get song by Id
+		Song song = SongGateway.findById(2);
+		assertEquals("Swim", song.getTitle());
+		assertEquals("Oh No Ono", song.getArtist());
+
+		// Get existent song by info
+		Song tsong = new Song("The Balcony", "The Rumour Said Fire",
+				"The Life and Death of a Male Body");
+		song = SongGateway.findBySongInfo(tsong);
+		assertEquals(tsong.getTitle(), song.getTitle());
+
+		// Get non-existen song by info
+		tsong = new Song("Butterx", "Bacon", "Jam");
+		song = SongGateway.findBySongInfo(tsong);
+		assertEquals(null, song);
+	}
+
+	@Test
+	public void testNewSong() {
+		Song song = new Song("Butter1", "Bacon", "Jam");
+		Integer result = SongGateway.newSong(song);
+		System.out.println("Id " + result);
+	}
 }

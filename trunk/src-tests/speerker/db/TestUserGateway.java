@@ -28,19 +28,20 @@ public class TestUserGateway {
 
 	@Test
 	public void testFindByUserName() {
+		// Get existent user by username
 		User user = UserGateway.findByUserName("user1");
 		assertEquals(true, user.getValid());
 		assertEquals("Test", user.getFirstName());
 
+		// Get non-existent user by username
 		user = UserGateway.findByUserName("userx");
-		assertEquals(false, user.getValid());
-		assertEquals("", user.getFirstName());
+		assertEquals(null, user);
 	}
 
 	@Test
 	public void testNewUser() {
-		User user = new User(0, "mittens3", "love 'em", "First", "Last", true);
-		Boolean result = UserGateway.newUser(user);
-		assertEquals(true, result);
+		User user = new User(0, "mittens9", "love 'em", "First", "Last", true);
+		Integer result = UserGateway.newUser(user);
+		assertTrue(result != -1);
 	}
 }
