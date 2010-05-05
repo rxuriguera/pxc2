@@ -53,7 +53,7 @@ public class SpeerkerNode extends Node {
 	public SpeerkerNode(PeerInfo info, int maxPeers) {
 		this(info, maxPeers, false);
 	}
-	
+
 	/**
 	 * Creates a new P2P Speerker Node
 	 * 
