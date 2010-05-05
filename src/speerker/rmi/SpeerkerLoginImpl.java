@@ -20,6 +20,8 @@ package speerker.rmi;
 
 import java.rmi.RemoteException;
 
+import speerker.App;
+import speerker.db.UserGateway;
 import speerker.types.User;
 
 public class SpeerkerLoginImpl implements SpeerkerLogin {
@@ -32,17 +34,13 @@ public class SpeerkerLoginImpl implements SpeerkerLogin {
 
 	@Override
 	public User login(User user) throws RemoteException {
-		System.out.println("Login "+user.getUsername()+" "+ user.getPassword());
-		if (user.getUsername().equals("abc")
-				&& user.getPassword().equals("def")){
-			System.out.println("Valid");
-			user.setValid(true); 
-		} else {
-			System.out.println("Not Valid");
-			user.setValid(false);
-		}
-		System.out.println("End Login "+user.getValid());
-		return user;
+		App.logger.info("Login user: " + user.getUsername());
+		User dbUser = UserGateway.findByUserName(user.getUsername());
+		if (dbUser.getValid()
+				&& dbUser.getPassword().equals(user.getPassword()))
+			return dbUser;
+		else
+			return user;
 	}
 
 	public void bind() throws RemoteException {
