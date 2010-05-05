@@ -23,8 +23,11 @@ import java.io.Serializable;
 
 public class User implements Serializable {
 	private static final long serialVersionUID = 2776844139926132228L;
+	protected int id;
 	protected String username;
 	protected String password;
+	protected String firstName;
+	protected String lastName;
 	protected Boolean valid;
 
 	public User() {
@@ -36,10 +39,26 @@ public class User implements Serializable {
 	}
 
 	public User(String username, String password, Boolean valid) {
+		this(-1, username, password, "", "", false);
+	}
+
+	public User(Integer id, String username, String password, String firstName,
+			String lastName, Boolean valid) {
 		super();
+		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.valid = valid;
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getUsername() {
@@ -58,6 +77,22 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
 	public Boolean getValid() {
 		return valid;
 	}
@@ -65,5 +100,4 @@ public class User implements Serializable {
 	public void setValid(Boolean valid) {
 		this.valid = valid;
 	}
-
 }
