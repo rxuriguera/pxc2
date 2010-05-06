@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<library>
+  <song>
+    <title>Bungaloo (Original Electrocuga</title>
+    <artist>Electrocugat</artist>
+    <album>Lounge Club Remixes</album>
+    <hash>085707DFD2B0F2DF140A6D40DF4BCFFA</hash>
+    <path>/home/rxuriguera/enlistments/speerker/fixtures/music/01 Bungaloo (Original Electrocugat).mp3</path>
+    <size>6222002</size>
+  </song>
+  <song>
+    <title>Seventeen</title>
+    <artist>Ladytron</artist>
+    <album>light&amp;magic (Emperor Norton -</album>
+    <hash>070EA649CB6D0C646FD34BB36B7D3CC2</hash>
+    <path>/home/rxuriguera/enlistments/speerker/fixtures/music/02 Seventeen.mp3</path>
+    <size>8895512</size>
+  </song>
+  <song>
+    <title>Money (That's What I Want)</title>
+    <artist>The Flying Lizards</artist>
+    <album>The Flying Lizards</album>
+    <hash>453A2D79E91541AB0F4D89E0DBF3FBFF</hash>
+    <path>/home/rxuriguera/enlistments/speerker/fixtures/music/b.mp3</path>
+    <size>6649075</size>
+  </song>
+</library>
+

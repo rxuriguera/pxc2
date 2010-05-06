@@ -1,0 +1,384 @@
+\documentclass[a4paper,oneside]{article}
+\usepackage{geometry}
+\usepackage{doc}
+\usepackage[latin1]{inputenc}
+\usepackage[catalan]{babel}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{fancyvrb}
+\usepackage{url} 
+\usepackage{color}
+
+\usepackage[pdfauthor={Jordi Bartrolí and Héctor Mañosas and Ramon Xuriguera},%
+        pdfsubject={Speerker: Proposta},%
+        pdftitle={Speerker: Proposta},%
+        pdftex]{hyperref}
+
+\title{Speerker: Proposta}
+\author{Jordi Bartrolí \and Héctor Mañosas \and Ramon Xuriguera}
+\date{Març 2010}
+
+
+\definecolor{lightgrey}{gray}{0.85}
+
+\lstset{%
+    numbers=none,               %
+    breaklines=true,            %
+    fancyvrb=false,             %
+    tabsize=2,                  % sets default tabsize to 2 spaces
+    language=Java,              %
+    captionpos=b,               % sets the caption-position to bottom
+    frame=single,
+    xleftmargin=3em,
+    xrightmargin=3em,
+    backgroundcolor = \color{lightgrey}
+}        
+
+\setlength{\parindent}{0in}
+
+\begin{document}
+\maketitle
+
+\section{Resum de la proposta}
+El projecte que pretenem desenvolupar per l'assignatura de PXC és una aplicació per escoltar cançons via \textit{streaming} en una xarxa \textit{peer-to-peer}; que permeti escoltar temes musicals buscant per artista, nom de la cançó o àlbum.
+\\
+\\
+Actualment existeixen nombrosos serveis d'streaming de música similars: \textit{Last.fm}, \textit{Spotify}, \textit{Grooveshark}, etc.  De tots aquests, només \textit{Spotify} fa ús de les tècniques P2P per repartir el tràfic entre els usuaris de la xarxa i tot i així, també s'ajuda de servidors d'streaming. També es poden trobar altres aplicacions com ara \textit{Despotify}, però només són eines generades amb enginyeria inversa que per sota utilitzen els servidors i el protocol d'\textit{Spotify}. 
+\\
+\\
+Creiem que fa falta una alternativa. La nostra proposta té els següents aspectes diferenciadors:
+\begin{itemize}
+\item{}100\% P2P
+\item{}Open Source (Llicència GPL v.3)
+\item{}Lliure de publicitat
+\item{}Possibilitat de descarregar música
+\end{itemize}
+
+\section{Objectius tecnològics}
+Una de les tasques que hem realitzat abans de redactar aquesta proposta i a la que hem dedicat força temps ha estat la recerca de tecnologies i treball existent que ens poden ajudar a aconseguir els nostres objectius. Per implementar la nostra aplicació en el període de temps requerit serà necessàri utilitzar les eines següents:
+\begin{itemize}
+\item{}Biblioteques d'streaming 
+\item{}Reproductor d'audio
+\item{}Framework P2P com ara JXTA
+\item{}Biblioteques per obtenir la informació ID3 dels arxius d'audio
+\end{itemize}
+
+Altres tecnologies que utilitzarem:
+\begin{itemize}
+\item{}RMI over SSL
+\item{}Servlets
+\item{}SQL
+\item{}XSLT
+\item{}DHT
+\end{itemize}
+
+
+\section{Descripció detallada de la proposta}
+La nostra aplicació està pensada per funcionar en un entorn com el de la figura \ref{fig:arquitectura}. Per una banda tenim un servidor amb una base de dades accessible tant a través del navegador (amb \textit{servlets}) com RMI. Aquest servidor ens permetrà tenir un control dels usuaris de l'aplicació i generar estadístiques.
+\\
+\\
+Per l'altra, tindrem una xarxa de \textit{peers} de diferents tipus:
+\begin{itemize}
+\item{}\textit{Rendezvous peers}: Nodes de la xarxa fixes que permetran que els nous nodes en puguin conèixer d'altres. En principi, aquesta funció la farà el mateix servidor que conté la base de dades.
+\item{}\textit{Edge peers}: Nodes dels usuaris. Seran màquines que compliran funcions tant de client com de servidor per tal d'intercanviar cançons.
+\item{}\textit{Peers} mòbils: Nodes dels usuaris que s'executen en un dispositiu mòbil. Només faran de client, és a dir, només podran rebre cançons. Hem pres aquesta decisió perquè es tracta de dispositius molt més limitats en qüestions de processador i capacitat d'emmagatzemament.
+\end{itemize}
+
+
+\begin{figure}[h!t]
+\begin{center}
+\includegraphics[scale=0.4]{figures/arquitectura.pdf}
+\caption{Topologia de la xarxa}
+\label{fig:arquitectura}
+\end{center}
+\end{figure}
+
+\subsection{Flux de la informació}
+Un dels problemes que creiem que hi pot haver a la pràctica és que els \textit{peers} descarreguin molta més música de la que pugen. De fet, un dels factors que influeix en això és el fet que els \textit{peers} mòbils només facin de client. Creiem que obligar als usuaris a registrar-se pot ser una solució. D'aquesta manera, podem controlar qui pot utilitzar l'aplicació mòbil i qui no. A més, també ens servirà per mostrar estadístiques d'ús de l'aplicació.
+\\
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[scale=0.5]{figures/registre_usuaris.pdf}
+\caption{Registre d'usuaris}
+\label{fig:registre_usuaris}
+\end{center}
+\end{figure}
+
+Per tant, el primer pas per a que un usuari pugui utilitzar la nostra aplicació serà registrar-se des de la nostra pàgina web. Com que les dades que s'enviaran són privades, caldrà que la connexió sigui segura. Un cop registrat, l'usuari es pot descarregar l'aplicació i instalar·la.
+\\
+\\
+Abans de poder començar a escoltar música, l'usuari s'haurà d'autenticar. Com en el cas anterior, el nom d'usuari i clau s'enviaran al servidor de forma segura, tot i que aquí s'utilitzarà RMI. Si la informació és correcta, el servidor li donarà permís per començar a utilitzar l'aplicació.
+\\
+\\
+Com que el servidor també serà un \textit{rendezvous peer}, li facilitarà una llista de peers per tal que es pugui unir a la xarxa. A partir d'aquí, l'usuari ja estarà connectat i podrà començar l'intercanvi de fitxers d'audio.
+
+\begin{figure}[h!t]
+\begin{center}
+\includegraphics[scale=0.4]{figures/autenticacio.pdf}
+\caption{Autenticació des de l'aplicació}
+\label{fig:autenticacio}
+\end{center}
+\end{figure}
+
+\paragraph{}
+Per poder escoltar música farà falta que els peers comparteixin els fitxers que tenen a la seva màquina local i puguin buscar-ne d'altres. Per facilitar la cerca, l'aplicació tindrà una biblioteca de música que consistirà en un fitxer XML amb un llistat dels fitxers disponibles i la seva informació, per exemple: el nom de la cançó, artista, hash del fitxer, etc.
+\\
+\\
+A més, ha de ser possible trobar fitxers de màquines que estan a la xarxa, però que no coneixem directament. Per fer-ho utilitzarem la tècnica de \textit{Distributed Hash Tables}. La figura \ref{fig:cercariescoltarmusica} mostra aquesta idea. Les fletxes blaves indiquen la cerca d'un fitxer als \textit{peers}. Encara que el fitxer estigui a una màquina que en principi no coneixem directament, la descàrrega sí que es fa de forma directa (fletxa verda).
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[scale=0.5]{figures/cercar_i_escoltar_musica.pdf}
+\caption{Cerca de cançons}
+\label{fig:cercariescoltarmusica}
+\end{center}
+\end{figure}
+
+\paragraph{}
+El servidor emmagatzemarà estadístiques de la música que estan escoltant els usuaris. Aquesta informació també l'enviarà l'aplicació utilitzant RMI. Per consultar-la caldrà fer-ho des de la web, on hi haurà disponibles estadístiques tant per usuari com globals. La informació s'extreurà de la base de dades en XML i es convertirà a HTML amb un full d'estil XSL, tal i com es pot veure a la figura \ref{fig:consulta_estadistiques}.
+
+\begin{figure}[h!t]
+\begin{center}
+\includegraphics[scale=0.35]{figures/consulta_estadistiques.pdf}
+\caption{Consulta d'estadístiques des de la web}
+\label{fig:consulta_estadistiques}
+\end{center}
+\end{figure}
+
+\subsection{Relació de la proposta amb l'assignatura}
+Creiem que la nostra proposta encaixa molt bé en l'àmbit de l'assignatura. Per una banda utilitzarem algunes de les tecnologies que hem vist durant les pràctiques: RMI i Servlets. Per l'altra, hi ha una bona part de treball que, tot i no haver-lo vist a classe, està molt relacionat amb el tema de xarxes: l'streaming i el P2P.
+
+
+\section{Arquitectura}
+Els següents diagrames mostren a grans trets, quina serà l'arquitectura de capes dels \textit{peers} de la xarxa i del servidor. Els \textit{peers} mòbils seran com els que es mostren al primer diagrama, però sense la possibilitat de fer de servidor P2P.
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[scale=0.4]{figures/capes_peer.pdf}
+\caption{Arquitectura dels \textit{peers} d'escriptori}
+\label{fig:capespeer}
+\end{center}
+\end{figure}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[scale=0.4]{figures/capes_servidor.pdf}
+\caption{Arquitectura del servidor}
+\label{fig:capespeers}
+\end{center}
+\end{figure}
+
+\section{Paquets de treball}
+A continuació llistem els paquets de treball principals que caldrà realitzar per completar la nostra aplicació. Per cadascun d'ells en detallem els objectius, una descripció i quin ha de ser el resultat. El diagrama de Gantt que acompanya aquest document mostra la duració estimada i a qui s'ha assignat cada paquet.
+
+\begin{enumerate}
+\item{}\textbf{Recerca d'informació}
+\begin{itemize}
+\item{}Objectius: Decidir quines tecnologies cal utilitzar i comprovar que ens poden ajudar a acomplir els propòsits de l'aplicació.
+\item{}Treball a realitzar: Obtenir informació i aprendre a utilitzar les tecnologies.
+\item{}Resultat: Llistat de tecnologies i proves de concepte.
+\item{}Assignat a: Tots
+\newline
+\end{itemize}
+
+\item{}\textbf{Disseny de l'esquema de la base de dades}
+\begin{itemize}
+\item{}Objectius: Crear un diagrama amb l'arquitectura de la base de dades.
+\item{}Treball a realitzar: Acordar amb tots els membres de l'equip les característiques necessàries de la base de dades i realitzar un diagrama d'arquitectura.
+\item{}Resultat: Un diagrama clar i complet.
+\item{}Assignat a: Tots
+\newline
+\end{itemize}
+
+\item{}\textbf{Disseny de la interfície Web}
+\begin{itemize}
+\item{}Objectius: Decidir com estructurar la informació i com presentar-la.
+\item{}Treball a realitzar: Consultar altres pàgines per veure com solucionen el problema de presentar les dades de forma clara. Fer prototips de paper. Codificar el disseny en XHTML i CSS.
+\item{}Resultat: Fitxers HTML i CSS amb la interfície de la web.
+\item{}Assignat a: Héctor i Ramon
+\newline
+\end{itemize}
+
+\item{}\textbf{Registre d'usuaris i consulta d'estadístiques}
+\begin{itemize}
+\item{}Objectius: Poder crear comptes d'usuari des de la pàgina web i consultar les estadístiques.
+\item{}Treball a realitzar: Decidir la informació necessària a demanar als usuaris. Estudiar com enviar les dades de forma segura. Crear dos \textit{servlets}.
+\item{}Resultat:  \textit{Servlets} per a la creació de nous comptes d'usuari i per a l'obtenció d'estadístiques.
+\item{}Assignat a: Héctor
+\newline
+\end{itemize}
+
+\item{}\textbf{Creació de la xarxa P2P}
+\begin{itemize}
+\item{}Objectius: Crear un parell de programes client i servidor que es puguin connectar entre ells.
+\item{}Treball a realitzar: Crear l'aplicació client, l'aplicació servidor i tenir en compte la necessitat de \textit{rendezvous peers} per comunicar peers disponibles quan algú entra a la xarxa.
+\item{}Resultat: Programes client i servidor que permetin crear una xarxa P2P on un peer nou pot arribar a connectar-se amb altres.
+\item{}Assignat a: Ramon
+\newline
+\end{itemize}
+
+\item{}\textbf{Multithreading client i servidor P2P}
+\begin{itemize}
+\item{}Objectius: Executar en la mateixa màquina tant el servidor com el client P2P.
+\item{}Treball a realitzar: Investigar sobre com funcionen els \textit{threads} a Java i implementar un programa que executi el codi del client i el del servidor en fils d'execució diferents.
+\item{}Resultat: Una única aplicació que faci de client i servidor P2P utilitzant threads diferents.
+\item{}Assignat a: Ramon
+\newline
+\end{itemize}
+
+\item{}\textbf{Creació de la biblioteca local}
+\begin{itemize}
+\item{}Objectius: Crear una biblioteca dels fitxers dels quals es disposa a la màquina local i que podran ser compartits amb la resta de peers.
+\item{}Treball a realitzar: Decidir quina informació cal fer disponible als usuaris de la xarxa. Trobar els fitxers d'audio d'un directori. Extreure'n la informació (ID3). Resoldre possibles    inconsistències (e.g. cançons duplicades, etc.)
+\item{}Resultat:  Un fitxer XML amb la descripció de la biblioteca.
+\item{}Assignat a: Jordi
+\newline
+\end{itemize}
+
+\item{}\textbf{Interfície Gràfica}
+\begin{itemize}
+\item{}Objectius: Crear interfície d'usuari intuïtiva per a la cerca i reproducció de cançons.
+\item{}Treball a realitzar: Buscar informació sobre com crear interfícies en Java, fer prototips i implementar la interfície.
+\item{}Resultat: Conjunt de classes Java que conformen la interfície de l'aplicació.
+\item{}Assignat a: Jordi i Ramon
+\newline
+\end{itemize}
+
+\item{}\textbf{Adaptació a Android}
+\begin{itemize}
+\item{}Objectius: Adaptar l'aplicació d'escriptori per utilitzar-la en mòbils Android.
+\item{}Treball a realitzar: Buscar informació com desenvolupar aplicacions Java per Android, dissenyar prototips de la interfície gràfica a Android, eliminar el codi de característiques que no s'ofereixen pels \textit{peers} mòbils.
+\item{}Resultat: Conjunt de classes Java que conformen l'aplicació d'Android.
+\item{}Assignat a: Jordi
+\newline
+\end{itemize}
+
+\item{}\textbf{Cerca de cançons dins de la xarxa P2P}
+\begin{itemize}
+\item{}Objectius: Oferir un servei als peers de la xarxa per tal de localitzar cançons d'altres peers.
+\item{}Treball a realitzar: Buscar informació sobre com utilitzar DHT amb el framework JXTA. Implementar.
+\item{}Resultat: Conjunt de classes Java que ofereixen aquesta funcionalitat.
+\item{}Assignat a: Ramon
+\newline
+\end{itemize}
+
+\item{}\textbf{Transmissió de fitxers}
+\begin{itemize}
+\item{}Objectius: Transmetre els fitxers d'audio d'un \textit{peer} a un altre.
+\item{}Treball a realitzar: Buscar informació sobre com utilitzar els \textit{sockets} del framework JXTA. Implementar.
+\item{}Resultat: Conjunt de classes Java que ofereixen aquesta funcionalitat.
+\item{}Assignat a: Ramon
+\newline
+\end{itemize}
+
+\item{}\textbf{Autenticació RMI i enviament d'estadístiques}
+\begin{itemize}
+\item{}Objectius: Permetre l'autenticació d'usuaris des de les aplicacions d'escriptori i mòbil. I permetre l'enviament d'estadístiques d'ús.
+\item{}Treball a realitzar: Estudiar com fer invocacions remotes segures (e.g. RMI over SSL) i implementar un client i un servidor que permetin autenticar usuaris i enviar estadístiques de l'aplicació (e.g. cançó que s'està escoltant en un moment donat).
+\item{}Resultat: Conjunt de classes Java que permeten autenticar i enviar estadístiques.
+\item{}Assignat a: Jordi i Héctor
+\newline
+\end{itemize}
+
+\item{}\textbf{Tests finals}
+\begin{itemize}
+\item{}Objectius: Testejar l'aplicació per assegurar-nos que funcioni.
+\item{}Treball a realitzar: Fer proves d'instal·lació, ús i desinstal·lació de les aplicacions d'escriptori i mòbil.
+\item{}Resultat: Aplicacions testejades.
+\item{}Assignat a: Tots
+\newline
+\end{itemize}
+
+\item{}\textbf{Documentació}
+\begin{itemize}
+\item{}Objectius: Generar la memòria del projecte i manual d'ús per tal que un nou usuari sàpigui utilitzar l'aplicació.
+\item{}Treball a realitzar: Escriure documentació. Dibuixar diagrames.
+\item{}Resultat: Manual d'usuari i la memòria del projecte.
+\item{}Assignat a: Tots
+\newline
+\end{itemize}
+\end{enumerate}
+
+
+\section{Pla de riscs}
+A continuació detallem els riscos que ens poden sorgir durant la implementació del projecte. Per cadascun d'ells especifiquem la probabilitat, l'impacte sobre el projecte i què farem si realment ens afecta. Com que estem molt condicionats per la data d'entrega del projecte, hem intentat que el pla B de cada risc no modifiqui el diagrama de Gantt per tal de no afectar les tasques successores.
+\begin{enumerate}
+
+\item{}\textbf{No trobem cap manera de cercar arxius amb DHT}
+\begin{itemize}
+\item{}Probabilitat: 0.6
+\item{}Impacte: 0.4
+\item{}Pla B: Si arribat el dia 19 d'abril no aconseguim tenir-ho funcionant, farem que les cerques es facin consultant directament els fitxers XML de biblioteca.
+\item{}\textbf{Hazard: $0.6 \cdot 0.4 = $ 0.24}
+\newline
+\end{itemize}
+
+\item{}\textbf{No aconseguim fer funcionar els threads de Java}
+\begin{itemize}
+\item{}Probabilitat: 0.3
+\item{}Impacte: 0.5
+\item{}Pla B: Si arribat el dia 7 d'abril no aconseguim tenir-ho funcionant, farem que les cerques es facin consultant directament els fitxers XML de biblioteca.
+\item{}\textbf{Hazard: 0.15}
+\newline
+\end{itemize}
+
+\item{}\textbf{Problemes al transferir cançons amb JXTA}
+\begin{itemize}
+\item{}Probabilitat: 0.3
+\item{}Impacte: 0.5
+\item{}Pla B: Si arribat el dia 29 d'abril no funciona, utilitzarem RMI..
+\item{}\textbf{Hazard: 0.15}
+\newline
+\end{itemize}
+
+\item{}\textbf{Problemes amb les llicències d'utilització de codecs per reproduir MP3}
+\begin{itemize}
+\item{}Probabilitat: 0.2
+\item{}Impacte: 0.6
+\item{}Pla B: Si arribat el dia 5 d'abril no hem aconseguit integrar la reproducció dins de l'aplicació, utilitzarem un reproductor extern.
+\item{}\textbf{Hazard: 0.12}
+\newline
+\end{itemize}
+
+\item{}\textbf{No tenim temps de crear les pàgines d'estadístiques}
+\begin{itemize}
+\item{}Probabilitat: 0.5
+\item{}Impacte: 0.2
+\item{}Pla B: Si el 22 d'abril no hem pogut implementar aquesta funcionalitat, la deixarem per la pròxima versió.
+\item{}\textbf{Hazard: 0.10}
+\newline
+\end{itemize}
+
+\item{}\textbf{Transformació de les dades de la DB a XML}
+\begin{itemize}
+\item{}Probabilitat: 0.2
+\item{}Impacte: 0.3
+\item{}Pla B: Si el 15 d'abril encara no ho hem pogut implementar, transformarem les dades directament a HTML.
+\item{}\textbf{Hazard: 0.06}
+\newline
+\end{itemize}
+
+\end{enumerate}
+
+\begin{figure}[h!t]
+\begin{center}
+\includegraphics[scale=0.7]{figures/grafic_riscs.pdf}
+\caption{Gràfic de riscs}
+\label{fig:graficriscs}
+\end{center}
+\end{figure}
+
+\section{El grup de projecte}
+Tal i com es pot intuir a partir del diagrama de Gantt, els rols dels membres de l'equip són:
+\begin{itemize}
+\item{Jordi Bartrolí: Streaming i dispositius mòbils}
+\item{Héctor Mañosas: Base de Dades i comunicació amb el servidor}
+\item{Ramon Xuriguera: Xarxa P2P}
+\end{itemize}
+
+Per desenvolupar el projecte utilitzarem un repositori SVN que es pot trobar a \url{http://code.google.com/p/pxc2}. Per organitzar-nos, utilitzem l'eina \textit{Planner} amb la qual podem indicar l'estat de cada tasca i reassignar-la a algun altre membre del grup.
+
+
+\end{document}

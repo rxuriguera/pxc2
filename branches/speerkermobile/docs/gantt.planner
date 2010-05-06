@@ -1,0 +1,188 @@
+<?xml version="1.0"?>
+<project name="" company="" manager="" phase="" project-start="20100309T000000Z" mrproject-version="2" calendar="2">
+  <properties/>
+  <phases/>
+  <calendars>
+    <day-types>
+      <day-type id="0" name="Laborable" description="Un dia laborable predeterminat"/>
+      <day-type id="1" name="Festiu" description="Un dia festiu predeterminat"/>
+      <day-type id="2" name="Fes servir la base" description="Fes servir un dia del calendari base"/>
+    </day-types>
+    <calendar id="1" name="Predeterminat">
+      <default-week mon="0" tue="0" wed="0" thu="0" fri="0" sat="1" sun="1"/>
+      <overridden-day-types>
+        <overridden-day-type id="0">
+          <interval start="0800" end="1200"/>
+          <interval start="1300" end="1700"/>
+        </overridden-day-type>
+      </overridden-day-types>
+      <days/>
+      <calendar id="2" name="PXC">
+        <default-week mon="2" tue="2" wed="2" thu="2" fri="1" sat="2" sun="2"/>
+        <overridden-day-types>
+          <overridden-day-type id="0">
+            <interval start="1000" end="1200"/>
+          </overridden-day-type>
+        </overridden-day-types>
+        <days>
+          <day date="20100331" type="day-type" id="0"/>
+        </days>
+      </calendar>
+    </calendar>
+  </calendars>
+  <tasks>
+    <task id="1" name="Recerca d'Informaci&#xF3;" note="" work="28800" start="20100309T000000Z" end="20100316T100320Z" work-start="20100309T100000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
+    <task id="2" name="Elaborar Proposta Formal" note="" work="57600" start="20100309T000000Z" end="20100323T100820Z" work-start="20100309T100000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
+    <task id="3" name="Lliurament Proposta Formal" note="" work="0" start="20100323T000000Z" end="20100323T000000Z" work-start="20100323T100000Z" percent-complete="0" priority="0" type="milestone" scheduling="fixed-work">
+      <constraint type="must-start-on" time="20100323T000000Z"/>
+    </task>
+    <task id="4" name="Infraestructura" note="" work="21600" start="20100323T000000Z" end="20100323T120000Z" work-start="20100323T100000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <predecessors>
+        <predecessor id="1" predecessor-id="3" type="FS"/>
+      </predecessors>
+      <task id="5" name="Instal&#xB7;laci&#xF3; i configuraci&#xF3; del servidor MySQL " note="" work="7200" start="20100323T000000Z" end="20100323T120000Z" work-start="20100323T100000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
+      <task id="6" name="Instal&#xB7;laci&#xF3; i configuraci&#xF3; del Tomcat" note="" work="7200" start="20100323T000000Z" end="20100323T120000Z" work-start="20100323T100000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
+      <task id="7" name="Instal&#xB7;laci&#xF3; i configuraci&#xF3; de l'emulador d'Android" note="" work="7200" start="20100323T000000Z" end="20100323T120000Z" work-start="20100323T100000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
+    </task>
+    <task id="8" name="Base de Dades" note="" work="14400" start="20100323T000000Z" end="20100324T104000Z" work-start="20100323T100000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <predecessors>
+        <predecessor id="1" predecessor-id="3" type="FS"/>
+      </predecessors>
+      <task id="9" name="Disseny de l'esquema" note="" work="7200" start="20100323T000000Z" end="20100323T104000Z" work-start="20100323T100000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
+      <task id="10" name="Creaci&#xF3; de taules" note="" work="7200" start="20100323T104000Z" end="20100324T104000Z" work-start="20100323T104000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+        <predecessors>
+          <predecessor id="1" predecessor-id="9" type="FS"/>
+        </predecessors>
+      </task>
+    </task>
+    <task id="11" name="P&#xE0;gina Web" note="" work="144000" start="20100324T104000Z" end="20100422T104000Z" work-start="20100324T104000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <task id="12" name="Disseny de la interf&#xED;cie" note="" work="43200" start="20100324T104000Z" end="20100330T104000Z" work-start="20100324T104000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+        <predecessors>
+          <predecessor id="1" predecessor-id="10" type="FS"/>
+        </predecessors>
+      </task>
+      <task id="13" name="Registre d'usuaris via Servlet" note="" work="57600" start="20100330T104000Z" end="20100413T104000Z" work-start="20100330T104000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+        <predecessors>
+          <predecessor id="1" predecessor-id="12" type="FS"/>
+        </predecessors>
+      </task>
+      <task id="14" name="Consulta Estad&#xED;stiques via Servlet" note="" work="43200" start="20100413T104000Z" end="20100422T104000Z" work-start="20100413T104000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+        <predecessors>
+          <predecessor id="1" predecessor-id="13" type="FS"/>
+        </predecessors>
+      </task>
+    </task>
+    <task id="15" name="Aplicaci&#xF3;" note="" work="468000" start="20100323T000000Z" end="20100513T104000Z" work-start="20100323T100000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <predecessors>
+        <predecessor id="1" predecessor-id="3" type="FS"/>
+      </predecessors>
+      <task id="16" name="Creaci&#xF3; de la xarxa P2P" note="" work="57600" start="20100323T000000Z" end="20100405T120000Z" work-start="20100323T100000Z" percent-complete="60" priority="0" type="normal" scheduling="fixed-work"/>
+      <task id="17" name="Multithreading client i servidor P2P" note="" work="21600" start="20100405T120000Z" end="20100408T120000Z" work-start="20100406T100000Z" percent-complete="74" priority="0" type="normal" scheduling="fixed-work">
+        <predecessors>
+          <predecessor id="1" predecessor-id="16" type="FS"/>
+        </predecessors>
+      </task>
+      <task id="18" name="Creaci&#xF3; de la biblioteca local" note="" work="28800" start="20100323T000000Z" end="20100329T120000Z" work-start="20100323T100000Z" percent-complete="75" priority="0" type="normal" scheduling="fixed-work"/>
+      <task id="19" name="Reproductor de fitxers d'audio" note="" work="43200" start="20100329T120000Z" end="20100407T120000Z" work-start="20100330T100000Z" percent-complete="75" priority="0" type="normal" scheduling="fixed-work">
+        <predecessors>
+          <predecessor id="1" predecessor-id="18" type="FS"/>
+        </predecessors>
+      </task>
+      <task id="20" name="Interf&#xED;cie Gr&#xE0;fica" note="" work="86400" start="20100407T120000Z" end="20100428T120000Z" work-start="20100408T100000Z" percent-complete="20" priority="0" type="normal" scheduling="fixed-work">
+        <predecessors>
+          <predecessor id="1" predecessor-id="19" type="FS"/>
+        </predecessors>
+      </task>
+      <task id="21" name="Adaptaci&#xF3; a Android" note="" work="57600" start="20100428T120000Z" end="20100512T120000Z" work-start="20100429T100000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+        <predecessors>
+          <predecessor id="1" predecessor-id="20" type="FS"/>
+        </predecessors>
+      </task>
+      <task id="22" name="Cerca de can&#xE7;ons dins la xarxa" note="" work="64800" start="20100408T120000Z" end="20100426T120000Z" work-start="20100412T100000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+        <predecessors>
+          <predecessor id="1" predecessor-id="17" type="FS"/>
+        </predecessors>
+      </task>
+      <task id="23" name="Transmissi&#xF3; de fitxers" note="" work="21600" start="20100426T120000Z" end="20100429T120000Z" work-start="20100427T100000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+        <predecessors>
+          <predecessor id="1" predecessor-id="22" type="FS"/>
+        </predecessors>
+      </task>
+      <task id="24" name="Autenticaci&#xF3; RMI" note="" work="43200" start="20100422T104000Z" end="20100504T104000Z" work-start="20100422T104000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+        <predecessors>
+          <predecessor id="1" predecessor-id="14" type="FS"/>
+        </predecessors>
+      </task>
+      <task id="25" name="Estad&#xED;stiques via RMI" note="" work="43200" start="20100504T104000Z" end="20100513T104000Z" work-start="20100504T104000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+        <predecessors>
+          <predecessor id="1" predecessor-id="24" type="FS"/>
+        </predecessors>
+      </task>
+    </task>
+    <task id="26" name="Testos finals" note="" work="21600" start="20100501T000000Z" end="20100506T100320Z" work-start="20100503T100000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <constraint type="start-no-earlier-than" time="20100501T000000Z"/>
+    </task>
+    <task id="27" name="Lliurament Presentaci&#xF3; Seguiment" note="" work="0" start="20100422T000000Z" end="20100422T000000Z" work-start="20100422T100000Z" percent-complete="0" priority="0" type="milestone" scheduling="fixed-work">
+      <constraint type="must-start-on" time="20100422T000000Z"/>
+    </task>
+    <task id="28" name="Documentaci&#xF3;" note="" work="86400" start="20100501T000000Z" end="20100517T100820Z" work-start="20100503T100000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <task id="29" name="Manual d'usuari" note="" work="28800" start="20100501T000000Z" end="20100510T100320Z" work-start="20100503T100000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+        <constraint type="start-no-earlier-than" time="20100501T000000Z"/>
+      </task>
+      <task id="30" name="Mem&#xF2;ria" note="" work="57600" start="20100501T000000Z" end="20100517T100820Z" work-start="20100503T100000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+        <constraint type="start-no-earlier-than" time="20100501T000000Z"/>
+      </task>
+    </task>
+    <task id="31" name="Lliurament Mem&#xF2;ria" note="" work="0" start="20100518T000000Z" end="20100518T000000Z" work-start="20100518T100000Z" percent-complete="0" priority="0" type="milestone" scheduling="fixed-work">
+      <constraint type="must-start-on" time="20100518T000000Z"/>
+    </task>
+  </tasks>
+  <resource-groups/>
+  <resources>
+    <resource id="1" name="H&#xE9;ctor" short-name="" type="1" units="0" email="" note="" std-rate="0"/>
+    <resource id="2" name="Jordi" short-name="" type="1" units="0" email="" note="" std-rate="0"/>
+    <resource id="3" name="Ramon" short-name="" type="1" units="0" email="" note="" std-rate="0"/>
+  </resources>
+  <allocations>
+    <allocation task-id="2" resource-id="1" units="33"/>
+    <allocation task-id="1" resource-id="1" units="33"/>
+    <allocation task-id="6" resource-id="1" units="100"/>
+    <allocation task-id="5" resource-id="1" units="100"/>
+    <allocation task-id="30" resource-id="1" units="33"/>
+    <allocation task-id="29" resource-id="1" units="33"/>
+    <allocation task-id="26" resource-id="1" units="33"/>
+    <allocation task-id="10" resource-id="1" units="100"/>
+    <allocation task-id="9" resource-id="1" units="100"/>
+    <allocation task-id="14" resource-id="1" units="100"/>
+    <allocation task-id="13" resource-id="1" units="100"/>
+    <allocation task-id="12" resource-id="1" units="100"/>
+    <allocation task-id="25" resource-id="1" units="75"/>
+    <allocation task-id="24" resource-id="1" units="75"/>
+    <allocation task-id="2" resource-id="2" units="33"/>
+    <allocation task-id="1" resource-id="2" units="33"/>
+    <allocation task-id="7" resource-id="2" units="100"/>
+    <allocation task-id="30" resource-id="2" units="33"/>
+    <allocation task-id="29" resource-id="2" units="33"/>
+    <allocation task-id="26" resource-id="2" units="33"/>
+    <allocation task-id="9" resource-id="2" units="100"/>
+    <allocation task-id="23" resource-id="2" units="25"/>
+    <allocation task-id="25" resource-id="2" units="25"/>
+    <allocation task-id="24" resource-id="2" units="25"/>
+    <allocation task-id="19" resource-id="2" units="100"/>
+    <allocation task-id="18" resource-id="2" units="100"/>
+    <allocation task-id="21" resource-id="2" units="100"/>
+    <allocation task-id="20" resource-id="2" units="50"/>
+    <allocation task-id="2" resource-id="3" units="33"/>
+    <allocation task-id="1" resource-id="3" units="33"/>
+    <allocation task-id="12" resource-id="3" units="100"/>
+    <allocation task-id="20" resource-id="3" units="50"/>
+    <allocation task-id="30" resource-id="3" units="33"/>
+    <allocation task-id="29" resource-id="3" units="33"/>
+    <allocation task-id="26" resource-id="3" units="33"/>
+    <allocation task-id="9" resource-id="3" units="100"/>
+    <allocation task-id="23" resource-id="3" units="75"/>
+    <allocation task-id="22" resource-id="3" units="100"/>
+    <allocation task-id="17" resource-id="3" units="100"/>
+    <allocation task-id="16" resource-id="3" units="100"/>
+  </allocations>
+</project>
