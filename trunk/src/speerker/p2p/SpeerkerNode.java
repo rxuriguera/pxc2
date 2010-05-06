@@ -263,8 +263,7 @@ public class SpeerkerNode extends Node {
 	public void newFileTransfer(SearchResult result) {
 		String transferID = result.getSong().getHash();
 		FileGetter fp = new FileGetter(transferID, this, result);
-		fp.setName("Speerker-" + this.getId() + "-Transfer-"
-				+ this.fileTransfers.size());
+		fp.setName("Transfer-" + transferID.substring(0, 6));
 		this.fileTransfers.put(transferID, fp);
 		fp.start();
 	}

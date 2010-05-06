@@ -18,6 +18,10 @@
 
 package speerker.p2p;
 
+import static org.junit.Assert.*;
+
+import java.util.HashMap;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -29,11 +33,9 @@ public class TestSpeerkerP2PLayer {
 	@Before
 	public void setUp() throws Exception {
 	}
-/*
-	@Test
-	public void testP2PLayer() throws InterruptedException {
-		App.setJavaLogging();
 
+	// @Test
+	public void testP2PLayer() throws InterruptedException {
 		PeerInfo nonExistent = new PeerInfo("nonExistent", "", 9001);
 		PeerInfo peer01 = new PeerInfo("peer01", "localhost", 9000);
 		PeerInfo peer02 = new PeerInfo("peer02", "localhost", 8900);
@@ -44,57 +46,77 @@ public class TestSpeerkerP2PLayer {
 		PeerInfo peer07 = new PeerInfo("peer07", "localhost", 8400);
 
 		@SuppressWarnings("unused")
-		SpeerkerP2PLayer app01 = new SpeerkerP2PLayer(peer01, nonExistent, 5);
-		SpeerkerP2PLayer app02 = new SpeerkerP2PLayer(peer02, peer01, 5);
-		SpeerkerP2PLayer app03 = new SpeerkerP2PLayer(peer03, peer01, 5);
-		SpeerkerP2PLayer app04 = new SpeerkerP2PLayer(peer04, peer01, 5);
-		SpeerkerP2PLayer app05 = new SpeerkerP2PLayer(peer05, peer01, 5);
-		SpeerkerP2PLayer app06 = new SpeerkerP2PLayer(peer06, peer01, 5);
-		SpeerkerP2PLayer app07 = new SpeerkerP2PLayer(peer07, peer01, 5);
+		SpeerkerP2PLayer app01 = new SpeerkerP2PLayer(peer01, nonExistent, 5,
+				false);
+		SpeerkerP2PLayer app02 = new SpeerkerP2PLayer(peer02, peer01, 5, false);
+		@SuppressWarnings("unused")
+		SpeerkerP2PLayer app03 = new SpeerkerP2PLayer(peer03, peer01, 5, false);
+		SpeerkerP2PLayer app04 = new SpeerkerP2PLayer(peer04, peer01, 5, false);
+		SpeerkerP2PLayer app05 = new SpeerkerP2PLayer(peer05, peer01, 5, false);
+		SpeerkerP2PLayer app06 = new SpeerkerP2PLayer(peer06, peer01, 5, false);
+		SpeerkerP2PLayer app07 = new SpeerkerP2PLayer(peer07, peer01, 5, false);
 
 		Thread.sleep(200);
 		assertEquals("Joined all peers", 5, app05.getNConnectedPeers());
 		assertEquals("Maximum peers reached", 0, app07.getNConnectedPeers());
 
-		// Remove one of the peers
-		app03.closeConnections();
-		Thread.sleep(200);
+		// Remove one of the peers app03.closeConnections(); Thread.sleep(200);
 		assertEquals("Peers after quitting", 4, app04.getNConnectedPeers());
 
 		app02.closeConnections();
 		Thread.sleep(200);
 		assertEquals("Peers after quitting", 3, app06.getNConnectedPeers());
 	}
-*/
-	/*
-	@Test
-	public void testSearch() {
-		fail("Not yet implemented");
-	}*/
 
-	@Test
-	public void testGetFile() {
+	// @Test
+	public void testSearch() {
 		PeerInfo nonExistent = new PeerInfo("Server", "localhost", 7999);
 		PeerInfo peer01 = new PeerInfo("peer01", "localhost", 9101);
 		PeerInfo peer02 = new PeerInfo("peer02", "localhost", 9102);
 
-		SpeerkerP2PLayer app01 = new SpeerkerP2PLayer(peer01, nonExistent, 5, false);
-		@SuppressWarnings("unused")
+		SpeerkerP2PLayer app01 = new SpeerkerP2PLayer(peer01, nonExistent, 5,
+				false);
 		SpeerkerP2PLayer app02 = new SpeerkerP2PLayer(peer02, peer01, 5, false);
+
+		app01.search("money");
+
+		HashMap<String, HashMap<String, SearchResult>> results = app01
+				.getSearchResults();
+
+		assertTrue(results.size() == 1);
+
+		app01.closeConnections();
+		app02.closeConnections();
+	}
+
+	@Test
+	public void testGetFile() {
+		PeerInfo nonExistent = new PeerInfo("Server", "localhost", 7999);
+		PeerInfo peer01 = new PeerInfo("peer01", "localhost", 9201);
+		PeerInfo peer02 = new PeerInfo("peer02", "localhost", 9202);
+		PeerInfo peer03 = new PeerInfo("peer03", "localhost", 9203);
+
+		SpeerkerP2PLayer app01 = new SpeerkerP2PLayer(peer01, nonExistent, 5,
+				false);
+		SpeerkerP2PLayer app02 = new SpeerkerP2PLayer(peer02, peer01, 5, false);
+		SpeerkerP2PLayer app03 = new SpeerkerP2PLayer(peer03, peer01, 5, false);
 
 		Song song = new Song();
 		song.setHash("453A2D79E91541AB0F4D89E0DBF3FBFF");
 		song.setSize(6649075l);
 
 		SearchResult result = new SearchResult("ID", song, peer02);
+		result.addPeer(peer03);
 
 		app01.getFile(result);
-		
+
 		try {
-			Thread.sleep(300000);
+			Thread.sleep(40000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		app01.closeConnections();
+		app02.closeConnections();
+		app03.closeConnections();
 	}
 }

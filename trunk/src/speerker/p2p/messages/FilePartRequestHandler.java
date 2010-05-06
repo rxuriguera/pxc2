@@ -50,6 +50,10 @@ public class FilePartRequestHandler extends SpeerkerMessageHandler {
 			return;
 		}
 
+		App.logger.info(this.peer.getInfo().toString()
+				+ ": Handling PARTREQ request. Sending file part: "
+				+ part.getPart() + " to " + part.getRequester().toString());
+
 		/*
 		 * // Test timeouts if(part.getPart()%2==0){
 		 * App.logger.debug("Not sending requested part "+part.getPart());
@@ -58,7 +62,8 @@ public class FilePartRequestHandler extends SpeerkerMessageHandler {
 
 		String path = this.peer.getFilePath(part.getFileHash());
 		if (path == null) {
-			App.logger.error("File does not exist in this peer");
+			App.logger.error(this.peer.getInfo().toString()
+					+ ": File does not exist in this peer");
 			return;
 		}
 
@@ -103,7 +108,8 @@ public class FilePartRequestHandler extends SpeerkerMessageHandler {
 		Random generator = new Random();
 		try {
 			Integer wait = generator.nextInt(8000);
-			App.logger.debug("Waiting random time before sending part: " + wait
+			App.logger.debug(this.peer.getInfo().toString()
+					+ ": Waiting random time before sending part: " + wait
 					+ " milliseconds");
 			Thread.sleep(wait);
 		} catch (InterruptedException e) {
@@ -111,10 +117,12 @@ public class FilePartRequestHandler extends SpeerkerMessageHandler {
 			e.printStackTrace();
 		}
 
-		App.logger.info("Sending part: " + part.getPart() + " to "
-				+ part.getRequester().toString());
-
 		// Send part to peer
 		this.peer.connectAndSend(part.getRequester(), message, false);
+
+		App.logger.info(this.peer.getInfo().toString()
+				+ ": Finished sending part: " + part.getPart() + " to "
+				+ part.getRequester().toString());
+
 	}
 }
