@@ -37,14 +37,14 @@ public class SearchManager {
 		new Thread () {
 			public void run () {
 				File f =  new File(App.getProperty("DestFilePath")+"/"+ hash);
-				while(!f.exists())
+				while(f.length()==0)
 					try {
 						sleep(100);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-				playlist.add(speerkerP2PLayer.getSearchResults().get(field).get(hash).getSong().getTitle(), speerkerP2PLayer.getSearchResults().get(field).get(hash).getSong().getArtist(), speerkerP2PLayer.getSearchResults().get(field).get(hash).getSong().getAlbum(), f.getAbsolutePath());
+				playlist.add(speerkerP2PLayer.getSearchResults().get(field).get(hash).getSong().getTitle(), speerkerP2PLayer.getSearchResults().get(field).get(hash).getSong().getArtist(), speerkerP2PLayer.getSearchResults().get(field).get(hash).getSong().getAlbum(), speerkerP2PLayer.getSearchResults().get(field).get(hash).getSong().getSize(), f.getAbsolutePath());
 			}
 		}.start ();
 		
