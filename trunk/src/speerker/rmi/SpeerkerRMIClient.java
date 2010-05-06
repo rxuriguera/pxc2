@@ -31,6 +31,7 @@ public class SpeerkerRMIClient {
 
 	public SpeerkerRMIClient() {
 		// Server URI
+		// System.setProperty("javax.net.debug", "ssl");
 		this.RMIServerPort = Integer.valueOf(App.getProperty("RMIServerPort"));
 		this.RMIServerBaseURI = App.getProperty("RMIServerBaseURI") + ":"
 				+ this.RMIServerPort + "/";
