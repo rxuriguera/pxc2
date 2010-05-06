@@ -62,7 +62,8 @@ public class FileGetter extends Thread {
 		// Check if file exists
 		File file = new File(filename);
 		if (file.exists()) {
-			App.logger.info("File already exists");
+			App.logger
+					.info(peer.getInfo().toString() + ": File already exists");
 			return;
 		}
 
@@ -80,7 +81,7 @@ public class FileGetter extends Thread {
 		PeerInfo currentPeerInfo;
 
 		App.logger.info(peer.getInfo().toString() + ": Sending " + fileParts
-				+ "file-part requests to peers.");
+				+ " file-part requests to peers.");
 		try {
 			// Send part requests to the peers that have the file
 			for (Integer part = 0; part < fileParts; part++) {
@@ -184,7 +185,8 @@ public class FileGetter extends Thread {
 				// Write the current part
 				out.write(currentPart.getData());
 				out.flush();
-				App.logger.debug("Write part: " + currentPart.getPart());
+				App.logger.debug(peer.getInfo().toString() + ": Writing part: "
+						+ currentPart.getPart());
 				this.expectedPart++;
 				// Reinitialize iterator
 				iterator = this.partsBuffer.iterator();
