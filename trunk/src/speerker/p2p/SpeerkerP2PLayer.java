@@ -111,6 +111,7 @@ public class SpeerkerP2PLayer {
 				query);
 		this.peer.newSearch(query.queryID);
 		for (String key : this.peer.getPeerKeys()) {
+			App.logger.debug("Sending query to peer " + key.toString());
 			peer.sendToPeer(key, message, false);
 		}
 	}

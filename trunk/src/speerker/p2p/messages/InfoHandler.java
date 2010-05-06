@@ -21,6 +21,7 @@ package speerker.p2p.messages;
 
 import peerbase.Node;
 import peerbase.PeerConnection;
+import speerker.App;
 
 /**
  * This class handles messages oft the type SpeerkerMessage.INFO. The purpose of

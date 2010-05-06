@@ -50,13 +50,12 @@ public class FilePartRequestHandler extends SpeerkerMessageHandler {
 			return;
 		}
 
-		// Test timeouts
-		if(part.getPart()%2==0){
-			App.logger.debug("Not sending requested part "+part.getPart());
-			return;
-		}
-		////
-		
+		/*
+		 * // Test timeouts if(part.getPart()%2==0){
+		 * App.logger.debug("Not sending requested part "+part.getPart());
+		 * return; } ////
+		 */
+
 		String path = this.peer.getFilePath(part.getFileHash());
 		if (path == null) {
 			App.logger.error("File does not exist in this peer");
@@ -111,6 +110,9 @@ public class FilePartRequestHandler extends SpeerkerMessageHandler {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+		App.logger.info("Sending part: " + part.getPart() + " to "
+				+ part.getRequester().toString());
 
 		// Send part to peer
 		this.peer.connectAndSend(part.getRequester(), message, false);

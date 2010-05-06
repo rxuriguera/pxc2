@@ -51,7 +51,7 @@ public class QueryProcessor extends Thread {
 			PeerInfo searcher = this.query.getPeerInfo();
 			this.peer.connectAndSend(searcher, responseMessage, false);
 
-			App.logger.info("Sent search results. Total files found: "
+			App.logger.info("Sent search results to: "+query.peerInfo.toString()+". Total files found: "
 					+ results.size());
 		}
 
