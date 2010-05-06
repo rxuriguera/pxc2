@@ -19,7 +19,7 @@ public class Tools {
 		player.setPlaylist(playlist);
 		
 		
-		searchManager =  new SearchManager();
+		searchManager =  new SearchManager(playlist);
 
 		
 	}
