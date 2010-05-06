@@ -6,10 +6,14 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
@@ -33,6 +37,7 @@ public class SearchInter {
 	
 	private String key;
 	private HashMap<String, SearchResult> searchResults;
+	private TableColumn columnHash;
 	
     public SearchInter(Composite c, Display d, SpeerkerInter s){
     	
@@ -61,7 +66,35 @@ public class SearchInter {
 		columnAlbum = new TableColumn (table, SWT.NONE);
 		columnAlbum.setText ("Album");
 		columnAlbum.setWidth(175);
+		
+		columnHash = new TableColumn (table, SWT.NONE);
+		columnHash.setText ("Hash");
+		columnHash.setWidth(175);
 
+		table.addListener (SWT.MouseDoubleClick, new Listener () {
+			public void handleEvent (Event event) {
+				Rectangle clientArea = table.getClientArea ();
+				Point pt = new Point (event.x, event.y);
+				int index = table.getTopIndex ();
+				while (index < table.getItemCount ()) {
+					boolean visible = false;
+					TableItem item = table.getItem (index);
+					for (int i=0; i < 3; i++) {
+						Rectangle rect = item.getBounds (i);
+						if (rect.contains (pt)) {
+							speerkerInter.getTool().getSearchManager().getFile(key, table.getItem(index).getText(3));
+							return;
+						}
+						if (!visible && rect.intersects (clientArea)) {
+							visible = true;
+						}
+					}
+					if (!visible) return;
+					index++;
+				}
+			}
+		});
+		
 		
 		key = "";
 		
@@ -88,7 +121,6 @@ public class SearchInter {
 					public void run(){
 						table.removeAll();
 						if (!key.equals("")){
-							System.out.println(key);
 							searchResults = speerkerInter.getTool().getSearchManager().getResults().get(key);
 							
 							Iterator<Entry<String, SearchResult>> iter = searchResults.entrySet().iterator();
@@ -99,6 +131,7 @@ public class SearchInter {
 								s.setText (0, r.getSong().getTitle());
 								s.setText (1, r.getSong().getArtist());
 								s.setText (2, r.getSong().getAlbum());
+								s.setText (3, r.getSong().getHash());
 								
 							}
 							
