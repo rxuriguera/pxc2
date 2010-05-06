@@ -71,13 +71,13 @@ public class SpeerkerP2PLayer {
 
 		this.peerThread = (new Thread() {
 			public void run() {
-				this.setName("Speerker-P2P-" + peer.getId());
+				this.setName("P2P-" + peer.getId());
 				peer.mainLoop();
 			}
 		});
 		this.peerThread.start();
 
-		App.logger.info("Peer with ID: " + peer.getId() + " started.");
+		App.logger.info(peer.getInfo().toString() + ": Peer started!");
 
 		peer.startStabilizer(new SimplePingStabilizer(peer), 3000);
 	}
@@ -111,7 +111,8 @@ public class SpeerkerP2PLayer {
 				query);
 		this.peer.newSearch(query.queryID);
 		for (String key : this.peer.getPeerKeys()) {
-			App.logger.debug("Sending query to peer " + key.toString());
+			App.logger.debug(this.peer.getInfo().toString()
+					+ ": Sending query to peer " + key.toString());
 			peer.sendToPeer(key, message, false);
 		}
 	}
