@@ -51,7 +51,9 @@ public class QueryProcessor extends Thread {
 			PeerInfo searcher = this.query.getPeerInfo();
 			this.peer.connectAndSend(searcher, responseMessage, false);
 
-			App.logger.info("Sent search results to: "+query.peerInfo.toString()+". Total files found: "
+			App.logger.info(this.peer.getInfo().toString()
+					+ ": Processing query. Sending search results to: "
+					+ query.peerInfo.toString() + ". Total files found: "
 					+ results.size());
 		}
 
@@ -61,7 +63,8 @@ public class QueryProcessor extends Thread {
 			SpeerkerMessage newMessage = new SpeerkerMessage(
 					SpeerkerMessage.QUERY, this.query);
 			for (String nextpid : peer.getPeerKeys())
-				peer.sendToPeer(nextpid, newMessage, false);
+				if (!nextpid.equals(this.query.getPeerInfo().getId()))
+					peer.sendToPeer(nextpid, newMessage, false);
 		}
 	}
 }
