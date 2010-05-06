@@ -104,18 +104,20 @@ public class SpeerkerNode extends Node {
 		if (results == null) {
 			results = new HashMap<String, SearchResult>();
 			this.searchResults.put(result.getQueryID(), results);
-			App.logger.debug("Added new HashMap for search result");
+			App.logger.debug(this.getInfo().toString()
+					+ ": Added new HashMap for search result");
 		}
 
 		// Add results depending on the song's hash
 		SearchResult existentResult = results.get(result.song.getHash());
 		if (existentResult != null) {
 			existentResult.addPeer(result.getPeers().get(0));
-			App.logger
-					.debug("Existent search result. Added to result peer list");
+			App.logger.debug(this.getInfo().toString()
+					+ ": Existent search result. Added to result peer list");
 		} else {
 			results.put(result.song.getHash(), result);
-			App.logger.debug("New search result added.");
+			App.logger.debug(this.getInfo().toString()
+					+ ": New search result added.");
 		}
 	}
 
@@ -190,7 +192,8 @@ public class SpeerkerNode extends Node {
 			return;
 		}
 
-		App.logger.info("Contacted peer: " + remotePeer.getId());
+		App.logger.info(this.getInfo().toString() + ": Contacted peer: "
+				+ remotePeer.getId());
 
 		// Send the remote peer a message to join
 		message = new SpeerkerMessage(SpeerkerMessage.JOIN, this.getInfo());

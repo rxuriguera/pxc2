@@ -21,6 +21,7 @@ package speerker.p2p.messages;
 
 import peerbase.Node;
 import peerbase.PeerConnection;
+import speerker.App;
 
 /**
  * This class handles SpeerkerMessage.LIST messages. The purpose of this handler
@@ -38,6 +39,10 @@ public class ListHandler extends SpeerkerMessageHandler {
 		// Send number of peers
 		peerconn.sendData(new SpeerkerMessage(SpeerkerMessage.REPLY, peer
 				.getNumberOfPeers()));
+
+		App.logger.info(this.peer.getInfo().toString()
+				+ ": Handling LIST request. Sending info about "
+				+ peer.getPeerKeys().size() + " peers.");
 
 		// Send peers' information
 		for (String pid : peer.getPeerKeys()) {

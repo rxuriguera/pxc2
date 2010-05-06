@@ -43,6 +43,9 @@ public class InfoHandler extends SpeerkerMessageHandler {
 
 	@Override
 	public void handleMessage(PeerConnection peerconn, SpeerkerMessage msg) {
+		App.logger.info(this.peer.getInfo().toString()
+				+ ": Handling INFO request. Sending this peer's info.");
+
 		peerconn.sendData(new SpeerkerMessage(SpeerkerMessage.REPLY, peer
 				.getInfo()));
 	}

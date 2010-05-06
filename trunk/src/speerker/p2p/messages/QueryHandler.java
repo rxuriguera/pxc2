@@ -53,14 +53,16 @@ public class QueryHandler extends SpeerkerMessageHandler {
 			return;
 		}
 
+		App.logger
+				.info(this.peer.getInfo().toString()
+						+ ": Handling QUERY message. Sent query acknowledgement for search "
+						+ query.getQuery());
 		peerconn.sendData(new SpeerkerMessage(SpeerkerMessage.REPLY,
 				"Query: ACK"));
 
-		App.logger.info("Sent query acknowledgement.");
-
 		// Perform the search in a separate thread
 		QueryProcessor qp = new QueryProcessor(peer, query);
-		qp.setName("Speerker-QueryProcessor");
+		qp.setName("QueryProcessor");
 		qp.start();
 	}
 

@@ -21,6 +21,7 @@ package speerker.p2p.messages;
 
 import peerbase.Node;
 import peerbase.PeerConnection;
+import speerker.App;
 
 /**
  * Handler for SpeerkerMessage.NAME messages. The main goal is to return the id
@@ -34,6 +35,9 @@ public class NameHandler extends SpeerkerMessageHandler {
 	}
 
 	public void handleMessage(PeerConnection peerconn, SpeerkerMessage msg) {
+		App.logger.info(this.peer.getInfo().toString()
+				+ ": Handling NAME request. Sending this peer's ID.");
+
 		peerconn.sendData(new SpeerkerMessage(SpeerkerMessage.REPLY, peer
 				.getId()));
 	}

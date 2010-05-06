@@ -64,6 +64,10 @@ public class JoinHandler extends SpeerkerMessageHandler {
 			return;
 		}
 
+		App.logger.info(this.peer.getInfo().toString()
+				+ ": Handling JOIN request. Attempting to add peer "
+				+ info.toString() + " to known-peers list");
+
 		if (peer.getPeer(info.getId()) != null)
 			peerconn.sendData(new SpeerkerMessage(SpeerkerMessage.ERROR,
 					"Join: " + "peer already inserted"));
