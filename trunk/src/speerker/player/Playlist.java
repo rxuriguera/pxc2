@@ -27,7 +27,7 @@ public class Playlist {
 		player = p;
 	}
 	
-	public void add(String t, String a, String alb, String p){
+	public void add(String t, String a, String alb, Long songSize, String p){
 		
 		if (list.size()==0) current = 0;
 		list.add(new Song(t,a,alb,p));
