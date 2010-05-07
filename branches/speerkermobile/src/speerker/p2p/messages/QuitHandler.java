@@ -22,6 +22,7 @@ package speerker.p2p.messages;
 import peerbase.Node;
 import peerbase.PeerConnection;
 import peerbase.PeerInfo;
+import speerker.App;
 
 /**
  * This class handles SpeerkerMessage.QUIT messages. It expects the content of
@@ -50,6 +51,10 @@ public class QuitHandler extends SpeerkerMessageHandler {
 					"Incorrect arguments.", e);
 			return;
 		}
+
+		App.logger.info(this.peer.getInfo().toString()
+				+ ":  Handling QUIT request. Attempting to remove peer "
+				+ info.toString() + " from known peers list.");
 
 		if (peer.getPeer(info.getId()) == null) {
 			peerconn.sendData(new SpeerkerMessage(SpeerkerMessage.ERROR,

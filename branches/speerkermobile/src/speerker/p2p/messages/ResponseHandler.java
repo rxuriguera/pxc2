@@ -23,6 +23,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import peerbase.PeerConnection;
+import speerker.App;
 import speerker.p2p.SearchResult;
 import speerker.p2p.SpeerkerNode;
 
@@ -47,6 +48,10 @@ public class ResponseHandler extends SpeerkerMessageHandler {
 					"Incorrect arguments.", e);
 			return;
 		}
+
+		App.logger.info(this.peer.getInfo().toString()
+				+ ": Handling RESP request. Storing " + searchResults.size()
+				+ " received results.");
 
 		// Add the search results to the peer's queue.
 		Iterator<SearchResult> iterator = searchResults.iterator();

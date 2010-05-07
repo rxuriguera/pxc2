@@ -28,13 +28,11 @@ import java.util.Set;
 import peerbase.*;
 import speerker.App;
 import speerker.Song;
-import speerker.p2p.messages.FilePartRequestHandler;
 import speerker.p2p.messages.FilePartResponseHandler;
 import speerker.p2p.messages.InfoHandler;
 import speerker.p2p.messages.JoinHandler;
 import speerker.p2p.messages.ListHandler;
 import speerker.p2p.messages.ResponseHandler;
-import speerker.p2p.messages.QueryHandler;
 import speerker.p2p.messages.QuitHandler;
 import speerker.p2p.messages.SpeerkerMessage;
 
@@ -46,7 +44,6 @@ import speerker.p2p.messages.SpeerkerMessage;
  * @author Nadeem Abdul Hamid
  */
 public class SpeerkerNode extends Node {
-	protected FileHashLibrary filesLibrary;
 	protected HashMap<String, HashMap<String, SearchResult>> searchResults;
 	protected HashMap<String, FileGetter> fileTransfers;
 
@@ -64,7 +61,6 @@ public class SpeerkerNode extends Node {
 	 */
 	public SpeerkerNode(PeerInfo info, int maxPeers, Boolean mobileNode) {
 		super(maxPeers, info);
-		this.filesLibrary = new FileHashLibrary(this.getId());
 		this.searchResults = new HashMap<String, HashMap<String, SearchResult>>();
 		this.fileTransfers = new HashMap<String, FileGetter>();
 
@@ -78,13 +74,6 @@ public class SpeerkerNode extends Node {
 		this.addHandler(SpeerkerMessage.PARTRSP, new FilePartResponseHandler(
 				this));
 		this.addHandler(SpeerkerMessage.QUIT, new QuitHandler(this));
-
-		// Mobile nodes will not process queries and file requests
-		if (!mobileNode) {
-			this.addHandler(SpeerkerMessage.QUERY, new QueryHandler(this));
-			this.addHandler(SpeerkerMessage.PARTREQ,
-					new FilePartRequestHandler(this));
-		}
 	}
 
 	public void clearSearchResults(String queryID) {
@@ -104,18 +93,20 @@ public class SpeerkerNode extends Node {
 		if (results == null) {
 			results = new HashMap<String, SearchResult>();
 			this.searchResults.put(result.getQueryID(), results);
-			App.logger.debug("Added new HashMap for search result");
+			App.logger.debug(this.getInfo().toString()
+					+ ": Added new HashMap for search result");
 		}
 
 		// Add results depending on the song's hash
 		SearchResult existentResult = results.get(result.song.getHash());
 		if (existentResult != null) {
 			existentResult.addPeer(result.getPeers().get(0));
-			App.logger
-					.debug("Existent search result. Added to result peer list");
+			App.logger.debug(this.getInfo().toString()
+					+ ": Existent search result. Added to result peer list");
 		} else {
 			results.put(result.song.getHash(), result);
-			App.logger.debug("New search result added.");
+			App.logger.debug(this.getInfo().toString()
+					+ ": New search result added.");
 		}
 	}
 
@@ -132,28 +123,6 @@ public class SpeerkerNode extends Node {
 
 	public HashMap<String, HashMap<String, SearchResult>> getSearchResults() {
 		return this.searchResults;
-	}
-
-	/**
-	 * Returns a list with all the songs in the local peer that match a query
-	 * 
-	 * @param query
-	 * @return a list of SearchResults
-	 */
-	public List<SearchResult> search(SearchQuery query) {
-		List<SearchResult> results = new LinkedList<SearchResult>();
-
-		Iterator<Song> iterator = this.filesLibrary.getMatchingSongs(
-				query.query).iterator();
-		while (iterator.hasNext()) {
-			results.add(new SearchResult(query.queryID, iterator.next(), this
-					.getInfo()));
-		}
-		return results;
-	}
-
-	public String getFilePath(String hash) {
-		return this.filesLibrary.getFilePath(hash);
 	}
 
 	/**
@@ -190,12 +159,19 @@ public class SpeerkerNode extends Node {
 			return;
 		}
 
-		App.logger.info("Contacted peer: " + remotePeer.getId());
+		App.logger.info(this.getInfo().toString() + ": Contacted peer: "
+				+ remotePeer.getId());
 
 		// Send the remote peer a message to join
 		message = new SpeerkerMessage(SpeerkerMessage.JOIN, this.getInfo());
-		String response = this.connectAndSend(remotePeer, message, true).get(0)
-				.getMsgType();
+		responseList = this.connectAndSend(remotePeer, message, true);
+		if (responseList.size() <= 0) {
+			App.logger.info("Could not get peer information for "
+					+ remotePeer.toString());
+			return;
+		}
+
+		String response = responseList.get(0).getMsgType();
 		if (!response.equals(SpeerkerMessage.REPLY)
 				|| this.getPeerKeys().contains(remotePeer.getId())) {
 			App.logger.info("Could not get peer information for "
@@ -260,8 +236,7 @@ public class SpeerkerNode extends Node {
 	public void newFileTransfer(SearchResult result) {
 		String transferID = result.getSong().getHash();
 		FileGetter fp = new FileGetter(transferID, this, result);
-		fp.setName("Speerker-" + this.getId() + "-Transfer-"
-				+ this.fileTransfers.size());
+		fp.setName("Transfer-" + transferID.substring(0, 6));
 		this.fileTransfers.put(transferID, fp);
 		fp.start();
 	}

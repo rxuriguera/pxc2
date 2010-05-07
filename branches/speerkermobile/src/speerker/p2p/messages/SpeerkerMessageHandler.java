@@ -31,7 +31,6 @@ public abstract class SpeerkerMessageHandler implements HandlerInterface {
 	 * message. In order to use a SpeerkerMessage, we need a wrapper that does
 	 * the transformation. This is the goal of this method.
 	 */
-	@Override
 	public void handleMessage(PeerConnection peerconn, PeerMessage msg) {
 		SpeerkerMessage smsg = SpeerkerMessage.valueOf(msg);
 		this.handleMessage(peerconn, smsg);

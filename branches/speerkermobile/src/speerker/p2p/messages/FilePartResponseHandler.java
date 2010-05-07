@@ -54,8 +54,12 @@ public class FilePartResponseHandler extends SpeerkerMessageHandler {
 		String transferID = part.getTransferID();
 		FileGetter transfer = this.peer.getFileTransfer(transferID);
 
+		App.logger.info(this.peer.getInfo().toString()
+				+ ": Handling PARTRSP request. File transfer: " + transferID);
+
 		if (transfer == null) {
-			App.logger.info("Transfer does not exist anymore");
+			App.logger.info(this.peer.getInfo().toString()
+					+ ": Transfer does not exist anymore");
 			return;
 		}
 
