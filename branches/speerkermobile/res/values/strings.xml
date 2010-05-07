@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="quitShortcut">q</string>
+    <string name="quitLabel">Quit</string>
+    <string name="searchShortcut">s</string>
+    <string name="hello">Hello World, SpeerkerMobile!</string>
+    <string name="app_name">Speerker Mobile</string>
+
+<color name="appBgColor">#CCCCCC</color>
+
+
+
+<string name="loginLabel">Log in</string>
+<dimen name="layoutMargin">9px</dimen>
+<string name="loginInfoLabel">Username and Password:</string>
+<color name="darkGrey">#333333</color>
+<dimen name="formTextSize">8pt</dimen>
+<string name="usernameLabel">Username</string>
+<string name="passwordLabel">Password</string>
+<string name="searchLabel">Search</string>
+
+<string name="playLabel">Play</string>
+<string name="pauseLabel">Pause</string>
+
+<color name="listBgColor">#EEEEEE</color>
+
+<string name="playerLabel">Player</string>
+<string name="playerShortcut">p</string>
+<color name="transparent">#00000000</color>
+</resources>

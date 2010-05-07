@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<item android:id="@+id/playerMenuItem" android:alphabeticShortcut="@string/playerShortcut"
+		android:title="@string/playerLabel" android:icon="@android:drawable/ic_lock_silent_mode_off"></item>
+
+	<item android:id="@+id/searchMenuItem" android:alphabeticShortcut="@string/searchShortcut"
+		android:title="@string/searchLabel" android:icon="@android:drawable/ic_menu_search"></item>
+</menu>
