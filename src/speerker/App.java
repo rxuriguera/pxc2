@@ -18,24 +18,32 @@
 
 package speerker;
 
+import java.io.InputStream;
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
+import speerker.mobile.AndroidLoggerWrapper;
+
+import android.util.Log;
 
 public class App {
-	private static Properties properties = null;
+	private static String LOGTAG = "Speerker";
+	public static AndroidLoggerWrapper logger = AndroidLoggerWrapper
+			.getLogger(App.LOGTAG);
 
-	public static Logger logger = Logger.getLogger("Speerker");
+	private static InputStream propertiesFile;
+
+	private static Properties properties = null;
 
 	protected static void loadProperties() {
 		if (properties == null) {
 			try {
 				properties = new Properties();
-				java.net.URL url = ClassLoader
-						.getSystemResource("speerker.properties");
-				properties.load(url.openStream());
+				// java.net.URL url = ClassLoader
+				// .getSystemResource("speerker.properties");
+				// properties.load(url.openStream());
+				properties.load(propertiesFile);
 			} catch (Exception e) {
-				App.logger.error("Couldn't load application properties.", e);
+				Log.e(LOGTAG, "Couldn't load application properties.", e);
 			}
 		}
 	}
@@ -49,5 +57,13 @@ public class App {
 	public static void setJavaLogging() {
 		System.setProperty("java.util.logging.config.file", App
 				.getProperty("JavaLogging"));
+	}
+
+	public static InputStream getPropertiesFile() {
+		return propertiesFile;
+	}
+
+	public static void setPropertiesFile(InputStream propertiesFile) {
+		App.propertiesFile = propertiesFile;
 	}
 }
