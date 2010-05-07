@@ -52,7 +52,8 @@ public class FileGetter extends Thread {
 		if (this.transferID == null)
 			return;
 
-		App.logger.info("Starting new file transfer for: " + this.transferID);
+		App.logger.info(peer.getInfo().toString()
+				+ ": Starting new file transfer for: " + this.transferID);
 
 		// Decide how to divide the file
 		String filename = App.getProperty("DestFilePath") + "/"
@@ -61,7 +62,8 @@ public class FileGetter extends Thread {
 		// Check if file exists
 		File file = new File(filename);
 		if (file.exists()) {
-			App.logger.info("File already exists");
+			App.logger
+					.info(peer.getInfo().toString() + ": File already exists");
 			return;
 		}
 
@@ -78,8 +80,8 @@ public class FileGetter extends Thread {
 		Integer currentPeer = 0;
 		PeerInfo currentPeerInfo;
 
-		App.logger.info("Sending peer requests to peers: " + fileParts
-				+ "parts");
+		App.logger.info(peer.getInfo().toString() + ": Sending " + fileParts
+				+ " file-part requests to peers.");
 		try {
 			// Send part requests to the peers that have the file
 			for (Integer part = 0; part < fileParts; part++) {
@@ -88,15 +90,18 @@ public class FileGetter extends Thread {
 						part, packetSize);
 				message = new SpeerkerMessage(SpeerkerMessage.PARTREQ, filePart);
 				this.peer.connectAndSend(currentPeerInfo, message, false);
-				App.logger.debug("Sent request for part " + part + " to "
+				App.logger.debug(peer.getInfo().toString()
+						+ ": Sent request for part " + part + " to "
 						+ currentPeerInfo.getId());
 				currentPeer = (currentPeer + 1) % peers.size();
 
 				// Thread.sleep(200);
 			}
-			App.logger.info("Sent part requests to peers");
+			App.logger.info(peer.getInfo().toString()
+					+ ": Sent part requests to peers");
 		} catch (Exception e) {
-			App.logger.error("Error sending part requests: " + e);
+			App.logger.error(peer.getInfo().toString()
+					+ ": Error sending part requests: " + e);
 		}
 
 		// Prepare streams
@@ -106,7 +111,8 @@ public class FileGetter extends Thread {
 		} catch (FileNotFoundException e) {
 			App.logger.error("File not found", e);
 		}
-		App.logger.info("Prepared output streams");
+		App.logger
+				.info(peer.getInfo().toString() + ": Prepared output streams");
 		BufferedOutputStream buf = new BufferedOutputStream(outfile);
 
 		Integer initiallyExpected, partPeriods;
@@ -132,7 +138,8 @@ public class FileGetter extends Thread {
 
 			// Spend as much time as possible waiting for the first part
 			if (this.expectedPart.equals(0)) {
-				App.logger.debug("Haven't received first part yet.");
+				App.logger.debug(peer.getInfo().toString()
+						+ ": Haven't received first part yet.");
 				firstPartPeriods--;
 				continue;
 			}
@@ -140,12 +147,13 @@ public class FileGetter extends Thread {
 			// If there's a timeout for the expected part, set it to expect the
 			// following
 			if (initiallyExpected.equals(this.expectedPart)) {
-				App.logger.debug("Part " + this.expectedPart
-						+ " timed out and skipped.");
+				App.logger.debug(peer.getInfo().toString() + ": Part "
+						+ this.expectedPart + " timed out and skipped.");
 				this.expectedPart++;
 			}
 		}
-		App.logger.info("Finished transfer or time out");
+		App.logger.info(peer.getInfo().toString()
+				+ ": Finished transfer or time out");
 
 		try {
 			buf.close();
@@ -153,9 +161,9 @@ public class FileGetter extends Thread {
 		} catch (IOException e) {
 			App.logger.warn("Exception while closing stream", e);
 		}
-		
+
 		// Remove the file if it is empty
-		if(file.length()==0 && file.canWrite()){
+		if (file.length() == 0 && file.canWrite()) {
 			file.delete();
 		}
 	}
@@ -177,7 +185,8 @@ public class FileGetter extends Thread {
 				// Write the current part
 				out.write(currentPart.getData());
 				out.flush();
-				App.logger.debug("Write part: " + currentPart.getPart());
+				App.logger.debug(peer.getInfo().toString() + ": Writing part: "
+						+ currentPart.getPart());
 				this.expectedPart++;
 				// Reinitialize iterator
 				iterator = this.partsBuffer.iterator();

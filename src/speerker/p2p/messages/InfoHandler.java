@@ -21,6 +21,7 @@ package speerker.p2p.messages;
 
 import peerbase.Node;
 import peerbase.PeerConnection;
+import speerker.App;
 
 /**
  * This class handles messages oft the type SpeerkerMessage.INFO. The purpose of
@@ -42,6 +43,9 @@ public class InfoHandler extends SpeerkerMessageHandler {
 
 	@Override
 	public void handleMessage(PeerConnection peerconn, SpeerkerMessage msg) {
+		App.logger.info(this.peer.getInfo().toString()
+				+ ": Handling INFO request. Sending this peer's info.");
+
 		peerconn.sendData(new SpeerkerMessage(SpeerkerMessage.REPLY, peer
 				.getInfo()));
 	}

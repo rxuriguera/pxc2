@@ -18,6 +18,7 @@
 
 package speerker.p2p;
 
+import android.util.Log;
 import peerbase.Node;
 import peerbase.PeerInfo;
 import peerbase.util.SimplePingStabilizer;
@@ -29,6 +30,8 @@ import speerker.p2p.messages.QuitHandler;
 import speerker.p2p.messages.SpeerkerMessage;
 
 public class SpeerkerServerNode extends Node {
+	private static String LOGTAG = "Node";
+
 	/**
 	 * Creates a new P2P Speerker Server Node
 	 * 
@@ -66,8 +69,7 @@ public class SpeerkerServerNode extends Node {
 			}
 		});
 		peerThread.start();
-		App.logger.info("Server peer on: " + serverInfo.toString()
-				+ " started.");
+		Log.i(LOGTAG, "Server peer on: " + serverInfo.toString() + " started.");
 
 		peer.startStabilizer(new SimplePingStabilizer(peer), 10000);
 	}
