@@ -159,4 +159,8 @@ public class SpeerkerP2PLayer {
 	public void getFile(SearchResult result) {
 		this.peer.newFileTransfer(result);
 	}
+
+	public void reloadLibrary() {
+		this.peer.loadLibrary();
+	}
 }
