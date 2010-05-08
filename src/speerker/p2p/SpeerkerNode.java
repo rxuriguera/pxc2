@@ -21,13 +21,11 @@ package speerker.p2p;
 
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
 import peerbase.*;
 import speerker.App;
-import speerker.Song;
 import speerker.p2p.messages.FilePartResponseHandler;
 import speerker.p2p.messages.InfoHandler;
 import speerker.p2p.messages.JoinHandler;
