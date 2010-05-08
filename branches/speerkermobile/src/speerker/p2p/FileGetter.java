@@ -56,11 +56,14 @@ public class FileGetter extends Thread {
 				+ ": Starting new file transfer for: " + this.transferID);
 
 		// Decide how to divide the file
-		String filename = App.getProperty("DestFilePath") + "/"
-				+ result.song.getHash();
+		String filename = result.song.getHash();
+
+		// Directory
+		File dir = new File(App.getProperty("DestFilePath"));
+		dir.mkdirs();
 
 		// Check if file exists
-		File file = new File(filename);
+		File file = new File(dir, filename);
 		if (file.exists()) {
 			App.logger
 					.info(peer.getInfo().toString() + ": File already exists");
@@ -122,7 +125,7 @@ public class FileGetter extends Thread {
 			partPeriods = this.nPeriods;
 			initiallyExpected = this.expectedPart;
 			// Timeout for each part
-			while (partPeriods > 0) {
+			while (partPeriods > 0 && this.expectedPart < fileParts) {
 				partPeriods--;
 				try {
 					this.checkPartsBuffer(buf);
@@ -192,5 +195,8 @@ public class FileGetter extends Thread {
 				iterator = this.partsBuffer.iterator();
 			}
 		}
+		App.logger.debug(peer.getInfo().toString()
+				+ ": Checked buffer parts. Current expected part: "
+				+ this.expectedPart);
 	}
 }

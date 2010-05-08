@@ -7,6 +7,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 public abstract class SpeerkerActivity extends Activity {
+	protected static String TITLE = "title";
+	protected static String ARTIST = "artist";
+	protected static String ALBUM = "album";
+	protected static String HASH = "hash";
+	
+	public SpeerkerActivity() {
+		super();
+		Control.currentContext = this;
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

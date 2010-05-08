@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<style parent="android:Theme.Light" name="SpeerkerTheme">
+		<item name="android:windowNoTitle">true</item>
+		<item name="android:windowBackground">@color/appBgColor</item>
+		<item name="android:listViewStyle">@style/speerkerListView</item>
+	</style>
+
+	<style name="speerkerListView" parent="@android:style/Widget.ListView">
+		<item name="android:listSelector">@android:drawable/list_selector_background</item>
+		<item name="android:background">@android:color/transparent</item>
+	</style>
+</resources>

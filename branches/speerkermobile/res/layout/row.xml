@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+	<LinearLayout android:orientation="vertical" android:id="@+id/rowTextLayout"
+		android:layout_width="fill_parent" android:layout_weight="0.2"
+		android:layout_height="fill_parent">
+		<TextView android:id="@+id/songTitle" android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:lines="1"
+			android:marqueeRepeatLimit="marquee_forever" android:textColor="@color/darkGrey"></TextView>
+		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+			<TextView android:id="@+id/songArtist" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:layout_weight="1"
+				android:lines="1" android:textColor="@color/notSoDarkGrey"></TextView>
+
+			<TextView android:id="@+id/songAlbum" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:layout_weight="1"
+				android:lines="1" android:textColor="@color/notSoDarkGrey"></TextView>
+
+	
+</LinearLayout>
+		</LinearLayout>
+
+
+	
+
+
+</LinearLayout>
