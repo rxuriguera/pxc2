@@ -6,16 +6,20 @@ import org.eclipse.swt.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.*;
 
+import speerker.Tools;
+import speerker.types.User;
+
 public class Login {
 	
 	static boolean login;
  
-	public static String[] show(final Display display) {
+	public static String[] show(final Display display, final Tools tools) {
 		
 		Shell shell = new Shell(display, SWT.DIALOG_TRIM);
 		login = false;
@@ -48,7 +52,7 @@ public class Login {
 		userLabel.setText("User: ");
 		userLabel.setLayoutData(gridData);
 		
-		Text userText = new Text (shell, SWT.BORDER);
+		final Text userText = new Text (shell, SWT.BORDER);
 		Point sizeText20 = UtilsSWT.getTextSize(userText, 20);
 		userText.setSize(sizeText20);
 		gridText.heightHint = sizeText20.y;
@@ -59,24 +63,44 @@ public class Login {
 		passwordLabel.setText("Password: ");
 		passwordLabel.setLayoutData(gridData);
 		
-		Text passwordText = new Text (shell, SWT.BORDER | SWT.PASSWORD);
+		final Text passwordText = new Text (shell, SWT.BORDER | SWT.PASSWORD);
 		passwordText.setLayoutData(gridText);
 		
 		Button button = new Button(shell, SWT.PUSH);
 		button.setText("Register");
 		button.setLayoutData(gridButton);
+		
+		Button buttonLogin = new Button(shell, SWT.PUSH);
+		buttonLogin.setText("Login");
+		buttonLogin.setLayoutData(gridButton);
+		
+		final Label error = new Label (shell, SWT.CENTER);
+		error.setText("");
+		GridData gridError = new GridData(GridData.HORIZONTAL_ALIGN_CENTER | GridData.GRAB_HORIZONTAL);
+		gridError.horizontalSpan = 2;
+		error.setLayoutData(gridError);
+		
 		button.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				Register.show(display);
 			}
 		});
 		
-		Button buttonLogin = new Button(shell, SWT.PUSH);
-		buttonLogin.setText("Login");
-		buttonLogin.setLayoutData(gridButton);
 		buttonLogin.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				login = true;
+				User user = tools.getUser();
+				user.setUsername(userText.getText());
+				user.setPassword(passwordText.getText());
+				//user = tools.getSpeerkerRMIClient().login(user);
+				if (!user.getValid()) login = true;
+				else {
+					error.setText("Error: User/Password invalid");
+					userText.setText("");
+					passwordText.setText("");
+					userText.forceFocus();
+				}
+				
+				
 			}
 		});
 		

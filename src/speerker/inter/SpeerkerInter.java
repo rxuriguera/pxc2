@@ -41,6 +41,7 @@ public class SpeerkerInter {
 	private Composite compoSearchSlot;
 	private GridData gridSearchSlot;
 	private SearchInter searchInter;
+	private UpMenuInter upMenuInter;
 
 	
 	public SpeerkerInter(Tools t, Display d){
@@ -108,6 +109,7 @@ public class SpeerkerInter {
 		browserInter = new BrowserInter(compoBrowser, display);
 		menuInter = new MenuInter(compoMenu, display, this);
 		playerInter = new PlayerInter(compoPlayer, display, tools.getPlayer());
+		upMenuInter = new UpMenuInter(shell, display, this);
 		
 		switchCenter("Browser");		
 		
@@ -121,7 +123,7 @@ public class SpeerkerInter {
 		shell.dispose();
 		
 		
-		
+	
 	}
 
 
