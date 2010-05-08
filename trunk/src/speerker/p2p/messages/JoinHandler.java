@@ -69,8 +69,8 @@ public class JoinHandler extends SpeerkerMessageHandler {
 				+ info.toString() + " to known-peers list");
 
 		if (peer.getPeer(info.getId()) != null)
-			peerconn.sendData(new SpeerkerMessage(SpeerkerMessage.ERROR,
-					"Join: " + "peer already inserted"));
+			peerconn.sendData(new SpeerkerMessage(SpeerkerMessage.REPLY,
+					"Join: " + "peer already added: " + info.getId()));
 		else if (info.getId().equals(peer.getId()))
 			peerconn.sendData(new SpeerkerMessage(SpeerkerMessage.ERROR,
 					"Join: " + "attempt to insert self"));
