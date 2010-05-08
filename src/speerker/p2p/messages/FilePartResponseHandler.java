@@ -64,6 +64,9 @@ public class FilePartResponseHandler extends SpeerkerMessageHandler {
 		}
 
 		transfer.addReceivedFilePart(part);
+
+		App.logger.debug(this.peer.getInfo().toString() + ": Filepart "
+				+ part.getPart() + " added for transfer " + transferID);
 	}
 
 }

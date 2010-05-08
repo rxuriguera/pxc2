@@ -1,20 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:background="@color/appBgColor" android:layout_height="fill_parent"
-	android:layout_width="fill_parent" android:orientation="vertical">
-	<LinearLayout android:id="@+id/searchLayout" android:layout_margin="@dimen/layoutMargin" android:layout_width="fill_parent" android:layout_height="wrap_content">
+	android:layout_height="fill_parent" android:layout_width="fill_parent"
+	android:orientation="vertical">
+	<LinearLayout android:id="@+id/searchLayout"
+		android:layout_margin="@dimen/layoutMargin" android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
 
 
 
-		<EditText android:id="@+id/searchEditText" android:hint="@string/searchLabel" android:layout_width="fill_parent" android:lines="1" android:layout_weight="0.4" android:layout_height="fill_parent">
-    
+		<EditText android:id="@+id/searchEditText" android:hint="@string/searchLabel"
+			android:layout_width="fill_parent" android:lines="1"
+			android:layout_height="fill_parent"
+			android:inputType="textPersonName" android:layout_weight="0.2">
+
 
 		</EditText>
-		
-		<Button android:text="@string/searchLabel" android:id="@+id/searchButton" android:layout_width="fill_parent" android:layout_weight="1" android:onClick="searchClicked" android:layout_height="fill_parent"></Button>
+<!-- 
+		<Button android:id="@+id/searchButton" android:src="@android:drawable/ic_menu_search"
+			android:layout_width="fill_parent" android:layout_weight="1"
+			android:onClick="searchClicked" android:layout_height="fill_parent"
+			android:background="@color/transparent"></Button> -->
 
+        <ImageButton android:id="@+id/searchButton"
+                android:layout_height="fill_parent" android:layout_weight="1"
+                android:layout_gravity="center_horizontal" android:layout_width="fill_parent"
+                android:src="@android:drawable/ic_menu_search" android:background="@color/transparent" android:onClick="searchClicked"></ImageButton>
 
-	
-</LinearLayout><ListView android:layout_width="fill_parent" android:id="@+id/resultsListView" android:layout_height="fill_parent" android:layout_margin="@dimen/layoutMargin"></ListView>
+	</LinearLayout>
+	<ListView android:layout_width="fill_parent" android:id="@+id/resultsListView"
+		android:layout_height="fill_parent" android:layout_margin="@dimen/layoutMargin">
+	</ListView>
 
 </LinearLayout>
