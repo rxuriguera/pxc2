@@ -24,5 +24,14 @@
     <path>/home/rxuriguera/enlistments/speerker/fixtures/music/b.mp3</path>
     <size>6649075</size>
   </song>
+
+  <song>
+    <title>Small File</title>
+    <artist>Short Artist</artist>
+    <album>One minute long album</album>
+    <hash>939384SOMEHASH849023</hash>
+    <path>/home/rxuriguera/enlistments/speerker/fixtures/music/short.mp3</path>
+    <size>200000</size>
+  </song>
 </library>
 
