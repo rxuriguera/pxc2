@@ -3,16 +3,5 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
-	<classpathentry kind="lib" path="lib/Mp3Player/basicplayer3.0.jar"/>
-	<classpathentry kind="lib" path="lib/Mp3Player/jl1.0.jar"/>
-	<classpathentry kind="lib" path="lib/Mp3Player/commons-logging-api.jar"/>
-	<classpathentry kind="lib" path="lib/Mp3Player/jflac-1.2.jar"/>
-	<classpathentry kind="lib" path="lib/Mp3Player/jmactritonusspi1.74.jar"/>
-	<classpathentry kind="lib" path="lib/Mp3Player/jogg-0.0.7.jar"/>
-	<classpathentry kind="lib" path="lib/Mp3Player/jorbis-0.0.15.jar"/>
-	<classpathentry kind="lib" path="lib/Mp3Player/jspeex0.9.7.jar"/>
-	<classpathentry kind="lib" path="lib/Mp3Player/kj_dsp1.1.jar"/>
-	<classpathentry kind="lib" path="lib/Mp3Player/mp3spi1.9.4.jar"/>
-	<classpathentry kind="lib" path="lib/Mp3Player/tritonus_share.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
