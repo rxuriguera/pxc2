@@ -9,7 +9,7 @@ public class loginTest {
 	
 	public static void main(String argv[]) {
 		Display display = new Display();
-		String[] loginData = Login.show(display);
+		String[] loginData = Login.show(display, null);
 		System.out.println(loginData[0]);
 		System.out.println(loginData[1]);
 	}

@@ -30,7 +30,7 @@ public class TestXmlMusicLibrary {
 	@Test
 	public void testAddDirectory(){
 		XmlMusicLibrary library = new XmlMusicLibrary("fixtures/library/lib.xml");
-		library.add("fixtures/music");
+		library.add("/Users/bartru/Music");
 		library.saveLibrary();
 	}
 }

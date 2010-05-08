@@ -8,6 +8,7 @@ import speerker.inter.Login;
 import speerker.inter.SpeerkerInter;
 import speerker.player.Playlist;
 import speerker.player.SpeerkerPlayer;
+import speerker.types.User;
 
 import javazoom.jl.decoder.JavaLayerException;
 
@@ -26,11 +27,12 @@ public class Speerker {
 		
 		Display display = new Display();
 		
-		String[] loginData = Login.show(display);
-		
 		tools = new Tools();
 		
+		String[] loginData = Login.show(display, tools);
+		
 		speerkerInter = new SpeerkerInter(tools, display);
+		
 		
 
 	}

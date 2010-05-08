@@ -3,7 +3,9 @@ package speerker;
 import speerker.p2p.SpeerkerP2PLayer;
 import speerker.player.Playlist;
 import speerker.player.SpeerkerPlayer;
+import speerker.rmi.SpeerkerRMIClient;
 import speerker.search.SearchManager;
+import speerker.types.User;
 
 public class Tools {
 
@@ -11,6 +13,8 @@ public class Tools {
 	private SpeerkerPlayer player;
 	private SpeerkerP2PLayer speerkerP2PLayer;
 	private SearchManager searchManager;
+	private SpeerkerRMIClient speerkerRMIClient;
+	private User user;
 
 	public Tools(){
 		playlist = new Playlist();
@@ -18,8 +22,10 @@ public class Tools {
 		playlist.setPlayer(player);
 		player.setPlaylist(playlist);
 		
-		
 		searchManager =  new SearchManager(playlist);
+		
+		user = new User();
+		speerkerRMIClient = new SpeerkerRMIClient();
 
 		
 	}
@@ -34,6 +40,14 @@ public class Tools {
 	
 	public SearchManager getSearchManager() {
 		return searchManager;
+	}
+	
+	public SpeerkerRMIClient getSpeerkerRMIClient() {
+		return speerkerRMIClient;
+	}
+	
+	public User getUser() {
+		return user;
 	}
 	
 }

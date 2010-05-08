@@ -68,6 +68,13 @@ public class XmlMusicLibrary {
 		}
 
 	}
+	
+	public void clear(){
+		Element root = lib.getRootElement();
+		root.removeContent();
+	}
+	
+
 
 	public void saveLibrary() {
 		flib.delete();
