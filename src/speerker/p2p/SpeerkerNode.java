@@ -64,7 +64,7 @@ public class SpeerkerNode extends Node {
 	 */
 	public SpeerkerNode(PeerInfo info, int maxPeers, Boolean mobileNode) {
 		super(maxPeers, info);
-		this.filesLibrary = new FileHashLibrary(this.getId());
+		this.loadLibrary();
 		this.searchResults = new HashMap<String, HashMap<String, SearchResult>>();
 		this.fileTransfers = new HashMap<String, FileGetter>();
 
@@ -85,6 +85,10 @@ public class SpeerkerNode extends Node {
 			this.addHandler(SpeerkerMessage.PARTREQ,
 					new FilePartRequestHandler(this));
 		}
+	}
+
+	public void loadLibrary() {
+		this.filesLibrary = new FileHashLibrary(this.getId());
 	}
 
 	public void clearSearchResults(String queryID) {
