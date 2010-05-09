@@ -2,6 +2,11 @@ package speerker.inter;
 
 
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import org.eclipse.swt.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -13,6 +18,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.*;
 
 import speerker.Tools;
+import speerker.p2p.SearchResult;
 import speerker.types.User;
 
 public class Login {
@@ -91,13 +97,18 @@ public class Login {
 				User user = tools.getUser();
 				user.setUsername(userText.getText());
 				user.setPassword(passwordText.getText());
-				//user = tools.getSpeerkerRMIClient().login(user);
-				if (!user.getValid()) login = true;
+				user = tools.getSpeerkerRMIClient().login(user);
+				if (user.getValid()) login = true;
 				else {
-					error.setText("Error: User/Password invalid");
-					userText.setText("");
-					passwordText.setText("");
-					userText.forceFocus();
+					display.syncExec(
+							new Runnable() {
+								public void run(){
+									error.setText("Error: User/Password invalid");
+									userText.setText("");
+									passwordText.setText("");
+									userText.forceFocus();
+							    }
+							});
 				}
 				
 				

@@ -3,7 +3,9 @@ package speerker.player;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
+import speerker.Tools;
 import speerker.inter.PlaylistInter;
+import speerker.types.Play;
 
 import javazoom.jl.decoder.JavaLayerException;
 
@@ -14,6 +16,7 @@ public class Playlist {
 	
 	SpeerkerPlayer player;
 	PlaylistInter inter;
+	Tools tools;
 	
 	int current;
 	
@@ -61,6 +64,8 @@ public class Playlist {
 			try {
 				player.loadSong((String) list.get(i).path);
 				player.play();
+				
+				Play p = new Play();
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
