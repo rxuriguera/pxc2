@@ -11,7 +11,6 @@ public class Tools {
 
 	private Playlist playlist;
 	private SpeerkerPlayer player;
-	private SpeerkerP2PLayer speerkerP2PLayer;
 	private SearchManager searchManager;
 	private SpeerkerRMIClient speerkerRMIClient;
 	private User user;
@@ -22,11 +21,10 @@ public class Tools {
 		playlist.setPlayer(player);
 		player.setPlaylist(playlist);
 		
-		searchManager =  new SearchManager(playlist);
-		
 		user = new User();
 		speerkerRMIClient = new SpeerkerRMIClient();
-
+		
+		searchManager =  new SearchManager(this);
 		
 	}
 
