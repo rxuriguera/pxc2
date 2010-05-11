@@ -10,9 +10,14 @@ public class formulario extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res)
     throws IOException, ServletException
 {
-	    String name = req.getParameter("Nombre");
-	    System.out.println(name);
-	    System.out.println("<a href=\"\">Tornar a la plana principal</a>");
+		res.setContentType("text/html");
+		PrintWriter out = res.getWriter();
+		out.println("<title>Informe Registro Usuario</title>");
+	    out.println("<h1>Informe Registro Usuario</h1>");
+
+	    String name = req.getParameter("Nombre<br>");
+	    out.println(name);
+	    out.println("<a href=\"\">Tornar a la plana principal</a>");
 }
 	
 	
