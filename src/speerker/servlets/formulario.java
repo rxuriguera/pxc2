@@ -15,8 +15,8 @@ public class formulario extends HttpServlet {
 		out.println("<title>Informe Registro Usuario</title>");
 	    out.println("<h1>Informe Registro Usuario</h1>");
 
-	    String name = req.getParameter("Nombre<br>");
-	    out.println(name);
+	    String name = req.getParameter("Nombre");
+	    out.println("html" + name + "</html>");
 	    out.println("<a href=\"\">Tornar a la plana principal</a>");
 }
 	
