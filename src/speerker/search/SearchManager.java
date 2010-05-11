@@ -3,6 +3,8 @@ package speerker.search;
 import java.io.File;
 import java.util.HashMap;
 
+import android.os.Looper;
+
 import speerker.App;
 import speerker.mobile.Control;
 import speerker.p2p.SearchResult;
@@ -49,6 +51,7 @@ public class SearchManager {
 		App.logger.debug("Receiving file " + hash);
 		new Thread() {
 			public void run() {
+				Looper.prepare();
 				Integer nPeriods = Integer.valueOf(App
 						.getProperty("WaitingPeriods"));
 				Integer waitingTime = Integer.valueOf(App

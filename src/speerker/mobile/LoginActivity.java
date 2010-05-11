@@ -19,13 +19,11 @@ public class LoginActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		
+
 		Control.currentContext = this;
 
 		this.username = (EditText) findViewById(R.id.usernameEditText);
 		this.password = (EditText) findViewById(R.id.passwordEditText);
-		
-		
 	}
 
 	public void loginClicked(View view) {
