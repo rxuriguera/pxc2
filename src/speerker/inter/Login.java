@@ -82,7 +82,7 @@ public class Login {
 		
 		final Label error = new Label (shell, SWT.CENTER);
 		error.setText("");
-		GridData gridError = new GridData(GridData.HORIZONTAL_ALIGN_CENTER | GridData.GRAB_HORIZONTAL);
+		GridData gridError = new GridData(GridData.HORIZONTAL_ALIGN_CENTER | GridData.FILL_HORIZONTAL);
 		gridError.horizontalSpan = 2;
 		error.setLayoutData(gridError);
 		
@@ -104,6 +104,7 @@ public class Login {
 							new Runnable() {
 								public void run(){
 									error.setText("Error: User/Password invalid");
+									error.pack();
 									userText.setText("");
 									passwordText.setText("");
 									userText.forceFocus();
