@@ -56,6 +56,9 @@ public class Control {
 	}
 
 	public static void addToPlaylist(SearchResult result) {
+		App.logger.info("Added song to play list");
+		App.logger.info("Toast: "+Control.currentContext.toString());
 		playlist.add(result);
+		Control.toastMessage(Control.currentContext, "New song added to playlist");
 	}
 }

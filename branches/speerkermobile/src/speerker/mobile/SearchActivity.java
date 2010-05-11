@@ -9,6 +9,7 @@ import speerker.App;
 import speerker.p2p.SearchResult;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Looper;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
@@ -107,22 +108,16 @@ public class SearchActivity extends SpeerkerActivity implements
 
 				while (iterator.hasNext()) {
 					result = iterator.next();
-
-					App.logger.debug("Adding result:\n\tSong title: "
-							+ result.getSong().getTitle() + "\n\tArtist: "
-							+ result.getSong().getArtist() + "\n\tAlbum: "
-							+ result.getSong().getAlbum());
-
 					item = new HashMap<String, String>();
 					item.put(TITLE, result.getSong().getTitle());
 					item.put(ARTIST, result.getSong().getArtist());
 					item.put(ALBUM, result.getSong().getAlbum());
 					item.put(HASH, result.getSong().getHash());
-					// if (!SearchActivity.this.listItems.contains(item)) {
-					App.logger.debug("Adding new item to results: "
-							+ result.getSong().getTitle());
+					App.logger.debug("Adding result:\n\tSong title: "
+							+ result.getSong().getTitle() + "\n\tArtist: "
+							+ result.getSong().getArtist() + "\n\tAlbum: "
+							+ result.getSong().getAlbum());
 					SearchActivity.this.listItems.add(item);
-					// }
 				}
 
 				SearchActivity.this.resultsAdapter.notifyDataSetChanged();
@@ -137,9 +132,17 @@ public class SearchActivity extends SpeerkerActivity implements
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		try {
-			String hash = this.listItems.get(position).get(HASH);
+			final String hash = this.listItems.get(position).get(HASH);
 			App.logger.info("File " + hash + " selected");
-			Control.searchManager.getFile(this.query, hash);
+			// Get file in a new thread so we can change activities and do
+			// more searches
+			(new Thread() {
+				public void run() {
+					Looper.prepare();
+					Control.searchManager.getFile(SearchActivity.this.query,
+							hash);
+				}
+			}).start();
 			Control.toastMessage(this, "Adding song to playlist");
 		} catch (Exception e) {
 			App.logger.error("Error getting file:", e);
