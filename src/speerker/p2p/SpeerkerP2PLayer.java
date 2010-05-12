@@ -161,6 +161,7 @@ public class SpeerkerP2PLayer {
 	}
 
 	public void reloadLibrary() {
+		App.logger.info("Reloading local library to be search by other peers");
 		this.peer.loadLibrary();
 	}
 }
