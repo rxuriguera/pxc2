@@ -51,7 +51,7 @@ public class PlayGateway {
 				+ "songs.artist, songs.album FROM plays INNER JOIN songs "
 				+ "ON plays.song=songs.id "
 				+ "INNER JOIN users ON plays.user=users.id "
-				+ "WHERE users.username=? "
+				+ "WHERE users.username LIKE ? "
 				+ "ORDER BY timeStamp DESC LIMIT 0,?";
 
 		try {

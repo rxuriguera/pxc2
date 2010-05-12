@@ -48,7 +48,7 @@ public class TestSpeerkerRMIClient {
 	
 	@Test
 	public void testSendStats() {
-		Play play = new Play("mittens2", new Song("a","b","c","d",33l));
+		Play play = new Play("mittens2", new Song("lks","b","c","d",33l));
 		this.client.sendPlay(play);
 	}
 	

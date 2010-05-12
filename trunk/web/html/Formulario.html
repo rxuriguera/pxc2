@@ -3,9 +3,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Registro Usuario</title>
-<style type="text/css"> 
-<!-- 
-body  {
+<style type="text/css">
+<!--
+body {
 	background: #666666;
 	margin: 0;
 	padding: 0;
@@ -14,131 +14,124 @@ body  {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 80%;
 }
-.twoColFixLtHdr #container { 
-	width: 780px;  
+
+.twoColFixLtHdr #container {
+	width: 780px;
 	background: #FFFFFF;
-	margin: 0 auto; 
+	margin: 0 auto;
 	border: 0px solid #000000;
-	text-align: left; 
-} 
-.twoColFixLtHdr #header { 
-	background: #DDDDDD; 
+	text-align: left;
+}
+
+.twoColFixLtHdr #header {
+	background: #DDDDDD;
 	padding: 0 10px 0 20px;
-} 
+}
+
 .twoColFixLtHdr #header h1 {
-	margin: 0; 
+	margin: 0;
 	padding: 10px 0;
 }
+
 .twoColFixLtHdr #sidebar1 {
 	float: left;
 	width: 200px;
 	background: #EBEBEB;
 	padding: 15px 10px 15px 20px;
 }
-.twoColFixLtHdr #mainContent { 
+
+.twoColFixLtHdr #mainContent {
 	margin: 0 0 0 250px;
 	padding: 0 20px;
-} 
-.twoColFixLtHdr #footer { 
+}
+
+.twoColFixLtHdr #footer {
 	padding: 0 10px 0 20px;
-	background:#DDDDDD; 
-} 
+	background: #DDDDDD;
+}
+
 .twoColFixLtHdr #footer p {
 	margin: 0;
 	padding: 10px 0;
 }
-.fltrt { 
+
+.fltrt {
 	float: right;
 	margin-left: 8px;
 }
-.fltlft { 
+
+.fltlft {
 	float: left;
 	margin-right: 8px;
 }
+
 .clearfloat {
-	clear:both;
-    height:0;
-    font-size: 1px;
-    line-height: 0px;
+	clear: both;
+	height: 0;
+	font-size: 1px;
+	line-height: 0px;
 }
+
 a:link {
 	color: #6C0;
 	text-decoration: none;
 }
+
 a:visited {
 	text-decoration: none;
 	color: #6C0;
 }
+
 a:hover {
 	text-decoration: none;
 }
+
 a:active {
 	text-decoration: none;
 }
---> 
+-->
 </style>
 </head>
 
 <body class="twoColFixLtHdr">
 
 <div id="container">
-  <div id="header">
-    <h1><img src="logo_speerker.png" width="334" height="94" alt="Logo" /></h1>
-  <!-- end #header --></div>
-  <div id="sidebar1">
-    <h3><a href="Main.html">Página Principal</a>
-    </h3>
-    <h3>Estadísticas
-      <!-- end #sidebar1 -->
-    </h3>
-  </div>
-  <div id="mainContent">
-    <h1 align="left">Registro Usuario</h1>
-  <p>&nbsp;</p>
-    <form action="http://127.0.0.1:8080/Speerker/hola2" method=post>
-      <p>
-        <label>Nombre:
-          <input name="Nombre" type="text" id="Nombre" maxlength="20" />
-        </label>
-      </p>
-      <p>
-        <label>Apellido:
-          <input name="Apellido" type="text" id="Apellido" maxlength="30" />
-        </label>
-      </p>
-      <p>
-        <label>Contraseña:
-          <input name="Contraseña" type="password" id="Contraseña" maxlength="20" />
-        </label>
-      </p>
-      <p>
-        <label>Confirmar Contraseña:
-          <input name="Contraseña2" type="password" id="Contraseña2" maxlength="20" />
-        </label>
-      </p>
-      <p>
-        <label>Correo Electrónico:
-          <input name="Email" type="text" id="Email" maxlength="30" />
-        </label>
-      </p>
-      <p>&nbsp;</p>
-      <p>
-        <label>
-          <div align="center">
-            <div align="center">
-              <input type="submit" name="boton1" id="boton1" value="ENVIAR" />
-            </div>
-          </div>
-        </label>
-      </p>
-    </form>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-  <!-- end #mainContent --></div>
+<div id="header">
+<h1><img src="logo_speerker.png" width="334" height="94" alt="Logo" /></h1>
+<!-- end #header --></div>
+<div id="sidebar1">
+<h3><a href="Main.html">Página Principal</a></h3>
+<h3><a href="stats">Estadísticas</a></h3>
+</div>
+<div id="mainContent">
+<h1 align="left">Registro Usuario</h1>
+<p>&nbsp;</p>
+<form action="http://127.0.0.1:8080/Speerker/hola2" method=post>
+<p><label>Nombre: <input name="Nombre" type="text"
+	id="Nombre" maxlength="20" /> </label></p>
+<p><label>Apellido: <input name="Apellido" type="text"
+	id="Apellido" maxlength="30" /> </label></p>
+<p><label>Contraseña: <input name="Contraseña"
+	type="password" id="Contraseña" maxlength="20" /> </label></p>
+<p><label>Confirmar Contraseña: <input name="Contraseña2"
+	type="password" id="Contraseña2" maxlength="20" /> </label></p>
+<p><label>Correo Electrónico: <input name="Email"
+	type="text" id="Email" maxlength="30" /> </label></p>
+<p>&nbsp;</p>
+<p><label>
+<div align="center">
+<div align="center"><input type="submit" name="boton1" id="boton1"
+	value="ENVIAR" /></div>
+</div>
+</label></p>
+</form>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<!-- end #mainContent --></div>
 <br class="clearfloat" />
-  <div id="footer">
-    <p>&nbsp;</p>
-  <!-- end #footer --></div>
+<div id="footer">
+<p>&nbsp;</p>
+<!-- end #footer --></div>
 <!-- end #container --></div>
 </body>
 </html>

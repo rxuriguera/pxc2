@@ -27,13 +27,29 @@ import speerker.App;
 public class SpeerkerConnection {
 	private static Connection connection = null;
 
-	private static void createConnection() {
+	private static String url = "";
+	private static String user = "";
+	private static String password = "";
 
+	private static void createStandardConnection() {
 		// Get connection data
-		String url = App.getProperty("DBUrl");
-		String user = App.getProperty("DBUser");
-		String password = App.getProperty("DBPassword");
+		SpeerkerConnection.url = App.getProperty("DBUrl");
+		SpeerkerConnection.user = App.getProperty("DBUser");
+		SpeerkerConnection.password = App.getProperty("DBPassword");
 
+		createConnection();
+	}
+
+	public static void createCustomConnection(String url, String user,
+			String password) {
+		SpeerkerConnection.url = url;
+		SpeerkerConnection.user = user;
+		SpeerkerConnection.password = password;
+
+		createConnection();
+	}
+
+	private static void createConnection() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			connection = DriverManager.getConnection(url, user, password);
@@ -46,12 +62,12 @@ public class SpeerkerConnection {
 		} catch (SQLException e) {
 			App.logger.error("Error creating DB connection: ", e);
 		}
-
 	}
 
 	public static Connection getConnection() {
 		if (connection == null)
-			createConnection();
+			createStandardConnection();
 		return connection;
 	}
+
 }
