@@ -23,9 +23,10 @@
 
 	<div id="header">
 	<h1>
-    <a class="logo" href="Main.html">
-    <img src="logo_speerker.png" width="334" height="94"
-        alt="logo" /></a></h1>
+	<a class="logo" href="Main.html">
+	<img src="logo_speerker.png" width="334" height="94"
+		alt="logo" /></a></h1>
+		
 	</div>
 
 	<div id="sidebar1">
@@ -45,34 +46,9 @@
 		</ul>
 	</c:if>
 
-	<h3>${playCountText} ${playCount}</h3>
+	<h3>${resultText}</h3>
 
-	<!-- List plays if any -->
-	<h3>${lastPlayText}</h3>
-	<c:if test="${not empty plays}">
-		<table class="plays">
-			<thead>
-				<tr>
-					<th>Title</th>
-					<th>Artist</th>
-					<th>Time</th>
-					<th>Date</th>
-				</tr>
-			</thead>
-			<c:forEach var="play" items="${plays}">
-
-				<tr>
-					<td class="title">${play.song.title}</td>
-					<td class="artist">${play.song.artist}</td>
-					<td class="date"><fmt:formatDate type="time"
-						value="${play.timestamp}" pattern="HH:mm"></fmt:formatDate></td>
-					<td class="date"><fmt:formatDate type="date"
-						value="${play.timestamp}" pattern="dd/MM/yy"></fmt:formatDate></td>
-				</tr>
-
-			</c:forEach>
-		</table>
-	</c:if></div>
+	</div>
 	<br class="clearfloat" />
 
 	<div id="footer">

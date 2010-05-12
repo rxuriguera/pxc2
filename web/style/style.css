@@ -78,13 +78,13 @@ body {
 }
 
 a:link {
-	color: #6C0;
+	color: #b0d90c;
 	text-decoration: none;
 }
 
 a:visited {
 	text-decoration: none;
-	color: #6C0;
+	color: #b0d90c;
 }
 
 a:hover {
@@ -112,6 +112,26 @@ h3 {
 	width: 100%;
 }
 
-.date{
-    color: #666666;
+.date {
+	color: #666666;
+}
+
+.label {
+	text-align: right;
+}
+
+.logo {
+	text-decoration: none;
+}
+
+.logoImg {
+	border-style: none;
+}
+
+#mainContent {
+	margin-bottom: 30px;
+}
+
+#footer {
+	min-height: 20px;
 }
