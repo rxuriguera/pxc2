@@ -1,8 +1,23 @@
+/*
+ * Speerker 
+ * Copyright (C) 2010  Jordi Bartrolí, Hector Mañosas i Ramon Xuriguera
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package speerker.mobile;
 
-import java.io.IOException;
-
-import speerker.App;
 import speerker.types.User;
 
 import android.app.Activity;
@@ -21,6 +36,7 @@ public class LoginActivity extends Activity {
 		setContentView(R.layout.main);
 
 		Control.currentContext = this;
+		Control.initializeProperties();
 
 		this.username = (EditText) findViewById(R.id.usernameEditText);
 		this.password = (EditText) findViewById(R.id.passwordEditText);
@@ -34,20 +50,21 @@ public class LoginActivity extends Activity {
 		Control.username = user.getUsername();
 		Control.password = user.getPassword();
 
-		this.initializeApplication();
+		Boolean logged = Control.logIn();
+		String loginMessage = "";
+		if (logged)
+			loginMessage = "You're logged in";
+		else
+			loginMessage = "Could not log you in";
+		Control.toastMessage(this, loginMessage);
 
-		Intent intent = new Intent(LoginActivity.this, SearchActivity.class);
-		startActivity(intent);
-		this.finish();
-	}
-
-	public void initializeApplication() {
-		try {
-			App.setPropertiesFile(getAssets().open("speerker.properties"));
-		} catch (IOException e) {
-			App.logger.error("Could not open properties", e);
-			Control.toastMessage(this, "Could not open properties");
+		// If user is logged in, change activity
+		if (logged) {
+			Control.initializeApplication();
+			Intent intent = new Intent(LoginActivity.this, SearchActivity.class);
+			startActivity(intent);
+			this.finish();
 		}
-		Control.initializeApplication();
 	}
+
 }
