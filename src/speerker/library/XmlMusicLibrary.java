@@ -34,6 +34,7 @@ import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
+import speerker.App;
 import speerker.Song;
 import speerker.util.MD5Checksum;
 
@@ -43,7 +44,7 @@ public class XmlMusicLibrary {
 	File flib;
 
 	public XmlMusicLibrary(String path) {
-
+		App.logger.info("Generating library for: " + path);
 		flib = new File(path);
 		if (flib.exists()) {
 			try {
@@ -68,15 +69,14 @@ public class XmlMusicLibrary {
 		}
 
 	}
-	
-	public void clear(){
+
+	public void clear() {
 		Element root = lib.getRootElement();
 		root.removeContent();
 	}
-	
-
 
 	public void saveLibrary() {
+		App.logger.info("Storing library to:" + this.flib.getAbsolutePath());
 		flib.delete();
 		try {
 			flib.createNewFile();
