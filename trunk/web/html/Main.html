@@ -3,95 +3,22 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Speerker</title>
-<style type="text/css"> 
-<!-- 
-body  {
-	font: 80% Verdana, Arial, Helvetica, sans-serif;
-	background: #666666;
-	margin: 0;
-	padding: 0;
-	text-align: center;
-	color: #000000;
-}
-.twoColLiqLtHdr #container { 
-	width: 80%;
-	background: #FFFFFF;
-	margin: 0 auto;
-	border: 1px solid #000000;
-	text-align: left;
-} 
-.twoColLiqLtHdr #header { 
-	background: #DDDDDD; 
-	padding: 0 10px;
-} 
-.twoColLiqLtHdr #header h1 {
-	margin: 0;
-	padding: 10px 0;
-}
-.twoColLiqLtHdr #sidebar1 {
-	float: left; 
-	width: 24%;
-	background: #EBEBEB;
-	padding: 15px 0;
-}
-.twoColLiqLtHdr #sidebar1 h3, .twoColLiqLtHdr #sidebar1 p {
-	margin-left: 10px;
-	margin-right: 10px;
-}
-.twoColLiqLtHdr #mainContent { 
-	margin: 0 20px 0 26%; 
-} 
-.twoColLiqLtHdr #footer { 
-	padding: 0 10px;
-	background:#DDDDDD;
-} 
-.twoColLiqLtHdr #footer p {
-	margin: 0;
-	padding: 10px 0;
-}
-
-.fltrt {
-	float: right;
-	margin-left: 8px;
-}
-.fltlft {
-	float: left;
-	margin-right: 8px;
-}
-.clearfloat {
-	clear:both;
-    height:0;
-    font-size: 1px;
-    line-height: 0px;
-}
-a:link {
-	color: #6C0;
-	text-decoration: none;
-}
-a:visited {
-	text-decoration: none;
-	color: #6C0;
-}
-a:hover {
-	text-decoration: none;
-}
-a:active {
-	text-decoration: none;
-}
-
---> 
-</style>
+<link type="text/css" rel="stylesheet" href="style.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 
 <body class="twoColLiqLtHdr">
 
-<div id="container"; style="position: absolute; top: 49px; left: 109px; width: 1000px;"> 
+<div id="container" class="container">
 
-  <div id="header">
-    <h1><img src="logo_speerker.png" width="334" height="94" alt="logo" /></h1>
-  <!-- end #header --></div>
+<div id="header">
+<h1><a class="logo" href="Main.html"> <img
+    src="logo_speerker.png" width="334" height="94" alt="logo" /></a></h1>
+</h1>
+</div>
+
   <div id="sidebar1">
-    <form name="form1" method="post" action="">
+    <form name="form1" method="post" action="login_servlet">
       <label>
         <div align="justify">
           <p>User
@@ -114,6 +41,7 @@ a:active {
     <h3><a href="Formulario.html">Crear Cuenta</a></h3>
     <h3><a href="stats">Estadísticas</a></h3>
 </div>
+
   <div id="mainContent">
     <h2> ¿Qué es?</h2>
     <p align="justify">És una aplicación que permite escuchar música vía streaming y compartir música mediante peer to peer.</p>
@@ -134,9 +62,9 @@ a:active {
 </ul>
 </div>
 <br class="clearfloat" />
-  <div id="footer">
-    <p>&nbsp;</p>
-  <!-- end #footer --></div>
-<!-- end #container --></div>
+<div id="footer">
+    <p></p>
+</div>
+</div>
 </body>
 </html>
