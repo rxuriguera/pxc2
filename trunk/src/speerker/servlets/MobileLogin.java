@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import speerker.db.UserGateway;
 import speerker.types.User;
 
-public class Login extends SpeerkerServlet {
+public class MobileLogin extends SpeerkerServlet {
 	private static final long serialVersionUID = 1819772909748015120L;
 
 	@Override
