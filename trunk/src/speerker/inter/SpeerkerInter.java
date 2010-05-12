@@ -8,6 +8,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
+import speerker.App;
 import speerker.Tools;
 
 
@@ -107,6 +108,7 @@ public class SpeerkerInter {
 		playlistInter = new PlaylistInter(compoPlaylist, display, tools.getPlaylist());
 		searchInter = new SearchInter(compoSearch, display, this);
 		browserInter = new BrowserInter(compoBrowser, display);
+		browserInter.setBrowserUrl(this.tools.getUser().getUsername());
 		menuInter = new MenuInter(compoMenu, display, this);
 		playerInter = new PlayerInter(compoPlayer, display, tools.getPlayer());
 		upMenuInter = new UpMenuInter(shell, display, this);
