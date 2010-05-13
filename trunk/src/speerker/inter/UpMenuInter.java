@@ -20,7 +20,7 @@ public class UpMenuInter {
 	private Display display;
 	private SpeerkerInter SpeerkerInter;
 
-	public UpMenuInter(Shell sh, Display d, SpeerkerInter s){
+	public UpMenuInter(Shell sh, Display d, final SpeerkerInter s){
 		
 		shell = sh;
 		display = d;
@@ -63,6 +63,8 @@ public class UpMenuInter {
 	            lib.clear();
 	            lib.add(selected);
 	            lib.saveLibrary();
+	            s.getTool().getSearchManager().getSpeerkerP2PLayer().reloadLibrary();
+	            
 	          }
 	      });
 	    

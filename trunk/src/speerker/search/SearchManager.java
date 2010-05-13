@@ -29,6 +29,10 @@ public class SearchManager {
 	
 	}
 	
+	public SpeerkerP2PLayer getSpeerkerP2PLayer(){
+		return this.speerkerP2PLayer;
+	}
+	
 	public void newSearch(String field){
 	
 		speerkerP2PLayer.search(field);
