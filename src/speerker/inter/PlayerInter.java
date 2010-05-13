@@ -121,6 +121,8 @@ public class PlayerInter {
     	gridScale = new GridData(GridData.FILL_HORIZONTAL);
     	scale.setLayoutData(gridScale);
     	
+    	scale.setVisible(false);
+    	
     	scaleMove = true;
     	
     	scale.addListener (SWT.MouseDown, new Listener () {
