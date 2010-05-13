@@ -75,6 +75,7 @@ public class Login {
 		Button button = new Button(shell, SWT.PUSH);
 		button.setText("Register");
 		button.setLayoutData(gridButton);
+		button.setVisible(false);
 		
 		Button buttonLogin = new Button(shell, SWT.PUSH);
 		buttonLogin.setText("Login");

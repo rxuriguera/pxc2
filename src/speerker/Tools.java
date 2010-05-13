@@ -24,8 +24,12 @@ public class Tools {
 		user = new User();
 		speerkerRMIClient = new SpeerkerRMIClient();
 		
-		searchManager =  new SearchManager(this);
 		
+		
+	}
+	
+	public void iniP2P(){
+		searchManager =  new SearchManager(this);
 	}
 
 	public SpeerkerPlayer getPlayer() {
