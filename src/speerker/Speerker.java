@@ -29,7 +29,8 @@ public class Speerker {
 		
 		tools = new Tools();
 		
-		String[] loginData = Login.show(display, tools);
+		boolean loginData = Login.show(display, tools);
+		
 		
 		speerkerInter = new SpeerkerInter(tools, display);
 		
