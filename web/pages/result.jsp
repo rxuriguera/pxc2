@@ -25,7 +25,7 @@
 	<h1>
 	<a class="logo" href="Main.html">
 	<img src="logo_speerker.png" width="334" height="94"
-		alt="logo" /></a></h1>
+		alt="logo" border="0"/></a></h1>
 		
 	</div>
 
