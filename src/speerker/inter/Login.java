@@ -25,7 +25,7 @@ public class Login {
 	
 	static boolean login;
  
-	public static String[] show(final Display display, final Tools tools) {
+	public static boolean show(final Display display, final Tools tools) {
 		
 		Shell shell = new Shell(display, SWT.DIALOG_TRIM);
 		login = false;
@@ -82,7 +82,7 @@ public class Login {
 		
 		final Label error = new Label (shell, SWT.CENTER);
 		error.setText("");
-		GridData gridError = new GridData(GridData.HORIZONTAL_ALIGN_CENTER | GridData.FILL_HORIZONTAL);
+		GridData gridError = new GridData(GridData.HORIZONTAL_ALIGN_CENTER | GridData.GRAB_HORIZONTAL);
 		gridError.horizontalSpan = 2;
 		error.setLayoutData(gridError);
 		
@@ -104,7 +104,6 @@ public class Login {
 							new Runnable() {
 								public void run(){
 									error.setText("Error: User/Password invalid");
-									error.pack();
 									userText.setText("");
 									passwordText.setText("");
 									userText.forceFocus();
@@ -127,7 +126,7 @@ public class Login {
 		
 		shell.dispose();
 		
-		return data;
+		return login;
 	}
             
 } 
