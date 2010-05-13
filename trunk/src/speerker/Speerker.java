@@ -29,9 +29,12 @@ public class Speerker {
 		
 		tools = new Tools();
 		
-		boolean loginData = Login.show(display, tools);
+		boolean login = false;
+		login = Login.show(display, tools);
 		
+		while(!login){};
 		
+		tools.iniP2P();
 		speerkerInter = new SpeerkerInter(tools, display);
 		
 		
