@@ -139,6 +139,7 @@ public class SpeerkerInter {
         	compoSearch.setVisible (!(gridSearch.exclude = true));
             compoPlaylist.setVisible (!(gridPlaylist.exclude = true));
             compoBrowser.setVisible (!(gridBrowser.exclude = false));
+            browserInter.refreshBrowser();
         } else if(center.equals("Search")){
         	compoSearch.setVisible (!(gridSearch.exclude = false));
             compoPlaylist.setVisible (!(gridPlaylist.exclude = true));

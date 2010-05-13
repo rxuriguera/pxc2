@@ -50,4 +50,10 @@ public class BrowserInter {
 			}
 		}
 	}
+	
+	public void refreshBrowser(){
+		if (browser != null) {
+			browser.refresh();
+		}
+	}
 }
