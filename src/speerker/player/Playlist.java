@@ -64,8 +64,6 @@ public class Playlist {
 			try {
 				player.loadSong((String) list.get(i).path);
 				player.play();
-				
-				Play p = new Play();
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
