@@ -15,10 +15,10 @@
    id="svg7553"
    sodipodi:version="0.32"
    inkscape:version="0.46"
-   sodipodi:docname="seguiment-2.svg"
+   sodipodi:docname="arquitectura.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape"
    version="1.0"
-   inkscape:export-filename="/home/rxuriguera/enlistments/speerker/docs/seguiment/seguiment-2.png"
+   inkscape:export-filename="/home/rxuriguera/enlistments/speerker/docs/presentacio final/arquitectura.png"
    inkscape:export-xdpi="149"
    inkscape:export-ydpi="149">
   <sodipodi:namedview
@@ -31,9 +31,9 @@
      objecttolerance="10"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.7"
-     inkscape:cx="805.55132"
-     inkscape:cy="406.72469"
+     inkscape:zoom="1.4"
+     inkscape:cx="431.60695"
+     inkscape:cy="96.044807"
      inkscape:document-units="px"
      inkscape:current-layer="capa1"
      showgrid="true"
@@ -22214,37 +22214,6 @@
            sodipodi:role="line">Servlets</tspan></text>
     </g>
     <g
-       id="g162818"
-       transform="matrix(0.7321509,0,0,0.7321509,76.75426,230.37272)"
-       inkscape:export-filename="/home/rxuriguera/Escriptori/httprequest.png"
-       inkscape:export-xdpi="46.855663"
-       inkscape:export-ydpi="46.855663">
-      <g
-         id="g162871">
-        <path
-           transform="translate(-94.663086,-1142.5439)"
-           id="rect162820"
-           d="M 508.8125,1267.375 L 508.8125,1374.8125 L 590,1374.8125 L 590,1287.375 L 570,1267.375 L 508.8125,1267.375 z"
-           style="opacity:1;fill:url(#linearGradient71136);fill-opacity:1;fill-rule:nonzero;stroke:#c7c7c7;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
-        <path
-           transform="translate(-94.663086,-1142.5439)"
-           id="path162867"
-           d="M 570,1267.3622 L 570,1287.3622 L 590,1287.3622 L 590,1287.3622"
-           style="fill:none;fill-rule:evenodd;stroke:#c7c7c7;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-      </g>
-      <text
-         id="text162822"
-         y="185.8335"
-         x="454.92383"
-         style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Serif;-inkscape-font-specification:Bitstream Vera Serif"
-         xml:space="preserve"><tspan
-           style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;text-anchor:middle;font-family:Bitstream Vera Serif;-inkscape-font-specification:Bitstream Vera Serif"
-           y="185.8335"
-           x="454.92383"
-           id="tspan162824"
-           sodipodi:role="line">XML</tspan></text>
-    </g>
-    <g
        id="g162877"
        transform="matrix(0.7321509,0,0,0.7321509,-154.48237,230.37271)"
        inkscape:export-filename="/home/rxuriguera/Escriptori/httprequest.png"
@@ -22300,38 +22269,7 @@
            y="79.818237"
            x="439.34082"
            id="tspan162844"
-           sodipodi:role="line">XSLT</tspan></text>
-    </g>
-    <g
-       id="g162895"
-       transform="matrix(0.7321509,0,0,0.7321509,-38.864131,320.9668)"
-       inkscape:export-filename="/home/rxuriguera/Escriptori/httprequest.png"
-       inkscape:export-xdpi="46.855663"
-       inkscape:export-ydpi="46.855663">
-      <g
-         id="g162897">
-        <path
-           transform="translate(-94.663086,-1142.5439)"
-           id="path162899"
-           d="M 508.8125,1267.375 L 508.8125,1374.8125 L 590,1374.8125 L 590,1287.375 L 570,1267.375 L 508.8125,1267.375 z"
-           style="opacity:1;fill:url(#linearGradient71130);fill-opacity:1;fill-rule:nonzero;stroke:#c7c7c7;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
-        <path
-           transform="translate(-94.663086,-1142.5439)"
-           id="path162901"
-           d="M 570,1267.3622 L 570,1287.3622 L 590,1287.3622 L 590,1287.3622"
-           style="fill:none;fill-rule:evenodd;stroke:#c7c7c7;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-      </g>
-      <text
-         id="text162903"
-         y="185.8335"
-         x="454.92383"
-         style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Serif;-inkscape-font-specification:Bitstream Vera Serif"
-         xml:space="preserve"><tspan
-           style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;text-anchor:middle;font-family:Bitstream Vera Serif;-inkscape-font-specification:Bitstream Vera Serif"
-           y="185.8335"
-           x="454.92383"
-           id="tspan162905"
-           sodipodi:role="line">XSL</tspan></text>
+           sodipodi:role="line">JSP</tspan></text>
     </g>
     <path
        inkscape:connection-end="#g162877"
@@ -22347,27 +22285,6 @@
        id="path7625"
        d="M 148.00535,347.68977 L 69.828572,313.28066"
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;display:inline" />
-    <path
-       inkscape:connection-end="#g162838"
-       inkscape:connection-start="#g162895"
-       inkscape:connector-type="polyline"
-       id="path7627"
-       d="M 294.07651,411.62048 L 294.07654,379.04595"
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <path
-       inkscape:connection-end="#g162838"
-       inkscape:connection-start="#g162818"
-       inkscape:connector-type="polyline"
-       id="path7629"
-       d="M 379.24198,361.09347 L 341.254,361.09347"
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <path
-       inkscape:connection-end="#g162818"
-       inkscape:connection-start="#g162793"
-       inkscape:connector-type="polyline"
-       id="path20450"
-       d="M 409.69484,280.08186 L 409.69486,321.0264"
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <path
        inkscape:connection-end="#g162793"
        inkscape:connection-start="#g14566"
@@ -22504,13 +22421,13 @@
        inkscape:export-filename="/home/rxuriguera/Escriptori/diagrames/autenticacioRMI.png"
        xml:space="preserve"
        style="font-size:40px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:cmsy10;-inkscape-font-specification:cmsy10 Medium"
-       x="-180"
-       y="312.36218"
+       x="-171.7"
+       y="332.71616"
        id="text11040"><tspan
          sodipodi:role="line"
          id="tspan11042"
-         x="-180"
-         y="312.36218"
+         x="-171.7"
+         y="332.71616"
          style="font-size:15px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Bitstream Vera Serif;-inkscape-font-specification:Bitstream Vera Serif">HTTPS</tspan></text>
     <text
        inkscape:export-ydpi="89.520401"
@@ -22518,14 +22435,19 @@
        inkscape:export-filename="/home/rxuriguera/Escriptori/diagrames/autenticacioRMI.png"
        xml:space="preserve"
        style="font-size:25px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:cmsy10;-inkscape-font-specification:cmsy10 Medium"
-       x="-130"
-       y="502.36218"
+       x="-193.73125"
+       y="462.71616"
        id="text134563"><tspan
          sodipodi:role="line"
          id="tspan134565"
-         x="-130"
-         y="502.36218"
-         style="font-size:15px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Bitstream Vera Serif;-inkscape-font-specification:Bitstream Vera Serif">RMI</tspan></text>
+         x="-193.73125"
+         y="462.71616"
+         style="font-size:15px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;text-anchor:middle;font-family:Bitstream Vera Serif;-inkscape-font-specification:Bitstream Vera Serif">RMI over SSL</tspan><tspan
+         sodipodi:role="line"
+         x="-193.73125"
+         y="481.46616"
+         style="font-size:15px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;text-anchor:middle;font-family:Bitstream Vera Serif;-inkscape-font-specification:Bitstream Vera Serif"
+         id="tspan11120">(desktop)</tspan></text>
     <g
        inkscape:export-ydpi="89.520401"
        inkscape:export-xdpi="89.520401"
@@ -22652,7 +22574,7 @@
     <text
        id="text162767"
        y="992.36218"
-       x="156.97177"
+       x="196.97177"
        style="font-size:25px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:cmsy10;-inkscape-font-specification:cmsy10 Medium"
        xml:space="preserve"
        inkscape:export-filename="/home/rxuriguera/Escriptori/diagrames/autenticacioRMI.png"
@@ -22660,7 +22582,7 @@
        inkscape:export-ydpi="89.520401"><tspan
          style="font-size:25px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Bitstream Vera Serif;-inkscape-font-specification:Bitstream Vera Serif"
          y="992.36218"
-         x="156.97177"
+         x="196.97177"
          id="tspan162769"
          sodipodi:role="line">Xarxa P2P</tspan></text>
     <path
@@ -22782,8 +22704,9 @@
        inkscape:connection-start="#a21351"
        inkscape:connector-type="polyline"
        id="path21359"
-       d="M -250.37156,639.05955 L -6.9714315,343.07506"
-       style="fill:none;fill-rule:evenodd;stroke:#b800ff;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow2MstartT);marker-end:url(#Arrow2MendO);stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       d="M -251.7,652.71617 L -151.7,482.71617 L -1.7,352.71617"
+       style="fill:none;fill-rule:evenodd;stroke:#b800ff;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow2MstartT);marker-end:url(#Arrow2MendO);stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       sodipodi:nodetypes="ccc" />
     <path
        inkscape:connection-end="#g26425"
        inkscape:connection-start="#a21351"
@@ -22791,20 +22714,6 @@
        id="path21361"
        d="M -314.42001,668.52511 L -357.21764,668.52511"
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;display:inline" />
-    <text
-       inkscape:export-ydpi="89.520401"
-       inkscape:export-xdpi="89.520401"
-       inkscape:export-filename="/home/rxuriguera/Escriptori/diagrames/autenticacioRMI.png"
-       xml:space="preserve"
-       style="font-size:25px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:cmsy10;-inkscape-font-specification:cmsy10 Medium"
-       x="-140"
-       y="702.36218"
-       id="text21363"><tspan
-         sodipodi:role="line"
-         id="tspan21365"
-         x="-140"
-         y="702.36218"
-         style="font-size:15px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Bitstream Vera Serif;-inkscape-font-specification:Bitstream Vera Serif">Sockets TCP</tspan></text>
     <path
        inkscape:connection-end="#g131407"
        inkscape:connection-start="#g10931"
@@ -22911,12 +22820,185 @@
          x="-24.131733"
          id="tspan24790"
          sodipodi:role="line">Servidor</tspan></text>
+    <path
+       inkscape:connector-type="polyline"
+       id="path11103"
+       d="M -251.7,652.71617 L -101.7,532.71617 L -1.7,352.71617"
+       style="fill:none;fill-rule:evenodd;stroke:#00a7ff;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow2MstartP);marker-end:url(#Arrow2MendqC);stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;display:inline"
+       sodipodi:nodetypes="ccc" />
+    <text
+       inkscape:export-ydpi="89.520401"
+       inkscape:export-xdpi="89.520401"
+       inkscape:export-filename="/home/rxuriguera/Escriptori/diagrames/autenticacioRMI.png"
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:cmsy10;-inkscape-font-specification:cmsy10 Medium"
+       x="-44.790821"
+       y="512.71619"
+       id="text11105"><tspan
+         sodipodi:role="line"
+         id="tspan11107"
+         x="-44.790821"
+         y="512.71619"
+         style="font-size:15px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;text-anchor:middle;font-family:Bitstream Vera Serif;-inkscape-font-specification:Bitstream Vera Serif">HTTPS</tspan><tspan
+         sodipodi:role="line"
+         x="-44.790821"
+         y="531.46619"
+         style="font-size:15px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;text-anchor:middle;font-family:Bitstream Vera Serif;-inkscape-font-specification:Bitstream Vera Serif"
+         id="tspan11118">(android)</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Serif;-inkscape-font-specification:Bitstream Vera Serif"
+       x="-63.79961"
+       y="642.71619"
+       id="text6683"><tspan
+         sodipodi:role="line"
+         id="tspan6685"
+         x="-63.79961"
+         y="642.71619"
+         style="font-size:15px">Sockets TCP</tspan><tspan
+         sodipodi:role="line"
+         x="-63.79961"
+         y="658.47595"
+         id="tspan6697">(transmissió entrant)</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:15px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:cmsy10;-inkscape-font-specification:cmsy10 Medium"
+       x="-24.131733"
+       y="380.59784"
+       id="text6691"
+       inkscape:export-filename="/home/rxuriguera/Escriptori/diagrames/autenticacioRMI.png"
+       inkscape:export-xdpi="89.520401"
+       inkscape:export-ydpi="89.520401"><tspan
+         sodipodi:role="line"
+         id="tspan6693"
+         x="-24.131733"
+         y="380.59784"
+         style="font-size:25px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Bitstream Vera Serif;-inkscape-font-specification:Bitstream Vera Serif">Servidor</tspan></text>
+    <path
+       inkscape:connector-type="polyline"
+       id="path6695"
+       d="M 408.80508,280.19079 L 408.3,362.71617 L 340.57284,362.71617"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       sodipodi:nodetypes="ccc" />
+    <path
+       inkscape:connector-type="polyline"
+       id="path6699"
+       d="M -230.58832,679.58418 L 168.3,772.71617"
+       style="fill:none;fill-rule:evenodd;stroke:#ff0b2a;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Mendo);stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;display:inline"
+       sodipodi:nodetypes="cc" />
+    <path
+       inkscape:connector-type="polyline"
+       id="path6703"
+       d="M -241.7,692.71617 L 58.3,902.71617"
+       style="fill:none;fill-rule:evenodd;stroke:#a0ff00;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow2Mstartn);marker-end:none;stroke-miterlimit:3.5;stroke-dasharray:none;stroke-opacity:1;display:inline"
+       sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Serif;-inkscape-font-specification:Bitstream Vera Serif"
+       x="-43.79961"
+       y="742.71619"
+       id="text6687"><tspan
+         sodipodi:role="line"
+         id="tspan6689"
+         x="-43.79961"
+         y="742.71619"
+         style="font-size:15px;text-align:center;text-anchor:middle">Sockets TCP</tspan><tspan
+         sodipodi:role="line"
+         x="-43.79961"
+         y="758.47595"
+         style="text-align:center;text-anchor:middle"
+         id="tspan6707">(transmissió sortint)</tspan></text>
     <g
-       id="g71152"
-       transform="translate(44.877565,0)">
+       id="g6779"
+       transform="translate(2,-4)">
       <g
-         transform="matrix(0.4,0,0,0.4,-540,832.36218)"
-         id="g71140"
+         transform="translate(-56.976253,23.868145)"
+         id="g6743">
+        <path
+           inkscape:connector-type="polyline"
+           id="path6701"
+           d="M -649.67625,916.71617 L -609.67625,916.71617"
+           style="fill:none;fill-rule:evenodd;stroke:#a0ff00;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow2Mstartn);marker-end:none;stroke-miterlimit:3.5;stroke-dasharray:none;stroke-opacity:1;display:inline"
+           sodipodi:nodetypes="cc" />
+        <path
+           inkscape:connector-type="polyline"
+           id="path6729"
+           d="M -651.7,920.71617 L -611.7,920.71617"
+           style="fill:none;fill-rule:evenodd;stroke:#ff0b2a;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Mendo);stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;display:inline"
+           sodipodi:nodetypes="cc" />
+        <path
+           inkscape:connector-type="polyline"
+           id="path6801"
+           d="M -649.66061,916.75331 L -624.66061,916.75331"
+           style="fill:none;fill-rule:evenodd;stroke:#a0ff00;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow2Mstartn);marker-end:none;stroke-miterlimit:3.5;stroke-dasharray:none;stroke-opacity:1;display:inline"
+           sodipodi:nodetypes="cc" />
+      </g>
+      <text
+         id="text6731"
+         y="946.72247"
+         x="-652.77588"
+         style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Serif;-inkscape-font-specification:Bitstream Vera Serif"
+         xml:space="preserve"><tspan
+           id="tspan6735"
+           style="font-size:15px;text-align:start;text-anchor:start"
+           y="946.72247"
+           x="-652.77588"
+           sodipodi:role="line"><tspan
+   id="tspan6775"
+   style="font-size:15px;font-style:italic;-inkscape-font-specification:Bitstream Vera Serif Italic">Sockets</tspan> TCP: Transmissions de fitxers amb des del punt de vista del <tspan
+   id="tspan6741"
+   style="font-size:15px;font-style:italic;-inkscape-font-specification:Bitstream Vera Serif Italic">peer</tspan> actual.</tspan></text>
+    </g>
+    <g
+       id="g6788"
+       transform="translate(2,-6.0000009)">
+      <path
+         sodipodi:nodetypes="cc"
+         style="fill:none;fill-rule:evenodd;stroke:#b800ff;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow2MstartT);marker-end:url(#Arrow2MendO);stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="M -708.67625,966.58432 L -668.67625,966.58432"
+         id="path6747"
+         inkscape:connector-type="polyline" />
+      <text
+         id="text6751"
+         y="970.91656"
+         x="-653.33252"
+         style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Serif;-inkscape-font-specification:Bitstream Vera Serif"
+         xml:space="preserve"><tspan
+           id="tspan6753"
+           style="font-size:15px;text-align:start;text-anchor:start"
+           y="970.91656"
+           x="-653.33252"
+           sodipodi:role="line">RMI <tspan
+   id="tspan6777"
+   style="font-size:15px;font-style:italic;-inkscape-font-specification:Bitstream Vera Serif Italic">over</tspan> SSL: Login i enviament d'estadistiques. Només per l'aplicació d'escriptori.</tspan></text>
+    </g>
+    <g
+       id="g6795"
+       transform="translate(2,-4)">
+      <path
+         sodipodi:nodetypes="cc"
+         style="fill:none;fill-rule:evenodd;stroke:#00a7ff;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow2MstartP);marker-end:url(#Arrow2MendqC);stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;display:inline"
+         d="M -708.67625,986.58432 L -668.67625,986.58432"
+         id="path6749"
+         inkscape:connector-type="polyline" />
+      <text
+         id="text6759"
+         y="990.91656"
+         x="-653.33252"
+         style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Serif;-inkscape-font-specification:Bitstream Vera Serif"
+         xml:space="preserve"><tspan
+           id="tspan6761"
+           style="font-size:15px;text-align:start;text-anchor:start"
+           y="990.91656"
+           x="-653.33252"
+           sodipodi:role="line">HTTPS: Registre i consulta d'estadístiques (web). Login des de l'aplicació mòbil.</tspan></text>
+    </g>
+    <g
+       id="g6803"
+       transform="translate(12.185725,0)">
+      <g
+         transform="matrix(0.3333333,0,0,0.3333333,-497.2102,832.71617)"
+         id="g6763"
          inkscape:export-filename="/home/rxuriguera/Escriptori/diagrames/autenticacioRMI.png"
          inkscape:export-xdpi="89.520401"
          inkscape:export-ydpi="89.520401">
@@ -22927,13 +23009,13 @@
            xlink:href="#com.gliffy.newnetwork.home.Workstation_LCD"
            width="120"
            height="120"
-           id="use71142" />
+           id="use6765" />
         <g
-           id="g71144" />
+           id="g6767" />
       </g>
       <g
-         transform="matrix(0.4217687,0,0,0.4217687,-470,839.49127)"
-         id="g71146"
+         transform="matrix(0.455102,0,0,0.455102,-449.00612,834.51191)"
+         id="g6769"
          inkscape:export-filename="/home/rxuriguera/Escriptori/diagrames/autenticacioRMI.png"
          inkscape:export-xdpi="89.520401"
          inkscape:export-ydpi="89.520401">
@@ -22944,9 +23026,9 @@
            xlink:href="#com.gliffy.newnetwork.home.Cell_Phone"
            width="48"
            height="80"
-           id="use71148" />
+           id="use6771" />
         <g
-           id="g71150" />
+           id="g6773" />
       </g>
     </g>
   </g>
